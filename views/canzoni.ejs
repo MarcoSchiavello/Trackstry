@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../assets/Img/Logo.png">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <title>Trackstry Canzoni</title>
+</head>
+<body>
+    <%- include("partials/nav") %> 
+    <div id="cover_canzoni" >
+        <img src="../assets/Img/home/sec_2.jpg" class="img_cover" >
+        <div id="cover_filter"></div>
+        <h1 style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);margin: 0;z-index: 31;font-size: 50px;">Artisti</h1>
+    </div>
+    <div class="cointeiner_card">
+        <% for(var i=0;i<100;i++){ %> 
+            <div class="card_artisti">
+                <div class="card_artisti" style="overflow: hidden;pointer-events: none;margin: 0;">
+                    <div class="filter_card"></div>
+                    <img src="../assets/Img/home/bg_home.jpg">
+                </div>
+
+                <h2 class="name_artista">nome_artista</h2>
+            </div>
+        <% } %> 
+    </div>
+    <%- include("partials/footer") %> 
+    <script src="../assets/js/app.js" ></script>
+</body>
+</html>

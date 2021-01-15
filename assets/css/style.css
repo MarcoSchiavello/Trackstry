@@ -12,6 +12,51 @@ html,body
 {
     display: none;
 }
+.input_text
+{
+  font-family: 'Quicksand', sans-serif;
+  border: none;
+  border-bottom: solid black 2px;
+  outline: none;
+  padding: 3px;
+  font-size: 18px;
+  transition: 0.3s;
+  min-width: 220px;
+}
+.input_text + label
+{
+  opacity: 0.6;
+  position: relative;
+  top: -27px;
+  left: 3px;
+  font-size: 18px;
+  pointer-events: none;
+  transition: 0.3s;
+  height: 0;
+
+}
+.input_text:valid + label
+{
+  opacity: 1;
+  font-size: 14px;
+  top: -45px;
+}
+.input_text:focus + label
+{
+  opacity: 1;
+  font-size: 14px;
+  top: -45px;
+}
+a
+{
+  text-decoration: none;
+  color: black;
+}
+h3  
+{
+    margin: 0;
+    padding: 0;
+}
 /*---------------------nav-bar----------------------*/
 header
 {
@@ -24,6 +69,8 @@ header
     position: fixed;
     z-index: 999;
     transition: 0.4s;
+    top: 0;
+    left: 0;
 }
 #logo
 {
@@ -33,18 +80,20 @@ header
 }
 li
 {
+    padding: 10px 0;
     width: max-content;
     margin: 12px;
     list-style: none;
     cursor: pointer;
+    z-index: 999;
 }
 #logIn
 {
     text-decoration: none;
-    color: rgb(146, 146, 146);
+    color: rgb(0, 0, 0);
     transition: 0.4s;
 }
-#logIn:hover {color: rgb(0, 0, 0);}
+#logIn:hover {text-decoration: underline;}
 .button
 {
     border: solid 1px black;
@@ -68,16 +117,67 @@ li
   pointer-events: none;
   transition: 0.3s;
 }
-/*------------------cover-------------------------*/
+.dot
+{
+  width: 6px;
+  height: 6px;
+  border-radius: 100%;
+  background-color: #26272b;
+  margin: 3px 0;
+}
+#three_dot
+{
+  padding: 10px;
+}
+#user_cont
+{
+  position: absolute;
+  top: 50px;
+  width: 100px;
+  height: max-content;
+  background-color: white;
+  display: none;
+  border: black solid 1px;
+}
+#nav_user:hover #user_cont
+{
+  color: #007bb6;
+  display: block;
+}
+.cont_voice
+{
+  width: 100%;
+  height: 20px;
+  border-bottom: solid black 1px;
+  margin: 0;
+  text-align: center;
+  transition: 0.6s;
+}
+.cont_voice:hover
+{
+  background-color:rgb(175, 175, 175);
+}
+#three_dot_cont
+{
+  position: absolute;
+  top: 55px;
+  right: 5px;
+  width: 100px;
+  height: max-content;
+  background-color: white;
+  display: none;
+  border: black solid 1px;
+}
+/*------------------index-------------------------*/
 #cover
 {
-    width: 100%;
-    height: 100%;
-    display: block;
-    overflow: hidden;
-    min-width: 1200px;
+  pointer-events: none;
+  width: 100%;
+  height: 100%;
+  display: block;
+  overflow: hidden;
+  min-width: 1200px;
 }
-/*-------------------body---------------------------*/
 .container
 {
     display: block;
@@ -86,27 +186,162 @@ li
     /*border: solid red 1px;*/
     display: flex;
 }
+.container_img
+{
+  display: block;
+  margin: auto;
+  height: 100%;
+  min-width: 559px;
+  transform: scale(1.6);
+}
+/*------------------login/register----------------------------*/
+.form
+{
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 48%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  width: max-content;
+  height: max-content;
+
+}
+/*------------------canzoni----------------------------*/
+.img_cover
+{
+  width: 100%;
+  filter: blur(5px);
+  transform: scale(1.2);
+  min-width:1110px;
+}
+#cover_canzoni
+{
+  width: 100%;
+  height: 50%;
+  overflow: hidden;
+  position: relative;
+}
+#cover_filter
+{
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  position: absolute;
+  background-color: rgba(255, 255, 255, 0.3);
+}
+.cointeiner_card
+{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin: auto;
+  display: block;
+  justify-content: center;
+  width: 1228px;
+  margin-top: 100px;
+}
+.card_artisti
+{
+  border-radius: 20px;
+  width: 200px;
+  height: 200px;
+  margin: 20px;
+  margin-bottom: 60px;
+  display: inline-flex;
+  position: relative;
+}
+.filter_card 
+{
+  background-color: rgba(0,0,0,0.3);
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  transition: 0.6s;
+  z-index: 41;
+}
+.filter_card + img
+{
+  width: 100%;
+  z-index: 40;
+  transition: 0.6s;
+}
+.card_artisti:hover .filter_card{opacity: 1;}
+.card_artisti:hover .filter_card + img{transform: scale(1.2);}
+.nome_artista
+{
+  position: absolute;
+  bottom: -60px;
+  width: max-content;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 20px;
+}
+/*------------------pag-artista----------------------------*/
+#cover_artista
+{
+  width: 100%;
+  height: 40%;
+  position: relative;
+  margin-bottom: 200px;
+}
+#img_artista
+{
+  transform: translateY(-50%);
+  margin-left: 100px;
+  border-radius: 100%;
+  width: 150px;
+  height: 150px; 
+  border: white solid 7px;
+}
+.album
+{
+  display: flex;
+  flex-direction: column;
+  width: 60%;
+  margin:auto;
+  position: relative;
+  margin-bottom: 100px;
+}
+.album_song
+{
+  display: flex;
+  border-bottom: black solid 1px;
+  padding: 5px;
+  box-sizing: border-box;
+  width: 100%;
+  margin: 0;
+  font-size: 25px;
+  align-items: center;
+  transition: 0.5s;
+}
+.single_song
+{
+  display: flex;
+  width: 60%;
+  margin:auto;
+  position: relative;
+  margin-bottom: 100px;
+  transition: 0.5s;
+}
+.album_song:hover,.single_song:hover{background-color: rgb(160, 160, 160);}
 /*------------------footer----------------------------*/
 .site-footer
 {
+  flex-shrink: 0;
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 200px;
     background-color:#26272b;
     padding:45px 0 20px;
     font-size:15px;
     line-height:24px;
     color:#737373;
-}
-.site-footer hr
-{
-  border-top-color:#bbb;
-  opacity:0.5
-}
-.site-footer hr.small
-{
-  margin:20px 0
+    margin-top: 500px;
 }
 .site-footer h6
 {
@@ -115,37 +350,6 @@ li
   text-transform:uppercase;
   margin-top:5px;
   letter-spacing:2px
-}
-.site-footer a
-{
-  color:#737373;
-}
-.site-footer a:hover
-{
-  color:#3366cc;
-  text-decoration:none;
-}
-.footer-links
-{
-  padding-left:0;
-  list-style:none
-}
-.footer-links li
-{
-  display:block
-}
-.footer-links a
-{
-  color:#737373
-}
-.footer-links a:active,.footer-links a:focus,.footer-links a:hover
-{
-  color:#3366cc;
-  text-decoration:none;
-}
-.footer-links.inline li
-{
-  display:inline-block
 }
 .site-footer .social-icons
 {
@@ -163,25 +367,7 @@ li
 }
 .copyright-text
 {
-  margin:0
-}
-@media (max-width:991px)
-{
-  .site-footer [class^=col-]
-  {
-    margin-bottom:30px
-  }
-}
-@media (max-width:767px)
-{
-  .site-footer
-  {
-    padding-bottom:0
-  }
-  .site-footer .copyright-text,.site-footer .social-icons
-  {
-    text-align:center
-  }
+  margin:0;
 }
 .social-icons
 {
@@ -193,14 +379,6 @@ li
 {
   display:inline-block;
   margin-bottom:4px
-}
-.social-icons li.title
-{
-  margin-right:15px;
-  text-transform:uppercase;
-  color:#96a2b2;
-  font-weight:700;
-  font-size:13px
 }
 .social-icons a{
   background-color:#eceeef;
@@ -244,13 +422,4 @@ li
 .social-icons a.dribbble:hover
 {
   background-color:#ea4c89
-}
-@media (max-width:767px)
-{
-  .social-icons li.title
-  {
-    display:block;
-    margin-right:0;
-    font-weight:600
-  }
 }
