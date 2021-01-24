@@ -48,3 +48,12 @@ document.getElementById("three_dot").onclick = ()=>{
     else
         ele.style.display = "block";
 };
+
+//swap star
+function swap_star(ele)
+{
+    if(ele.src.search("piena") !== -1)
+        ele.setAttribute("src","../assets/Img/preferiti/stella_vuota.png");
+    else
+        ele.setAttribute("src","../assets/Img/preferiti/stella_piena.png");
+}
