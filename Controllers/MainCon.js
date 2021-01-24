@@ -6,8 +6,8 @@ module.exports = (app) => {
     app.get('/', (req,res) =>{
         res.render('index');
     });
-    app.get('/canzoni', (req,res) =>{
-        res.render('canzoni');
+    app.get('/artisti', (req,res) =>{
+        res.render('artisti');
     });
     app.get('/login', (req,res) =>{
         res.render('login');
@@ -17,5 +17,11 @@ module.exports = (app) => {
     });
     app.get('/artista', (req,res) =>{
         res.render('artista');
+    });
+    app.get('/mia_musica', (req,res) =>{
+        res.render('yourMusic');
+    });
+    app.get('/preferiti', (req,res) =>{
+        res.render('preferiti');
     });
 }
