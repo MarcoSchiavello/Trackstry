@@ -15,11 +15,11 @@
         }
     </style>
 </head>
-<body>
+<body class="bg_log">
     <%- include('partials/nav') %>
-    <dir>
+    <div>
         <form action="/login" class="form" style="height:55%;padding: 40px;" method="POST">
-            <h1 style="margin-bottom: 100px;margin-top: 0;text-align:center;cursor:default;">Trackstry Sign Up</h1>
+            <img src="../assets/Img/Logo.png" class="img_log">
             <input type="text" name="username" required autocomplete="off" class="input_text" style="width: 320px;">
             <label for="username">Username</label>
             <input type="text" name="Mail" required autocomplete="off" class="input_text" style="margin-top: 50px;width: 320px;">
@@ -30,7 +30,7 @@
             <label for="password">Conferma password</label>
             <input type="submit"  style="margin: auto; margin-top: 100px;width: 220px;min-width: 100px;" class="button">
         </form>
-    </dir>
+    </div>
     <%- include('partials/footer') %>
     <script src="../assets/js/app.js" ></script>
 </body>
