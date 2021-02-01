@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="icon" href="../assets/Img/Logo.png">
+    <title>Profile</title>
+</head>
+<body>
+    <%- include("partials/log_nav") %>
+    <div id="page_container_profile" >
+        <div id="container_profile_data">
+            <div id="container_img_profile">
+                <img src="../assets/Img/9dcd0cf7ed5659114bdcddea44ffaab4.png" id="img_profile">
+                <div id="filter_img_profile"></div>
+            </div>
+            <div>
+                <span class="profile_data_label">username</span>
+                <h2 class="profile_data">naturald</h2>
+                <span class="profile_data_label">E-mail</span>
+                <h2 class="profile_data">dasdadads@dsadasd.com</h2>
+                <span class="profile_data_label">password</span>
+                <h2 class="profile_data">* * * * * * * * * * *</h2>
+            </div>
+        </div>
+    
+        <div id="container_change_profile">
+            <h1>Cambia dati</h1>
+            <form method="POST" action="" id="change_form">
+                <input type="text" class="input_text input_change_profile" name="email" required autocomplete="off">
+                <label for="email">nuova mail</label>
+                <input type="text" class="input_text input_change_profile" name="username" required autocomplete="off">
+                <label for="username">nuovo username</label>
+                <input type="text" class="input_text input_change_profile" name="pass" required autocomplete="off">
+                <label for="pass">nuova password</label>
+                <input type="text" class="input_text input_change_profile" name="rep_pass" required autocomplete="off">
+                <label for="rep_pass">comferma password</label><br>
+                <input type="submit" class="button" id="sub_change_profile">
+            </form>
+        </div>
+    </div>
+    <%- include("partials/footer") %> 
+    <script src="../assets/js/app.js"></script>
+</body>
+</html>

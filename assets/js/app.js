@@ -57,3 +57,16 @@ function swap_star(ele)
     else
         ele.setAttribute("src","../assets/Img/preferiti/stella_piena.png");
 }
+
+//aggiungi canzone
+function add_songAlbum()
+{
+    var album = document.getElementById('album_list');
+    var node = album.lastElementChild;
+    var copy = node.cloneNode(true);
+    album.appendChild(copy);
+    //incremento numero traccia
+    var ult_track = document.getElementsByClassName("n_track");
+    ult_track[ult_track.length-1].innerHTML = parseInt(ult_track[ult_track.length-1].innerHTML)+1;
+    console.log(ult_track.innerHTML);
+}

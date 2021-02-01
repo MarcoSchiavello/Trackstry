@@ -24,4 +24,10 @@ module.exports = (app) => {
     app.get('/preferiti', (req,res) =>{
         res.render('preferiti');
     });
+    app.get('/profilo', (req,res) =>{
+        res.render('profile');
+    });
+    app.get('/uploadAlbum', (req,res) =>{
+        res.render('upload_alb');
+    });
 }

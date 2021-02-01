@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../assets/Img/Logo.png">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <title>Trackstry Upload</title>
+</head>
+<body>
+    <%- include("partials/nav") %>
+    <div class="album" style="margin-top: 150px;">
+        <div id="header_album">
+            <div style="width: 138px;height: 128px;margin-right: 40px;" id="fake_upload">
+                <h3>
+                    Inserisci IMG
+                </h3>
+            </div>
+            <div class="container_input_text" >
+                <input name="title_album" type="text" class="input_text" required autocomplete="off">
+                <label for="title_album">Titolo album</label>
+            </div>
+        </div>
+        <hr style="width: 100%;margin: 0;border: black solid 1px;">
+        <ul style="padding: 0;margin: 0;list-style: none;" id="album_list">
+        <% for(var i=0;i<10;i++){ %> 
+            <li class="album_song" style="padding: 20px;">
+                <span class="n_track" ><%= i+1%></span>
+                <div class="container_input_text" >
+                    <input name="title_song" type="text" class="input_text" required autocomplete="off">
+                    <label for="title_song">Titolo canzone</label>
+                </div>
+                <img src="../assets/Img/upload_icon.png" class="upload_icon">
+                <span class="remove_song" style="margin-right: 20px;" ><hr class="remove_line"></span>
+            </li>
+        <% } %> 
+        </ul>
+        <button class="plus_cross" onclick="add_songAlbum()"> 
+            <span class="line1_cross"></span>
+            <span class="line1_cross line2_cross"></span>
+        </button>
+    </div>
+    <%- include('partials/footer') %>
+    <script src="../assets/js/app.js" ></script>
+</body>
+</html>
