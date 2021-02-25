@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../assets/Img/Logo.png">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <title>Trackstry Upload</title>
+</head>
+<body>
+    <%- include("partials/nav") %>
+    <div id="container_upload_song">
+        <div id="header_album">
+            <div style="width: 138px;height: 128px;margin-right: 40px;" id="fake_upload">
+                <h3>
+                    Inserisci IMG
+                </h3>
+            </div>
+            <div class="container_input_text" style="margin-left: 80px;">
+                <input name="title_song" type="text" class="input_text" required autocomplete="off">
+                <label for="title_song">Titolo canzone</label>
+            </div>
+            <img src="../assets/Img/upload_icon.png" id="img_upload_song">
+        </div>
+        <button class="button" id="sub_upload_song">Fatto</button>
+    </div>
+    <%- include('partials/footer') %>
+    <script src="../assets/js/app.js" ></script>
+</body>
+</html>

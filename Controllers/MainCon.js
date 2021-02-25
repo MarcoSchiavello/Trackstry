@@ -30,4 +30,7 @@ module.exports = (app) => {
     app.get('/uploadAlbum', (req,res) =>{
         res.render('upload_alb');
     });
+    app.get('/uploadSong', (req,res) =>{
+        res.render('upload_song');
+    });
 }

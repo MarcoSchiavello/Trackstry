@@ -1,5 +1,5 @@
 /*--------------------pre-settings---------------*/
-@import url('https://fonts.googleapis.com/css2?family=Quicksand&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Quicksand&family=Varela+Round&display=swap');
 html,body
 {
   font-family: 'Quicksand', sans-serif;
@@ -267,7 +267,7 @@ header
 }
 .bg_log
 {
-  background-image: linear-gradient(-45deg,rgb(104, 123, 209),rgb(53, 88, 184),rgb(5, 30, 83));
+  background-image: linear-gradient(135deg, #0015b2 1%, #4485fc 65%, #437cf5cf 80%);
 }
 #container_log
 {
@@ -683,6 +683,37 @@ header
   border-radius: 10px;
 }
 .line2_cross{transform: translate(-50%,-50%) rotate(90deg);}
+#sub_upload_album
+{
+  padding: 10px;
+  width: max-content;
+  height: max-content;
+  font-size: 25px;
+  margin: auto;
+  margin-top: 50px;
+}
+/*------------------upload_song----------------------------*/
+#container_upload_song
+{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+#img_upload_song
+{
+  width: 40px;
+  height: 40px;
+  margin: 10px;
+  margin-left: 160px;
+}
+#sub_upload_song
+{
+  font-size: 20px;
+  margin-top: 50px;
+}
 /*------------------footer----------------------------*/
 .site-footer
 {

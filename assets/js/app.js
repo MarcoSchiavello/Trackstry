@@ -70,3 +70,54 @@ function add_songAlbum()
     ult_track[ult_track.length-1].innerHTML = parseInt(ult_track[ult_track.length-1].innerHTML)+1;
     console.log(ult_track.innerHTML);
 }
+
+//rimuovi canzone lista 
+function remove_songAlbum(ele)
+{
+    if(!document.getElementsByClassName("n_track")[1])
+        return;
+    ele.parentElement.remove();
+
+    recount();
+}
+
+//ri assegna il numero della traccia
+function recount()
+{
+    var songs = document.getElementsByClassName("n_track");
+    for(var i = 0; i<songs.length;i++)
+    {
+        songs[i].innerHTML = i+1;
+    }
+}
+
+/*UTILE 
+document.getElementById("fake_file").onclick=function()
+{
+    document.getElementById("file").click();
+}
+$("#file").change(function() 
+{
+    document.getElementById("sele").style.display="none";
+    pre_img(this); 
+});
+
+function pre_img(input) 
+{
+    
+    if (input.files && input.files[0]) 
+    {
+       
+        
+        var reader = new FileReader();
+      
+        reader.onload = function(e) 
+        {
+          $('#pre_img').attr('src', e.target.result);
+        }
+        
+        reader.readAsDataURL(input.files[0]); // convert to base64 string
+    }
+  
+}
+*/
