@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="icon" href="../assets/Img/Logo.png">
+    <script defer src="../assets/js/all.js"></script>
+    <title>Player</title>
+</head>
+<body id="body_player" >
+    <a href="/"><i class="fas fa-arrow-left" id="back_arrow_player"></i></a>
+    <div id="container_player">
+        <img src="../assets/Img/9dcd0cf7ed5659114bdcddea44ffaab4.png" id="img_player">
+        <div style="margin-top: 30px;">
+            <div id="icon_row_player">
+                <i class="fas fa-angle-double-left"></i>
+                <i class="fas fa-download"></i>
+                <div id="button-play" onclick="start()" >
+                    <div id="play-icon" >
+                        <i class="fas fa-play"></i>
+                    </div>
+                    <div id="pause-icon" >
+                        <i class="fas fa-pause"></i>
+                    </div>
+            
+                </div>
+                <i class="fas fa-redo-alt"></i>
+                <i class="fas fa-angle-double-right"></i>
+            </div>
+            <audio id="player" ontimeupdate="updateTime()">
+                <source src="/prova.mp3" type="audio/mp3" >
+            </audio>
+            </button>
+            <input type="range" value="0" min="0" max="10000" id="duration"  > <br>
+            <input type="range" value="50" min="0" max="100" id="seek" onchange="chageAudio(this.value)" >
+        </div>
+    </div>
+    <!--<%- include("partials/nav") %> -->
+    <script src="../assets/js/app.js" ></script>
+</body>
+</html>
+

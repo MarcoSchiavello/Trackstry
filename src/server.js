@@ -1,11 +1,11 @@
 const Express = require('express');
-const MainCon = require('./Controllers/MainCon');
+const MainRouter = require('./Router/MainRouter');
 
 var app = Express();
 
 app.set('view engine', 'ejs');   
 app.use('/assets',Express.static("assets"));
 
-MainCon(app);
+MainRouter(app);
 
 app.listen(3000);

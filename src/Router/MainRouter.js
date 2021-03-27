@@ -1,11 +1,9 @@
-const BodyPar = require('body-parser');
-const Express = require('express');
+const MainCon = require('../Controllers/MainCon');
 
 module.exports = (app) => {
 
-    app.get('/', (req,res) =>{
-        res.render('index');
-    });
+    app.get('/',MainCon.root);
+    
     app.get('/artisti', (req,res) =>{
         res.render('artisti');
     });
@@ -32,5 +30,8 @@ module.exports = (app) => {
     });
     app.get('/uploadSong', (req,res) =>{
         res.render('upload_song');
+    });
+    app.get('/player', (req,res) =>{
+        res.render('player');
     });
 }

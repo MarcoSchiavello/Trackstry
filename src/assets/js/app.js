@@ -1,3 +1,4 @@
+"use strict";
 //------------------puntatore nav-bar---------------------
 movePointer(0);
 document.addEventListener('mousemove', e =>{
@@ -91,7 +92,41 @@ function recount()
     }
 }
 
+//player 
+var audio = document.getElementById("player");
+document.getElementById("duration").addEventListener('click',chageTime);
+audio.volume = 0.50;
 
+function start()
+{
+    audio.play();
+    document.getElementById("play-icon").style.display = "none";
+    document.getElementById("pause-icon").style.display = "block";
+    if(document.getElementById("play-icon").style.display == "block")
+        pause();
+}
+function pause()
+{
+    audio.pause();
+    document.getElementById("play-icon").style.display = "block";
+    document.getElementById("pause-icon").style.display = "none";
+} 
+function chageAudio(time)
+{
+    console.log(time);
+    audio.volume = time /100;
+}
+function chageTime()
+{
+    var time = document.getElementById("duration");
+    audio.currentTime = (time.value * audio.duration)/10000;
+}
+function updateTime()
+{
+    var durationBar = document.getElementById("duration");
+    durationBar.value = Math.floor((audio.currentTime * 10000 ) / audio.duration);
+    console.log(durationBar.value);
+}
 
 /*UTILE 
 document.getElementById("fake_file").onclick=function()
@@ -109,17 +144,35 @@ function pre_img(input)
     
     if (input.files && input.files[0]) 
     {
-       
+    
         
         var reader = new FileReader();
-      
+    
         reader.onload = function(e) 
         {
-          $('#pre_img').attr('src', e.target.result);
+        $('#pre_img').attr('src', e.target.result);
         }
         
         reader.readAsDataURL(input.files[0]); // convert to base64 string
     }
-  
+
 }
 */
+
+//slider
+function slideNext()
+{
+    const slider = document.getElementById("img_container_slider");
+    if(slider.childElementCount-1 == offset)
+    {
+        slider.style.transition = "unset";
+        slider.style.left = "0%";
+        offset = 0;
+    }
+    else
+    {
+        slider.style.transition = "2s ease";
+        slider.style.left = "-"+offset+"00%";
+    }
+    offset++;
+}
