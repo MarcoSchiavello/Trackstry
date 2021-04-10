@@ -4,6 +4,7 @@ const MainMod = require('../Model/MainMod');
 
 module.exports = {
     root: async (req,res) =>{
-        res.render('index');
+        req.session.name = "marco";
+        res.render('index',{sess : req.session});
     }
 };
