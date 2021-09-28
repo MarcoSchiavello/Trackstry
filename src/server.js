@@ -1,13 +1,11 @@
-const Express = require('express');
-const MainRouter = require('./Router/MainRouter');
-const Session = require('express-session');
+const express = require('express');
+const router = require('./Routers/router.js');
 
-var app = Express();
+var app = express();
 
 app.set('view engine', 'ejs');   
-app.use('/assets',Express.static("assets"));
-app.use(Session({secret: 'ssshhhhh',saveUninitialized: true,resave: true}));
+app.use('/assets',express.static("assets"));
 
-MainRouter(app);
+router(app);
 
 app.listen(3000);

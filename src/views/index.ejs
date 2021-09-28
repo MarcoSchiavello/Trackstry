@@ -14,12 +14,8 @@
     </style>
 </head>
 <body>
-    <% if(sess.name){ %> 
-    <%- include('partials/log_nav')%>
-    <% }else{ %> 
+
     <%- include('partials/nav')%>
-    <% } %> 
- 
     
     <div id="cover">
         <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);z-index: 98;">
@@ -108,7 +104,6 @@
         </div>
     </div>
     <%- include('partials/footer') %>
-    <script src="../assets/js/app.js" ></script>
     <script>
         var offset = 0;
         setInterval(slideNext,5000);

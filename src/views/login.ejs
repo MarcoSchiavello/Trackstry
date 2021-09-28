@@ -16,16 +16,41 @@
 <body class="bg_log">
     <%- include('partials/nav') %>
     <div id="container_log">
-        <form action="/login" class="form" style="height:55%;padding: 40px;" method="POST">
+        <form action="#" class="form" style="height:55%;padding: 40px;" method="POST">
             <img src="../assets/Img/Logo.png" class="img_log">
-            <input type="text" name="username" required autocomplete="off" class="input_text" style="width: 320px;">
-            <label for="username">Username</label>
-            <input type="text" name="password" required required autocomplete="off" class="input_text" style="margin-top: 100px;width: 320px;">
+            <input type="text" name="email" required autocomplete="off" class="input_text" style="width: 320px;">
+            <label for="username">E-mail</label>
+            <input type="password" name="password" required required autocomplete="off" class="input_text" style="margin-top: 100px;width: 320px;">
             <label for="password">Password</label>
             <input type="submit"  style="margin: auto; margin-top: 100px;width: 220px;min-width: 100px;" class="button">
         </form>
     </div>
     <%- include('partials/footer') %>
-    <script src="../assets/js/app.js" ></script>
+    <script>
+        document.querySelector(".form").addEventListener("submit", e =>{
+            let email = document.querySelector(".form > input[name='email']").value;
+            let password = document.querySelector(".form > input[name='password']").value;
+            let data = {
+                email: email,
+                password: password
+            };
+            event.preventDefault();
+            fetch("http://localhost:4000/v1/auth/login",{
+                method: 'POST',
+                mode: 'cors',
+                credentials: 'include',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(res => {
+                localStorage.setItem("loggedIn",true);
+                if(res.status === 200)
+                    location.href = "/";
+            })
+
+        });
+    </script>
 </body>
 </html>

@@ -1,54 +1,4 @@
 "use strict";
-//------------------puntatore nav-bar---------------------
-movePointer(0);
-document.addEventListener('mousemove', e =>{
-    var on_ele = document.elementFromPoint(e.pageX - window.pageXOffset, e.pageY - window.pageYOffset);
-    /*
-        window.pageYOffset dice di quanto ho "scrollato" avendo questo posso prendere la posizione assoluta del cursore e togliergli 
-        di quanto scrollato in modo da avere la posizione del mouse relativa alla mia finestra facendo credere che il mio cursore sia in alto nel documento
-        in modo da triggerare l'evento e al coltempo essere nella mia finestra come deve essere
-    */
-    if(on_ele == null)
-        return;
-    if( !on_ele.matches("ul") && !on_ele.matches("li")  && !on_ele.matches("a"))
-        movePointer(0);
-});
-function movePointer(voce)
-{
-    var lista = document.getElementsByTagName("ul")[0];
-    var voce = document.getElementsByTagName("li")[voce];
-    var selector = document.getElementById("selector");
-    selector.style.left= (voce.offsetLeft + (voce.offsetWidth/2)-(selector.offsetWidth/2) + "px");
-} 
-//-----------------------------------------------------------
-var nav = document.getElementById("header");
-if (document.documentElement.scrollTop >= 150) 
-{
-    header.style.background="white";
-    header.style.borderBottom="solid black 1px";
-}
-window.onscroll = function () 
-{
-    if (document.documentElement.scrollTop >= 150) 
-    {
-        header.style.background="white";
-        header.style.borderBottom="solid black 1px";
-    }
-    else 
-    {
-        header.style.background="transparent";
-        header.style.borderBottom="";
-    }
-};
-
-//drop menu three dot
-document.getElementById("three_dot").onclick = ()=>{
-    var ele = document.getElementById("three_dot_cont");
-    if(ele.style.display == "block")
-        ele.style.display = "none";
-    else
-        ele.style.display = "block";
-};
 
 //swap star
 function swap_star(ele)
@@ -92,40 +42,22 @@ function recount()
     }
 }
 
-//player 
-var audio = document.getElementById("player");
-document.getElementById("duration").addEventListener('click',chageTime);
-audio.volume = 0.50;
-
-function start()
+//slider
+function slideNext()
 {
-    audio.play();
-    document.getElementById("play-icon").style.display = "none";
-    document.getElementById("pause-icon").style.display = "block";
-    if(document.getElementById("play-icon").style.display == "block")
-        pause();
-}
-function pause()
-{
-    audio.pause();
-    document.getElementById("play-icon").style.display = "block";
-    document.getElementById("pause-icon").style.display = "none";
-} 
-function chageAudio(time)
-{
-    console.log(time);
-    audio.volume = time /100;
-}
-function chageTime()
-{
-    var time = document.getElementById("duration");
-    audio.currentTime = (time.value * audio.duration)/10000;
-}
-function updateTime()
-{
-    var durationBar = document.getElementById("duration");
-    durationBar.value = Math.floor((audio.currentTime * 10000 ) / audio.duration);
-    console.log(durationBar.value);
+    const slider = document.getElementById("img_container_slider");
+    if(slider.childElementCount-1 == offset)
+    {
+        slider.style.transition = "unset";
+        slider.style.left = "0%";
+        offset = 0;
+    }
+    else
+    {
+        slider.style.transition = "2s ease";
+        slider.style.left = "-"+offset+"00%";
+    }
+    offset++;
 }
 
 /*UTILE 
@@ -158,21 +90,3 @@ function pre_img(input)
 
 }
 */
-
-//slider
-function slideNext()
-{
-    const slider = document.getElementById("img_container_slider");
-    if(slider.childElementCount-1 == offset)
-    {
-        slider.style.transition = "unset";
-        slider.style.left = "0%";
-        offset = 0;
-    }
-    else
-    {
-        slider.style.transition = "2s ease";
-        slider.style.left = "-"+offset+"00%";
-    }
-    offset++;
-}

@@ -15,17 +15,29 @@
         <h1 style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);margin: 0;z-index: 31;font-size: 50px;">Artisti</h1>
     </div>
     <div class="cointeiner_card">
-        <% for(var i=0;i<100;i++){ %> 
-            <div class="card_artisti">
-                <div class="card_artisti" style="overflow: hidden;pointer-events: none;margin: 0;">
-                    <div class="filter_card"></div>
-                    <img src="../assets/Img/home/bg_home.jpg">
-                </div>
-                <h2 class="name_artista">nome_artista</h2>
+        <div class="card_artisti" style="display: none;">
+            <div class="card_img">
+                <div class="filter_card"></div>
+                <img src="../assets/Img/home/bg_home.jpg">
             </div>
-        <% } %> 
+            <h2 class="name_artista">nome_artista</h2>
+        </div>
     </div>
     <%- include("partials/footer") %> 
-    <script src="../assets/js/app.js" ></script>
+    <script>
+        fetch("http://localhost:4000/v1/artists",{method: 'GET',credentials: 'include',})
+        .then(res => res.json())
+        .then(res => {
+            const list = document.querySelector(".cointeiner_card");
+            res.forEach(ele => {
+                const clone = document.querySelector(".card_artisti").cloneNode(true);
+                clone.querySelector("img").src = "http://localhost:4000"+ele.artist_img;
+                clone.querySelector(".name_artista").innerHTML = ele.artist_name;
+
+                clone.removeAttribute("style");
+                list.appendChild(clone);
+            });
+        })
+    </script>
 </body>
 </html>

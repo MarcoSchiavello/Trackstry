@@ -1,2 +1,0 @@
-const Mysql = require('mysql');
-

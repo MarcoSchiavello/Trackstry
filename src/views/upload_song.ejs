@@ -11,20 +11,71 @@
     <%- include("partials/nav") %>
     <div id="container_upload_song">
         <div id="header_album">
-            <div style="width: 138px;height: 128px;margin-right: 40px;" id="fake_upload">
+            <div class="fake_upload">
+                <img src="" class="preview">
                 <h3>
                     Inserisci IMG
                 </h3>
             </div>
+            <input type="file" class="upload" accept="image/*">
+
             <div class="container_input_text" style="margin-left: 80px;">
                 <input name="title_song" type="text" class="input_text" required autocomplete="off">
                 <label for="title_song">Titolo canzone</label>
             </div>
-            <img src="../assets/Img/upload_icon.png" id="img_upload_song">
+
+            <div class="songUpload">
+                <img src="../assets/Img/upload_icon.png" class="fakeUploadSong">
+                <input type="file" class="uploadSong" accept="audio/*">
+                <h5 id="uploadSongName"></h5>
+            </div>
         </div>
+
         <button class="button" id="sub_upload_song">Crea</button>
     </div>
     <%- include('partials/footer') %>
-    <script src="../assets/js/app.js" ></script>
+    <script>
+        document.querySelector(".fake_upload").onclick = e => {
+            document.querySelector(".upload").click();
+        }
+        document.querySelector(".upload").onchange = e => {
+            const tmpfile = document.querySelector(".upload");
+            const [file] = tmpfile.files;
+            if(file) 
+            {
+                document.querySelector(".preview").src = URL.createObjectURL(file);
+                document.querySelector(".preview").style.display = "block";
+            }
+        }
+        document.querySelector(".fakeUploadSong").onclick = e => {
+            document.querySelector(".uploadSong").click();
+        }
+        document.querySelector(".uploadSong").onchange = e => {
+
+            let fileName = document.querySelector(".uploadSong").value;
+            fileName = fileName.split("/").length > fileName.split("\\").length ? fileName.split("/") : fileName.split("\\");
+            fileName = fileName[fileName.length-1];
+            document.querySelector("#uploadSongName").innerHTML = fileName;
+        }
+
+        document.querySelector("#sub_upload_song").onclick = e => {
+            e.preventDefault();
+            let body = new FormData();
+            body.append("songName",document.querySelector("input[name='title_song']").value);
+            let fileName = document.querySelector(".uploadSong").value;
+            fileName = fileName.split("/").length > fileName.split("\\").length ? fileName.split("/") : fileName.split("\\");
+            fileName = fileName[fileName.length-1];
+            body.append("song",document.querySelector(".uploadSong").files[0],"track."+fileName.split(".")[fileName.length-1]);
+            body.append("songImg",document.querySelector(".upload").files[0]);
+            body.append("songDuration",123);
+
+            fetch("http://localhost:4000/v1/auth/isLoggedIn",{method: 'GET',credentials: 'include'})
+            .then(res => res.json())
+            .then(artist => {
+                fetch("http://localhost:4000/v1/artists/"+artist.artId+"/songs",{method: 'POST',credentials: 'include',body:body})
+
+            })
+        }
+    </script>
 </body>
 </html>

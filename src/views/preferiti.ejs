@@ -25,33 +25,36 @@
         </div>
         <hr style="width: 100%;margin: 0;border: black solid 1px;">
         <ul style="padding: 0;margin: 0;list-style: none;" id="album_list">
-        <% for(var i=0;i<5;i++){ %> 
-            <li class="album_song">
-                <span>ciao</span> 
+            <li class="album_song" style="display: none;">
+                <span class="song_name">ciao</span> 
                 <span class="author" id="author_field">naturald</span>
                 <span class="song_title data_song_field">titolo_album</span> 
                 <span class="duration data_song_field">3:30</span>
             </li>
-        <% } %> 
-        <% for(var i=0;i<5;i++){ %> 
-            <li class="album_song">
-                <span>pppppp</span> 
-                <span class="author" id="author_field">ciao</span>
-                <span class="song_title data_song_field">titolsssssso_album</span> 
-                <span class="duration data_song_field">5:30</span>
-            </li>
-        <% } %> 
-        <% for(var i=0;i<15;i++){ %> 
-            <li class="album_song">
-                <span>ciasdadado</span> 
-                <span class="author" id="author_field">dsad</span>
-                <span class="song_title data_song_field">titdsadadolo_album</span> 
-                <span class="duration data_song_field">4:30</span>
-            </li>
-        <% } %> 
         </ul>
     </div>
     <%- include("partials/footer") %>
-    <script src="../assets/js/app.js"></script>
+    <script>
+        fetch("http://localhost:4000/v1/auth/isLoggedIn",{method: 'GET',credentials: 'include'})
+        .then(res => res.json())
+        .then(artist => {
+            fetch("http://localhost:4000/v1/artists/"+artist.artId+"/favorites",{method: 'GET',credentials: 'include',})
+            .then(res => res.json())
+            .then(favorites => {
+                const list = document.querySelector("#album_list");
+
+                favorites.forEach(ele => {
+                    const clone = document.querySelector(".album_song").cloneNode(true);
+                    clone.querySelector(".song_name").innerHTML = ele.song.name;
+                    clone.querySelector(".duration").innerHTML = ele.song.duration;
+                    clone.querySelector(".author").innerHTML = ele.artist.name;
+                    clone.querySelector(".song_title").innerHTML = ele.albumId;
+
+                    clone.removeAttribute("style");
+                    list.appendChild(clone);
+                });
+            });
+        });
+    </script>
 </body>
 </html>
