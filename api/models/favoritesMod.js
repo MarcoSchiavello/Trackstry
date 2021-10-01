@@ -3,11 +3,12 @@ const {mysql,conn} = require('../config/dataBase');
 module.exports = {
     getAllFavorites: artId =>{
         return new Promise((solved,reject) =>{
-            const query =  `SELECT favorite_id,song_id,song_name,song_img,song_duration,songs.fk_artist_id,artist_name,fk_album_id
-            FROM songs 
+            const query =  `SELECT favorite_id,song_id,song_name,song_img,song_duration,songs.fk_artist_id,artist_name,fk_album_id,album_name
+            FROM songs
             INNER JOIN favorites ON fk_song_id = song_id
             INNER JOIN artists ON songs.fk_artist_id = artist_id
-            WHERE favorites.fk_artist_id =  ?;`;
+            LEFT JOIN albums ON fk_album_id = album_id
+            WHERE favorites.fk_artist_id = ? OR fk_album_id = null;`;
 
             conn.query(query,[artId],(err,res) =>{
                 if(err === null && res !== undefined)
@@ -26,7 +27,11 @@ module.exports = {
                                 id: ele.fk_artist_id, 
                                 name: ele.artist_name
                             },
-                            albumId: ele.fk_album_id
+                            album: {
+                                id: ele.fk_album_id,
+                                name: ele.album_name,
+                            },
+
                         });
                     });
                     solved(favSongs);
@@ -41,10 +46,12 @@ module.exports = {
 
     getFavoriteById: (artId,favoriteId) =>{
         return new Promise((solved,reject) =>{
-            const query =  `SELECT favorite_id,song_id,song_name,song_img,song_duration,songs.fk_artist_id,fk_album_id 
-            FROM favorites 
-            INNER JOIN songs ON fk_song_id = song_id
-            WHERE favorites.fk_artist_id = ? && favorite_id = ?;`;
+            const query =  `SELECT favorite_id,song_id,song_name,song_img,song_duration,songs.fk_artist_id,artist_name,fk_album_id,album_name
+            FROM songs
+            INNER JOIN favorites ON fk_song_id = song_id
+            INNER JOIN artists ON songs.fk_artist_id = artist_id
+            LEFT JOIN albums ON fk_album_id = album_id
+            WHERE (favorites.fk_artist_id = ? || fk_album_id = null) &&  favorite_id = = ?;`;
             conn.query(query,[artId,favoriteId],(err,res) =>{
                 if(err === null && res !== undefined)
                 {
@@ -52,11 +59,21 @@ module.exports = {
                     {
                         const song = {
                             id: res[0].song_id,
-                            songName: res[0].song_name,
-                            songImg: res[0].song_img,
-                            songDuration: res[0].song_duration,
-                            artistId: res[0].fk_artist_id,
-                            albumId: res[0].fk_album_id
+                            song: {
+                                id: res[0].song_id,
+                                name: res[0].song_name,
+                                img: res[0].song_img,
+                                duration: res[0].song_duration,
+                            },
+                            artist: {
+                                id: res[0].fk_artist_id, 
+                                name: res[0].artist_name
+                            },
+                            album: {
+                                id: res[0].fk_album_id,
+                                name: res[0].album_name,
+                            },
+
                         };
                         solved(song);
                     }
