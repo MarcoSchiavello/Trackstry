@@ -64,4 +64,20 @@ module.exports = {
         });
     },
 
+    addAlbum: (req,res) =>{
+        const albumImgPath = req.files.albumImg[0].destination.replace(".","")+"/"+req.files.albumImg[0].filename;
+        albumsMod.addAlbum(req.user.artist_id,{
+            albumName: req.body.albumName,
+            albumImg: albumImgPath,
+        })
+        .then(newAlbumId => {
+            res.status(200)
+            .json({msg:"album caricato corretamente",albumId:newAlbumId});
+        })
+        .catch(err => {
+            res.status(500)
+            .json({error: "errore durante l'aggiunta" });
+        });
+    },
+
 };

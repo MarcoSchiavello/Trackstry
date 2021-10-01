@@ -4,11 +4,14 @@ audio.volume = 0.50;
 
 function start()
 {
-    audio.play();
-    document.getElementById("play-icon").style.display = "none";
-    document.getElementById("pause-icon").style.display = "block";
-    if(document.getElementById("play-icon").style.display == "block")
+    if(document.getElementById("pause-icon").style.display == "block")
         pause();
+    else
+    {
+        audio.play();
+        document.getElementById("play-icon").style.display = "none";
+        document.getElementById("pause-icon").style.display = "block";
+    }
 }
 function pause()
 {
@@ -18,7 +21,6 @@ function pause()
 } 
 function chageAudio(time)
 {
-    console.log(time);
     audio.volume = time /100;
 }
 function chageTime()
@@ -30,5 +32,11 @@ function updateTime()
 {
     var durationBar = document.getElementById("duration");
     durationBar.value = Math.floor((audio.currentTime * 10000 ) / audio.duration);
-    console.log(durationBar.value);
+}
+
+function fillFiled(songAlbumObj)
+{
+    document.querySelector("#player").src = "http://localhost:4000"+songAlbumObj.songAudio; 
+    document.querySelector(".songInfo > h1").innerHTML = songAlbumObj.songName;
+    document.querySelector(".songInfo > h5").innerHTML = songAlbumObj.artist.name;
 }

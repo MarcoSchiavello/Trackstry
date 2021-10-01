@@ -32,17 +32,20 @@ module.exports = {
     },
 
     addSong: (req,res) =>{
-        const songImgPath = req.files.songImg[0].destination.replace(".","")+"/"+req.files.songImg[0].filename;
+        let songImgPath = "/files/icons/songs/default/default.png";
+        if(req.files.songImg !== undefined)
+            songImgPath = req.files.songImg[0].destination.replace(".","")+"/"+req.files.songImg[0].filename;
         const songPath = req.files.song[0].destination.replace(".","")+"/"+req.files.song[0].filename;
         songsMod.addSong(req.user.artist_id,{
             songAudio: songPath,
             songImg: songImgPath,
             songDuration: Number(req.body.songDuration),
             songName: req.body.songName,
+            albumId: req.body.albumId
         })
-        .then(succ => {
+        .then(newSongId => {
             res.status(200)
-            .json({msg:"canzone aggiunta"});
+            .json({msg:"canzone aggiunta",songId: newSongId});
         })
         .catch(err =>{
             res.status(500)

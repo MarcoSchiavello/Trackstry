@@ -35,6 +35,11 @@
     </div>
     <%- include('partials/footer') %>
     <script>
+        const urlParams = new URLSearchParams(location.search);
+
+        if(urlParams.get("album") !== null)
+            document.querySelector(".fake_upload").style.display = "none";
+
         document.querySelector(".fake_upload").onclick = e => {
             document.querySelector(".upload").click();
         }
@@ -50,6 +55,7 @@
         document.querySelector(".fakeUploadSong").onclick = e => {
             document.querySelector(".uploadSong").click();
         }
+
         document.querySelector(".uploadSong").onchange = e => {
 
             let fileName = document.querySelector(".uploadSong").value;
@@ -65,16 +71,29 @@
             let fileName = document.querySelector(".uploadSong").value;
             fileName = fileName.split("/").length > fileName.split("\\").length ? fileName.split("/") : fileName.split("\\");
             fileName = fileName[fileName.length-1];
-            body.append("song",document.querySelector(".uploadSong").files[0],"track."+fileName.split(".")[fileName.length-1]);
+
+            body.append("song",document.querySelector(".uploadSong").files[0]);
             body.append("songImg",document.querySelector(".upload").files[0]);
-            body.append("songDuration",123);
+            getDuration(document.querySelector(".uploadSong"))
+            .then(songDuration => body.append("songDuration",Math.floor(songDuration)))
+            .then(() => {           
+                if(urlParams.get("album") !== null)
+                    body.append("albumId",urlParams.get("album"));
 
-            fetch("http://localhost:4000/v1/auth/isLoggedIn",{method: 'GET',credentials: 'include'})
-            .then(res => res.json())
-            .then(artist => {
-                fetch("http://localhost:4000/v1/artists/"+artist.artId+"/songs",{method: 'POST',credentials: 'include',body:body})
-
+                fetch("http://localhost:4000/v1/auth/isLoggedIn",{method: 'GET',credentials: 'include'})
+                .then(res => res.json())
+                .then(artist => {
+                    fetch("http://localhost:4000/v1/artists/"+artist.artId+"/songs",{method: 'POST',credentials: 'include',body:body})
+                    .then(newSongId => {
+                        location.href = "/mia_musica/"+artist.artId;
+                    })
+                    .catch(() => {
+                        //do something
+                    });
+                })
             })
+            
+
         }
     </script>
 </body>

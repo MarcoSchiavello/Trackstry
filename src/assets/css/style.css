@@ -65,7 +65,7 @@ h3
 }
 .shadow_text
 {
-  text-shadow:0 0 6px black;
+  text-shadow:0 0 10px white;
 }
 li
 {
@@ -108,6 +108,7 @@ header
   z-index: 999;
   font-size: 20px;
   font-weight: bold;
+  cursor: pointer;
 }
 #logIn
 {
@@ -166,6 +167,7 @@ header
   background-color: white;
   display: none;
   border: black solid 1px;
+  cursor: pointer;
 }
 #nav_user:hover #user_cont
 {
@@ -197,6 +199,7 @@ header
   background-color: white;
   display: none;
   border: black solid 1px;
+  cursor: pointer;
 }
 #drop_user_cont
 {
@@ -361,6 +364,7 @@ header
   width: 100%;
   filter: blur(5px);
   transform: scale(1.2);
+  margin-top: -15%;
   min-width:1110px;
 }
 #cover_canzoni
@@ -396,6 +400,7 @@ header
   margin-bottom: 60px;
   display: inline-flex;
   position: relative;
+  cursor: pointer;
 }
 .card_img
 {
@@ -478,6 +483,7 @@ header
   font-size: 25px;
   align-items: center;
   transition: 0.3s;
+  cursor: pointer;
 }
 .album_list
 {
@@ -493,6 +499,7 @@ header
   position: relative;
   margin-bottom: 100px;
   transition: 0.3s;
+  cursor: pointer;
 }
 .song_container
 {
@@ -565,7 +572,7 @@ header
   margin-right: 20px; 
   margin-bottom: 100px;
 }
-.add_songNalbum
+.addSong
 {
   font-family: "quicksand";
   display: flex;
@@ -591,7 +598,7 @@ header
   position: relative;
   top: -2px;
 }
-.add_songNalbum:hover
+.addSong:hover
 {
   color: rgb(55, 223, 55);
   background-color:white;
@@ -852,6 +859,37 @@ header
   display: none;
 }
 /*------------------player----------------------------*/
+.controlBars
+{
+  width: max-content;
+  margin: auto;
+}
+.volumeBar
+{
+  display: flex;
+}
+.volumeBar > svg
+{
+  margin-right: 10px;
+}
+.volumeBar > input
+{
+  width: 253px;
+}
+.songInfo > h1,.songInfo > h5
+{ 
+  margin: 0;
+  margin-bottom: 10px;
+}
+.songInfo
+{
+  width: max-content;
+  margin: 0 auto;
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 #back_arrow_player
 {
   transform: scale(2.4);
@@ -875,7 +913,8 @@ header
 #img_player
 {
   display: block;
-  width: 35vh;
+  width: 280px;
+  height: 280px;
   margin: auto;
   border-radius: 10px;
 }
@@ -892,8 +931,8 @@ header
   border: black;
   border-radius: 0;
 }
-input[type="range"]{
-  width: 40%;
+.range{
+  width: 280px;
   height: 5px;
   outline: none !important;
   appearance:none;

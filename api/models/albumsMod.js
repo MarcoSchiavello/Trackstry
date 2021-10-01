@@ -3,7 +3,7 @@ const {mysql,conn} = require('../config/dataBase');
 module.exports = {
     getAllAlbums: artId =>{
         return new Promise((solved,reject) =>{
-            const query = "SELECT * FROM albums WHERE fk_artist_id = ?;";
+            const query = "SELECT albums.*,artist_name FROM albums INNER JOIN artists ON fk_artist_id = artist_id WHERE fk_artist_id = ?;";
             conn.query(query,[artId],(err,res) =>{
                 if(err === null && res !== undefined)
                 {
@@ -13,7 +13,10 @@ module.exports = {
                             id: ele.album_id,
                             albumName: ele.album_name,
                             albumImg: ele.album_img,
-                            artistId: ele.fk_artist_id
+                            artist: {
+                                id: ele.fk_artist_id,
+                                name: ele.artist_name,
+                            }
                         });
                     });
                     solved(albums);
@@ -28,7 +31,7 @@ module.exports = {
 
     getAlbumById: (artId,albumId) =>{
         return new Promise((solved,reject) =>{
-            const query = "SELECT * FROM albums WHERE fk_artist_id = ? && album_id = ?;";
+            const query = "SELECT albums.*,artist_name FROM albums INNER JOIN artists ON fk_artist_id = artist_id WHERE fk_artist_id = ? && album_id = ?;";
             conn.query(query,[artId,albumId],(err,res) =>{
                 if(err === null && res !== undefined)
                 {
@@ -38,7 +41,10 @@ module.exports = {
                             id: res[0].album_id,
                             albumName: res[0].album_name,
                             albumImg: res[0].album_img,
-                            artistId: res[0].fk_artist_id
+                            artist: {
+                                id: res[0].fk_artist_id,
+                                name: res[0].artist_name,
+                            }
                         };
                         solved(album);
                     }
@@ -55,7 +61,7 @@ module.exports = {
 
     getAllSongsFromAlbum: (artId,albumId) =>{
         return new Promise((solved,reject) =>{
-            const query = "SELECT * FROM songs WHERE fk_artist_id = ? && fk_album_id = ?;";
+            const query = "SELECT songs.*,artist_name FROM songs INNER JOIN artists ON fk_artist_id = artist_id WHERE fk_artist_id = ? && fk_album_id = ?;";
             conn.query(query,[artId,albumId],(err,res) =>{
                 if(err === null && res !== undefined)
                 {
@@ -64,9 +70,13 @@ module.exports = {
                         songs.push({
                             id: ele.song_id,
                             songName: ele.song_name,
+                            songAudio: ele.song_audio,
                             songImg: ele.song_img,
                             songDuration: ele.song_duration,
-                            artistId: ele.fk_artist_id,
+                            artist: {
+                                id: ele.fk_artist_id,
+                                name: ele.artist_name,
+                            }
                         });
                     });
                     solved(songs);
@@ -79,4 +89,26 @@ module.exports = {
         });
     },
 
+    addAlbum: (artId,album) =>{
+        return new Promise((solved,reject) =>{
+            const query = "INSERT INTO albums VALUES(null,?,?,?);";
+            conn.query(query,[album.albumName,album.albumImg,artId],(err,res) =>{
+                console.log(err);
+                if(err === null && res !== undefined)
+                {
+                    conn.query("SELECT LAST_INSERT_ID();",(err,res) =>{
+                        if(err === null)
+                            solved(res[0]["LAST_INSERT_ID()"]);
+                        else
+                            reject(false);
+                    });  
+                }
+                else
+                {
+                   
+                    reject(false);
+                }
+            });
+        });
+    },
 }

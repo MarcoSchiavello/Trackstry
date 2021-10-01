@@ -33,6 +33,7 @@
                 const clone = document.querySelector(".card_artisti").cloneNode(true);
                 clone.querySelector("img").src = "http://localhost:4000"+ele.artist_img;
                 clone.querySelector(".name_artista").innerHTML = ele.artist_name;
+                clone.addEventListener("click",e => location.href = "/artista/"+ele.artist_id);
 
                 clone.removeAttribute("style");
                 list.appendChild(clone);

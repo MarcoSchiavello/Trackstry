@@ -3,7 +3,7 @@ const {mysql,conn} = require('../config/dataBase');
 module.exports = {
     getAllSongs: artId =>{
         return new Promise((solved,reject) =>{
-            const query = "SELECT * FROM songs WHERE fk_artist_id = ?;";
+            const query = "SELECT songs.*,artist_name FROM songs INNER JOIN artists ON fk_artist_id = artist_id WHERE fk_artist_id = ?;";
             conn.query(query,[artId],(err,res) =>{
                 if(err === null && res !== undefined)
                 {
@@ -16,8 +16,11 @@ module.exports = {
                             songName: ele.song_name,
                             songImg: ele.song_img,
                             songDuration: ele.song_duration,
-                            artistId: ele.fk_artist_id,
-                            albumId: ele.fk_album_id
+                            artist: {
+                                id: ele.fk_artist_id,
+                                name: ele.artist_name,
+                            },
+                            albumId: ele.fk_album_id,
                         });
                     });
                     solved(songs);
@@ -32,7 +35,7 @@ module.exports = {
 
     getSongById: (artId,songId) =>{
         return new Promise((solved,reject) =>{
-            const query = "SELECT * FROM songs WHERE fk_artist_id = ? && song_id = ?;";
+            const query = "SELECT songs.*,artist_name FROM songs INNER JOIN artists ON fk_artist_id = artist_id WHERE fk_artist_id = ? && song_id = ?;";
             conn.query(query,[artId,songId],(err,res) =>{
                 if(err === null && res !== undefined)
                 {
@@ -44,7 +47,10 @@ module.exports = {
                             songName: res[0].song_name,
                             songImg: res[0].song_img,
                             songDuration: res[0].song_duration,
-                            artistId: res[0].fk_artist_id,
+                            artist: {
+                                id: res[0].fk_artist_id,
+                                name: res[0].artist_name,
+                            },
                             albumId: res[0].fk_album_id
                         };
                         solved(song);
@@ -62,11 +68,22 @@ module.exports = {
 
     addSong: (artId,song) =>{
         return new Promise((solved,reject) =>{
-            const query = "INSERT INTO songs VALUES(null,?,?,?,?,?,null)";
-            conn.query(query,[song.songAudio,song.songName,song.songImg,song.songDuration,artId],(err,res) =>{
+            let albumId = null;
+            if(song.albumId !== undefined)
+                albumId = Number(song.albumId);
+                
+            const query = "INSERT INTO songs VALUES(null,?,?,?,?,?,?)";
+            conn.query(query,[song.songAudio,song.songName,song.songImg,song.songDuration,artId,albumId],(err,res) =>{
                 console.log(err);
                 if(err === null)
-                    solved(true);
+                {
+                    conn.query("SELECT LAST_INSERT_ID();",(err,res) =>{
+                        if(err === null)
+                            solved(res[0]["LAST_INSERT_ID()"]);
+                        else
+                            reject(false);
+                    });  
+                }
                 else
                     reject(false);
             });

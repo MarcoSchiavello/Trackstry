@@ -15,11 +15,25 @@ function add_songAlbum()
     var album = document.getElementById('album_list');
     var node = album.lastElementChild;
     var copy = node.cloneNode(true);
+    copy.querySelector(".uploadSong").value = "";
+    copy.querySelector("input[name='title_song']").value = "";
+    copy.querySelector("#uploadSongName").innerHTML = "";
     album.appendChild(copy);
     //incremento numero traccia
     var ult_track = document.getElementsByClassName("n_track");
     ult_track[ult_track.length-1].innerHTML = parseInt(ult_track[ult_track.length-1].innerHTML)+1;
-    console.log(ult_track.innerHTML);
+
+    copy.querySelector(".fakeUploadSong").onclick = e => {
+        copy.querySelector(".uploadSong").click();
+    }
+    
+    copy.querySelector(".uploadSong").onchange = e => {
+
+        let fileName = copy.querySelector(".uploadSong").value;
+        fileName = fileName.split("/").length > fileName.split("\\").length ? fileName.split("/") : fileName.split("\\");
+        fileName = fileName[fileName.length-1];
+        copy.querySelector("#uploadSongName").innerHTML = fileName;
+    }
 }
 
 //rimuovi canzone lista 
@@ -60,33 +74,22 @@ function slideNext()
     offset++;
 }
 
-/*UTILE 
-document.getElementById("fake_file").onclick=function()
+function getDuration(file)
 {
-    document.getElementById("file").click();
+    var audio = new Audio();
+    audio.src = URL.createObjectURL(file.files[0]);
+    return new Promise((solved,reject) => {
+        audio.addEventListener("canplaythrough",e =>{
+            solved(audio.duration);
+        })
+    })
 }
-$("#file").change(function() 
-{
-    document.getElementById("sele").style.display="none";
-    pre_img(this); 
-});
 
-function pre_img(input) 
+function getTimeFormat(time)
 {
-    
-    if (input.files && input.files[0]) 
-    {
-    
-        
-        var reader = new FileReader();
-    
-        reader.onload = function(e) 
-        {
-        $('#pre_img').attr('src', e.target.result);
-        }
-        
-        reader.readAsDataURL(input.files[0]); // convert to base64 string
-    }
-
+    let min = Math.floor(time / 60);
+    let sec = time - (min*60)
+    if(sec < 10)
+        sec = "0"+sec;
+    return min+":"+sec;
 }
-*/

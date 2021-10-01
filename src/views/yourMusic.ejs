@@ -11,63 +11,149 @@
     <%- include("partials/nav") %> 
     <div id="cover_artista">
         <div style="width: 100%;height: 100%;overflow: hidden;">
-            <img src="../assets/Img/home/bg_home.jpg" class="img_cover">
+            <img src="#" class="img_cover">
         </div>
         <div style="display: flex;">
-            <img src="../assets/Img/9dcd0cf7ed5659114bdcddea44ffaab4.png" id="img_artista">
-            <h1 id="name_artista" class="shadow_text">Naturald</h1>
+            <img src="#" id="img_artista">
+            <h1 id="name_artista" class="shadow_text"></h1>
         </div>
     </div>
     <div id="button_select">
-        <button class="add_songNalbum">
+        <button class="addSong" id="addAlbum">
             <span class="cross_add">+</span>
             <h3>aggiungi album</h3>
         </button>
-        <button class="add_songNalbum">
+        <button class="addSong" id="addSong">
             <span class="cross_add">+</span>
             <h3>aggiungi canzone</h3>
         </button>
     </div>
-    <div class="album">
-        <div style="display: flex;align-items: baseline; margin: 0;">
-            <img src="../assets/Img/9dcd0cf7ed5659114bdcddea44ffaab4.png" style="width: 138px;height: 128px;">
-            <h1 style="margin-left: 30px;">titolo_album</h1>
+
+    <div class="song_container">
+
+        <div class="album" style="display: none;">
+            <div class="album_header">
+                <img src="../assets/Img/9dcd0cf7ed5659114bdcddea44ffaab4.png" style="width: 138px;height: 128px;">
+                <h1 style="margin-left: 30px;">titolo_album</h1>
+            </div>
+            <div style="display: flex;">
+                <h3 class="n_track">N°</h3>
+                <h3 class="song_name">nome_canzone</h3>
+                <h3 class="author">autore</h3>
+                <h3 class="song_title">album</h3>
+                <h3 class="duration" style="right: 42px;">durata</h3>
+            </div>
+            <hr class="line">
+            <ul class="album_list">
+                <li class="album_song" style="display: none;">
+                    <span class="n_track" ></span>
+                    <span class="song_name">ciao</span> 
+                    <span class="author author_field">naturald</span>
+                    <span class="song_title data_song_field">titolo_album</span> 
+                    <span class="duration data_song_field">3:30</span>
+                    <span class="remove_song"><hr class="remove_line"></span>
+                </li>
+            </ul>
+
+            <button id="addSongToAlbum" class="addSong" style="width: max-content;" onclick="add_songAlbum()">
+                <span class="cross_add">+</span>
+                <h3>aggiungi canzone</h3>
+            </button>
+    
         </div>
-        <div style="display: flex;">
-            <h3 class="n_track">N°</h3>
-            <h3 class="song_name">nome_canzone</h3>
-            <h3 class="author">autore</h3>
-            <h3 class="song_title">album</h3>
-            <h3 class="duration" style="right: 42px;">durata</h3>
+
+        <div class="single_song" style="display: none;">
+            <img src="../assets/Img/9dcd0cf7ed5659114bdcddea44ffaab4.png"  style="width: 138px;height: 128px;">
+            <div style="display: flex;flex-direction: column;margin-left: 20px;">
+                <h1>titolo_canzone</h1>
+                <h3>autore</h3>
+            </div>
+            <h3 class="duration single_song_duration">3:30</h3>
+            <span class="remove_song"><hr class="remove_line"></span>
         </div>
-        <hr style="width: 100%;margin: 0;border: black solid 1px;">
-        <ul style="padding: 0;margin: 0;list-style: none;" id="album_list">
-        <% for(var i=0;i<10;i++){ %> 
-            <li class="album_song">
-                <span class="n_track" ><%= i+1%></span>
-                <span class="song_name">ciao</span> 
-                <span class="author author_field">naturald</span>
-                <span class="song_title data_song_field">titolo_album</span> 
-                <span class="duration data_song_field">3:30</span>
-                <span class="remove_song"><hr class="remove_line"></span>
-            </li>
-        <% } %> 
-        </ul>
-        <button class="add_songNalbum" style="width: max-content;" onclick="add_songAlbum()">
-            <span class="cross_add">+</span>
-            <h3>aggiungi canzone</h3>
-        </button>
-    </div>
-    <div class="single_song">
-        <img src="../assets/Img/9dcd0cf7ed5659114bdcddea44ffaab4.png"  style="width: 138px;height: 128px;">
-        <div style="display: flex;flex-direction: column;margin-left: 20px;">
-            <h1>titolo_canzone</h1>
-            <h3>autore</h3>
-        </div>
-        <h3 class="duration single_song_duration">3:30</h3>
-        <span class="remove_song"><hr class="remove_line"></span>
     </div>
 
     <%- include("partials/footer") %>
+    <script>
+        fetch("http://localhost:4000/v1/auth/isLoggedIn",{method: 'GET',credentials: 'include'})
+        .then(res => res.json())
+        .then(artistLoggedIn => {
+            document.querySelector("#addAlbum").addEventListener("click",e => location.href = "/uploadAlbum/"+artistLoggedIn.artId);
+            document.querySelector("#addSong").addEventListener("click",e => location.href = "/uploadSong/"+artistLoggedIn.artId);
+            
+            fetch("http://localhost:4000/v1/artists/"+artistLoggedIn.artId,{method: 'GET',credentials: 'include'})
+            .then(res => res.json())
+            .then(artist => { //load profile data
+                    document.querySelector(".img_cover").src = "http://localhost:4000"+artist.artist_banner;
+                    document.querySelector("#name_artista").innerHTML = artist.artist_name;
+                    document.querySelector("#img_artista").src = "http://localhost:4000"+artist.artist_img;
+                    return artist;
+            })
+            .then(artist => {
+                fetch("http://localhost:4000/v1/artists/"+artist.artist_id+"/songs",{method: 'GET',credentials: 'include'})
+                .then(res => res.json())
+                .then(res => { // load single song
+                    const sigleSong = document.querySelector(".single_song");
+                    res = res.filter(song => song.albumId === null);
+
+                    res.forEach(song => {
+                        const tmpSigleSong = sigleSong.cloneNode(true);
+                        tmpSigleSong.querySelector("h1").innerHTML = song.songName;
+                        tmpSigleSong.querySelector("h3").innerHTML = artist.artist_name;
+                        tmpSigleSong.querySelector("img").src = "http://localhost:4000"+song.songImg;
+                        tmpSigleSong.querySelector(".duration").innerHTML = getTimeFormat(song.songDuration);
+                        tmpSigleSong.querySelector(".remove_song").addEventListener("click",e => {
+                            //remove
+                        });
+                        tmpSigleSong.onclick = () => location.href = "/player?artist="+artist.artist_id+"&song="+song.id;
+
+
+                        tmpSigleSong.removeAttribute("style");
+                        document.querySelector(".song_container").appendChild(tmpSigleSong);
+                    });
+                })
+
+                // load albums
+                fetch("http://localhost:4000/v1/artists/"+artist.artist_id+"/albums",{method: 'GET',credentials: 'include'})
+                .then(res => res.json())
+                .then(res => {
+                    const albumEle = document.querySelector(".album");
+
+                    res.forEach(album => {
+                        const tmpAlbumEle = albumEle.cloneNode(true);
+                        tmpAlbumEle.querySelector(".album_header h1").innerHTML = album.albumName;
+                        tmpAlbumEle.querySelector(".album_header img").src = "http://localhost:4000"+album.albumImg;
+                        
+                        // load album's songs
+                        fetch("http://localhost:4000/v1/artists/"+artist.artist_id+"/albums/"+album.id+"/songs",{method: 'GET',credentials: 'include'})
+                        .then(res => res.json())
+                        .then(albumSongs => {
+                            const albumSongEle = tmpAlbumEle.querySelector(".album_song");
+                            const albumList = tmpAlbumEle.querySelector(".album_list");
+                            let i = 1;
+                            
+                            albumSongs.forEach(albumSong =>{
+                                const tmpAlbumSongEle = albumSongEle.cloneNode(true);
+                                tmpAlbumSongEle.querySelector(".n_track").innerHTML += (" "+i);
+                                tmpAlbumSongEle.querySelector(".song_name").innerHTML = albumSong.songName;
+                                tmpAlbumSongEle.querySelector(".author").innerHTML = artist.artist_name;
+                                tmpAlbumSongEle.querySelector(".song_title").innerHTML = album.albumName;
+                                tmpAlbumSongEle.querySelector(".duration").innerHTML = getTimeFormat(albumSong.songDuration);
+                                tmpAlbumSongEle.onclick = () => location.href = "/player?artist="+artist.artist_id+"&album="+album.id+"&song="+albumSong.id;
+
+                                tmpAlbumSongEle.removeAttribute("style");
+                                albumList.appendChild(tmpAlbumSongEle);
+                                i++;                                
+                            });
+
+                            tmpAlbumEle.querySelector("#addSongToAlbum").addEventListener("click",e => location.href = "/uploadSong/"+artistLoggedIn.artId+"?album="+album.id);
+                            tmpAlbumEle.removeAttribute("style");
+                            document.querySelector(".song_container").appendChild(tmpAlbumEle);
+                        })
+                    });
+                })
+            })
+        })
+    </script>
 </body>
 </html>

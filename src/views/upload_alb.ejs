@@ -12,11 +12,13 @@
     
     <div class="album" style="margin-top: 150px;">
         <div id="header_album">
-            <div style="width: 138px;height: 128px;margin-right: 40px;" id="fake_upload">
+            <div class="fake_upload">
+                <img src="" class="preview">
                 <h3>
                     Inserisci IMG
                 </h3>
             </div>
+            <input type="file" class="upload" accept="image/*">
             <div class="container_input_text" >
                 <input name="title_album" type="text" class="input_text" required autocomplete="off">
                 <label for="title_album">Titolo album</label>
@@ -24,24 +26,92 @@
         </div>
         <hr style="width: 100%;margin: 0;border: black solid 1px;">
         <ul style="padding: 0;margin: 0;list-style: none;" id="album_list">
-        <% for(var i=0;i<10;i++){ %> 
             <li class="album_song" style="padding: 20px;">
-                <span class="n_track" ><%= i+1%></span>
+                <span class="n_track" >1</span>
                 <div class="container_input_text" >
                     <input name="title_song" type="text" class="input_text" required autocomplete="off">
                     <label for="title_song">Titolo canzone</label>
                 </div>
-                <img src="../assets/Img/upload_icon.png" class="upload_icon">
+                <img src="../assets/Img/upload_icon.png" class="fakeUploadSong">
+                <input type="file" class="uploadSong" accept="audio/*">
+                <h5 id="uploadSongName"></h5>
                 <span class="remove_song" style="margin-right: 20px;" onclick="remove_songAlbum(this)" ><hr class="remove_line"></span>
             </li>
-        <% } %> 
         </ul>
+
         <button class="plus_cross" onclick="add_songAlbum()"> 
             <span class="line1_cross"></span>
             <span class="line1_cross line2_cross"></span>
         </button>
+
         <button class="button" id="sub_upload_album">Crea</button>
     </div>
     <%- include('partials/footer') %>
+    <script>
+         document.querySelector(".fake_upload").onclick = e => {
+            document.querySelector(".upload").click();
+        }
+        document.querySelector(".upload").onchange = e => {
+            const tmpfile = document.querySelector(".upload");
+            const [file] = tmpfile.files;
+            if(file) 
+            {
+                document.querySelector(".preview").src = URL.createObjectURL(file);
+                document.querySelector(".preview").style.display = "block";
+            }
+        }
+       
+        document.querySelector(".fakeUploadSong").onclick = e => {
+            document.querySelector(".uploadSong").click();
+        }
+        
+        document.querySelector(".uploadSong").onchange = e => {
+
+            let fileName = document.querySelector(".uploadSong").value;
+            fileName = fileName.split("/").length > fileName.split("\\").length ? fileName.split("/") : fileName.split("\\");
+            fileName = fileName[fileName.length-1];
+            document.querySelector("#uploadSongName").innerHTML = fileName;
+        }
+
+        document.querySelector("#sub_upload_album").onclick = e => {
+            e.preventDefault();
+
+            fetch("http://localhost:4000/v1/auth/isLoggedIn",{method: 'GET',credentials: 'include'})
+            .then(res => res.json())
+            .then(artist => {
+                let bodyAlbum = new FormData();
+                bodyAlbum.append("albumName",document.querySelector("input[name='title_album']").value);
+                bodyAlbum.append("albumImg",document.querySelector(".upload").files[0]);
+
+                fetch("http://localhost:4000/v1/artists/"+artist.artId+"/albums",{method: 'POST',credentials: 'include',body:bodyAlbum})
+                .then(albumId => albumId.json()) 
+                .then(newAlbumId => {
+                    const albumSongs = document.querySelector("#album_list").children;
+                    console.log(albumSongs);
+                    for(const ele of albumSongs) 
+                    {
+                        let bodySong = new FormData();
+                        bodySong.append("song",ele.querySelector(".uploadSong").files[0]);
+                        bodySong.append("songName",ele.querySelector("input[name='title_song']").value);
+                        bodySong.append("albumId",newAlbumId.albumId);
+                        getDuration(document.querySelector(".uploadSong"))
+                        .then(songDuration => bodySong.append("songDuration",Math.floor(songDuration)))
+                        .then(() => {  
+                            fetch("http://localhost:4000/v1/artists/"+artist.artId+"/songs",{method: 'POST',credentials: 'include',body:bodySong})
+                            .catch(() => {
+                                //do something
+                            });
+                        })
+
+                        
+                    };
+                })
+                .then(() => location.href = "/mia_musica/"+artist.artId)
+                .catch(() => {
+                    //do something
+                }); 
+            })
+        }
+    </script>
 </body>
 </html>

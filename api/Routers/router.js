@@ -45,6 +45,7 @@ module.exports = (app) => {
     app.get('/v1/artists/:artistId/albums/:albumId',albumsCon.getAlbum);
     app.get('/v1/artists/:artistId/albums/:albumId/songs',albumsCon.getSongsFromAlbum);
     app.get('/v1/artists/:artistId/albums/:albumId/songs/:songId',albumsCon.getSongFromAlbum);
+    app.post('/v1/artists/:artistId/albums',passport.authenticate("jwt",{ session: false }),upload.fields([{ name: 'albumImg', maxCount: 1 }]),albumsCon.addAlbum);
 
     //favorite
     app.get('/v1/artists/:artistId/favorites',passport.authenticate("jwt",{ session: false }),favoritesCon.getAllFavorites);

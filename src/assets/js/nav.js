@@ -13,12 +13,12 @@ fetch("http://localhost:4000/v1/auth/isLoggedIn",{method: "GET",credentials: 'in
             <ul style="display: flex;padding: 0;padding: 10px 20px;">
                 <li onmouseover="movePointer(0)" class="voice_nav" ><a href="/">Home</a></li>
                 <li onmouseover="movePointer(1)" class="voice_nav" ><a href="/artisti">artisti</a></li>
-                <li onmouseover="movePointer(2)" class="voice_nav" id="nav_user" >
+                <li class="voice_nav" id="nav_user" >
                     <span>Username</span>
                     <div id="user_cont">
                         <ul id="drop_user_cont">
-                            <li class="cont_voice"><a href="/artista">Musica</a></li>
-                            <li class="cont_voice" style="border-bottom: none;"><a href="/preferiti">Preferiti</a></li>
+                            <li class="cont_voice"><a href="/mia_musica/${artist.artId}">Musica</a></li>
+                            <li class="cont_voice" style="border-bottom: none;"><a href="/preferiti/${artist.artId}">Preferiti</a></li>
                         </ul>
                     </div>
                 </li>       
@@ -71,12 +71,17 @@ fetch("http://localhost:4000/v1/auth/isLoggedIn",{method: "GET",credentials: 'in
     }
 
     document.querySelector("#nav_user").addEventListener("mouseover",e => {
+        movePointer(2);
         document.querySelector("#user_cont").style.display = "block";
     });
+
+    document.querySelector("#nav_user").addEventListener("mouseover",e => movePointer(2));
     
     document.querySelector("#nav_user").addEventListener("mouseleave",e => {
         document.querySelector("#user_cont").style.display = "none";
     });
+
+    movePointer(0);
 })
 .catch(err =>{
     document.querySelector("#header").innerHTML = `
@@ -87,7 +92,7 @@ fetch("http://localhost:4000/v1/auth/isLoggedIn",{method: "GET",credentials: 'in
         <div style="display: flex; align-items: center;margin: 0 20px;">
             <ul style="display: flex;padding: 0;">
                 <li onmouseover="movePointer(0)" class="voice_nav" ><a href="/">Home</a></li>
-                <li onmouseover="movePointer(1)" class="voice_nav"><a href="">Canzoni</a></li>
+                <li onmouseover="movePointer(1)" class="voice_nav" ><a href="/artisti">artisti</a></li>
             </ul>
             <img src="../assets/Img/nav/selector.png" alt="selector" id="selector">
             <hr style="transform: rotate(90deg);width: 40px;border:solid black 1px;">
@@ -104,7 +109,6 @@ fetch("http://localhost:4000/v1/auth/isLoggedIn",{method: "GET",credentials: 'in
 })
 .finally(() => {
     //------------------puntatore nav-bar---------------------
-    movePointer(0);
     document.addEventListener('mousemove', e =>{
         var on_ele = document.elementFromPoint(e.pageX - window.pageXOffset, e.pageY - window.pageYOffset);
         /*
@@ -114,19 +118,19 @@ fetch("http://localhost:4000/v1/auth/isLoggedIn",{method: "GET",credentials: 'in
         */
         if(on_ele == null)
             return;
-        if( !on_ele.matches("ul") && !on_ele.matches("li")  && !on_ele.matches("a"))
+        if( !on_ele.matches("ul") && !on_ele.matches("li")  && !on_ele.matches("a") && !on_ele.matches("span"))
             movePointer(0);
     });
 
-    var nav = document.getElementById("header");
+    var header = document.getElementById("header");
     if (document.documentElement.scrollTop >= 150) 
     {
         header.style.background="white";
         header.style.borderBottom="solid black 1px";
     }
-    window.onscroll = function () 
-    {
-        if (document.documentElement.scrollTop >= 150) 
+
+    window.onscroll = () => {
+        if (document.documentElement.scrollTop >= 10) 
         {
             header.style.background="white";
             header.style.borderBottom="solid black 1px";
