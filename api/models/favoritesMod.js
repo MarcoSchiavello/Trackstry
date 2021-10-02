@@ -3,7 +3,7 @@ const {mysql,conn} = require('../config/dataBase');
 module.exports = {
     getAllFavorites: artId =>{
         return new Promise((solved,reject) =>{
-            const query =  `SELECT favorite_id,song_id,song_name,song_img,song_duration,songs.fk_artist_id,artist_name,fk_album_id,album_name
+            const query = `SELECT favorite_id,song_id,song_name,song_img,song_duration,songs.fk_artist_id,artist_name,fk_album_id,album_name
             FROM songs
             INNER JOIN favorites ON fk_song_id = song_id
             INNER JOIN artists ON songs.fk_artist_id = artist_id
@@ -46,7 +46,7 @@ module.exports = {
 
     getFavoriteById: (artId,favoriteId) =>{
         return new Promise((solved,reject) =>{
-            const query =  `SELECT favorite_id,song_id,song_name,song_img,song_duration,songs.fk_artist_id,artist_name,fk_album_id,album_name
+            const query = `SELECT favorite_id,song_id,song_name,song_img,song_duration,songs.fk_artist_id,artist_name,fk_album_id,album_name
             FROM songs
             INNER JOIN favorites ON fk_song_id = song_id
             INNER JOIN artists ON songs.fk_artist_id = artist_id
@@ -87,4 +87,60 @@ module.exports = {
             });
         });
     },
+
+    addFavorite: (artId,songId) =>{
+        return new Promise((solved,reject) =>{
+            const query = `INSERT INTO favorites VALUES(null,?,?)`;
+            conn.query(query,[Number(artId),Number(songId)],(err,res) =>{
+                if(err === null && res !== undefined)
+                {
+                    conn.query("SELECT LAST_INSERT_ID();",(err,res) =>{
+                        if(err === null)
+                            solved(res[0]["LAST_INSERT_ID()"]);
+                        else
+                            reject(false);
+                    });  
+                }
+                else
+                {
+                    reject(false);
+                }
+            });
+        });
+    },
+
+    remFavorite: (artId,favoriteId) =>{
+        return new Promise((solved,reject) =>{
+            const query = `DELETE FROM favorites WHERE fk_artist_id = ? && favorite_id = ?;`;
+            conn.query(query,[Number(artId),Number(favoriteId)],(err,res) =>{
+                if(err === null && res !== undefined)
+                {
+                    solved(true);
+                }
+                else
+                {
+                    reject(false);
+                }
+            });
+        });
+    },
+
+    alreadyExistFav: (artId,songId) =>{
+        return new Promise((solved,reject) =>{
+            const query = `SELECT fk_artist_id FROM favorites WHERE fk_artist_id = ? && fk_song_id = ?`;
+            conn.query(query,[Number(artId),Number(songId)],(err,res) =>{
+                if(err === null && res !== undefined)
+                {
+                    if(res.length !== 0)
+                        solved(true);
+                    else
+                        reject(false);
+                }
+                else
+                {
+                    reject(-1);
+                }
+            });
+        });
+    }, 
 }

@@ -93,7 +93,6 @@ module.exports = {
         return new Promise((solved,reject) =>{
             const query = "INSERT INTO albums VALUES(null,?,?,?);";
             conn.query(query,[album.albumName,album.albumImg,artId],(err,res) =>{
-                console.log(err);
                 if(err === null && res !== undefined)
                 {
                     conn.query("SELECT LAST_INSERT_ID();",(err,res) =>{
@@ -105,7 +104,6 @@ module.exports = {
                 }
                 else
                 {
-                   
                     reject(false);
                 }
             });

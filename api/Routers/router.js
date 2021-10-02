@@ -50,6 +50,8 @@ module.exports = (app) => {
     //favorite
     app.get('/v1/artists/:artistId/favorites',passport.authenticate("jwt",{ session: false }),favoritesCon.getAllFavorites);
     app.get('/v1/artists/:artistId/favorites/:favoriteId',passport.authenticate("jwt",{ session: false }),favoritesCon.getFavorite);
+    app.post('/v1/artists/:artistId/favorites',passport.authenticate("jwt",{ session: false }),favoritesCon.addFavorite);
+    app.delete('/v1/artists/:artistId/favorites/:favoriteId',passport.authenticate("jwt",{ session: false }),favoritesCon.remFavorite);
 
     
 }

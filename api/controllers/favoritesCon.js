@@ -31,4 +31,41 @@ module.exports = {
                 .json({error: "favorite song not found" });
         });
     },
+
+    addFavorite: (req,res) =>{
+        favoritesMod.alreadyExistFav(req.params.artistId,req.body.songId)
+        .then(succ =>{//if there is even one entry it means that this is duped
+            res.status(409)
+            .json({error: "favorite already exist" });
+        })
+        .catch(noEntry => {//else if there is no entry it proceeds to insert 
+            if(noEntry === -1)
+                res.status(500)
+                .json({error: "internal error" });
+            else
+            {
+                favoritesMod.addFavorite(req.params.artistId,req.body.songId)
+                .then(newFavorite => {
+                    res.status(200)
+                    .json({msg:"favorite was added successfully"});
+                })
+                .catch(err => {
+                    res.status(500)
+                    .json({error: "internal error" });
+                });
+            }
+        });
+    },
+
+    remFavorite: (req,res) =>{
+        favoritesMod.remFavorite(req.params.artistId,req.params.favoriteId)
+        .then(newFavorite => {
+            res.status(200)
+            .json({msg:"favorite was removed successfully"});
+        })
+        .catch(err => {
+            res.status(500)
+            .json({error: "internal error" });
+        });
+    },
 };
