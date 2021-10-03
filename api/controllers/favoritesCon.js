@@ -17,7 +17,7 @@ module.exports = {
     },
 
     getFavorite: (req,res) =>{
-        favoritesMod.getFavoriteById(req.params.artistId,req.params.favoriteId)
+        favoritesMod.getFavoriteById(req.params.artistId,req.params.songId)
         .then(favorite => {
             res.status(200)
             .json(favorite);
@@ -58,7 +58,7 @@ module.exports = {
     },
 
     remFavorite: (req,res) =>{
-        favoritesMod.remFavorite(req.params.artistId,req.params.favoriteId)
+        favoritesMod.remFavorite(req.params.artistId,req.params.songId)
         .then(newFavorite => {
             res.status(200)
             .json({msg:"favorite was removed successfully"});

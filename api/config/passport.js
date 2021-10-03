@@ -12,9 +12,15 @@ const cookieExtractor = req => {
 
 passport.use(new JwtStrategy({
     jwtFromRequest: cookieExtractor,
-    secretOrKey: process.env.JWT_SECRET
-}, function(jwt_payload, done) {
-    user.getUserById(jwt_payload.userId)
+    secretOrKey: process.env.JWT_SECRET,
+    passReqToCallback: true
+},
+(req,jwt_payload, done) => {
+    /*if(Number(jwt_payload.userId) !== Number(req.params.artistId) && req.url.search("isLoggedIn") === -1) //TODO: fix
+    {
+        return done("Unauthorized", user);
+    }*/
+    user.getUserById(jwt_payload.userId,true)
     .then(user =>{
         return done(null, user);
     })

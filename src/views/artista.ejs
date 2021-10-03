@@ -83,15 +83,48 @@
                     tmpSigleSong.querySelector("h3").innerHTML = artist.artist_name;
                     tmpSigleSong.querySelector("img").src = "http://localhost:4000"+song.songImg;
                     tmpSigleSong.querySelector(".duration").innerHTML = getTimeFormat(song.songDuration);
-                    tmpSigleSong.querySelector(".fav_star").addEventListener("click",e => {
-                        //add favorite
+                    fetch("http://localhost:4000/v1/auth/isloggedIn",{method: 'GET',credentials: 'include'})
+                    .then(artistId => artistId.json())
+                    .then(artistLoggedIn => {
                         const element = tmpSigleSong.querySelector(".fav_star");
-                        if(element.src.search("piena") !== -1)
-                            element.setAttribute("src","../assets/Img/preferiti/stella_vuota.png");
-                        else
-                            element.setAttribute("src","../assets/Img/preferiti/stella_piena.png");
+                        fetch("http://localhost:4000/v1/artists/"+artistLoggedIn.artId+"/favorites/"+song.id,{method: 'GET',credentials: 'include'})
+                        .then(res => res.json())
+                        .then(favorite => {
+                            if(favorite.error !== undefined)// if it find an error it means that the song is not in the favorite
+                                element.setAttribute("src","../assets/Img/preferiti/stella_vuota.png");
+                            else
+                                element.setAttribute("src","../assets/Img/preferiti/stella_piena.png");
+                        })
+                        tmpSigleSong.querySelector(".fav_star").addEventListener("click",e => {
+                                if(element.src.search("piena") !== -1)
+                                {
+                                    fetch("http://localhost:4000/v1/artists/"+artistLoggedIn.artId+"/favorites/"+song.id,{
+                                        method: 'DELETE',
+                                        credentials: 'include',
+                                    })
+                                    .then(succ =>{
+                                        element.setAttribute("src","../assets/Img/preferiti/stella_vuota.png");
+                                    })
+                                }
+                                else
+                                {
+                                    fetch("http://localhost:4000/v1/artists/"+artistLoggedIn.artId+"/favorites",{
+                                        method: 'POST',
+                                        credentials: 'include',
+                                        headers:{'Content-Type': 'application/json'},
+                                        body:JSON.stringify({songId: song.id})
+                                    })
+                                    .then(succ =>{
+                                        element.setAttribute("src","../assets/Img/preferiti/stella_piena.png");
+                                    })
+                                }
+                        })       
                     });
-                    tmpSigleSong.onclick = () => location.href = "/player?artist="+artist.artist_id+"&song="+song.id;
+
+                    tmpSigleSong.onclick = e => {
+                        if(e.target.className.search("fav_star") === -1)
+                            location.href = "/player?artist="+artist.artist_id+"&song="+song.id;
+                    };
 
 
                     tmpSigleSong.removeAttribute("style");
@@ -125,8 +158,49 @@
                             tmpAlbumSongEle.querySelector(".author").innerHTML = artist.artist_name;
                             tmpAlbumSongEle.querySelector(".song_title").innerHTML = album.albumName;
                             tmpAlbumSongEle.querySelector(".duration").innerHTML = getTimeFormat(albumSong.songDuration);
-                            tmpAlbumSongEle.onclick = () => location.href = "/player?artist="+artist.artist_id+"&album="+album.id+"&song="+albumSong.id;
+                            fetch("http://localhost:4000/v1/auth/isloggedIn",{method: 'GET',credentials: 'include'})
+                            .then(artistId => artistId.json())
+                            .then(artistLoggedIn => {
+                                const element = tmpAlbumSongEle.querySelector(".fav_star");
+                                fetch("http://localhost:4000/v1/artists/"+artistLoggedIn.artId+"/favorites/"+albumSong.id,{method: 'GET',credentials: 'include'})
+                                .then(res => res.json())
+                                .then(favorite => {
+                                    if(favorite.error !== undefined)// if it find an error it means that the song is not in the favorite
+                                        element.setAttribute("src","../assets/Img/preferiti/stella_vuota.png");
+                                    else
+                                        element.setAttribute("src","../assets/Img/preferiti/stella_piena.png");
+                                })
+                                tmpAlbumSongEle.querySelector(".fav_star").addEventListener("click",e => {
+                                    if(element.src.search("piena") !== -1)
+                                    {
+                                        fetch("http://localhost:4000/v1/artists/"+artistLoggedIn.artId+"/favorites/"+albumSong.id,{
+                                            method: 'DELETE',
+                                            credentials: 'include',
+                                        })
+                                        .then(succ =>{
+                                            element.setAttribute("src","../assets/Img/preferiti/stella_vuota.png");
+                                        })
+                                    }
+                                    else
+                                    {
+                                        fetch("http://localhost:4000/v1/artists/"+artistLoggedIn.artId+"/favorites",{
+                                            method: 'POST',
+                                            credentials: 'include',
+                                            headers:{'Content-Type': 'application/json'},
+                                            body:JSON.stringify({songId: albumSong.id})
+                                        })
+                                        .then(succ =>{
+                                            element.setAttribute("src","../assets/Img/preferiti/stella_piena.png");
+                                        })
+                                    }
+                                })       
+                            });
 
+                            tmpAlbumSongEle.onclick = e => {
+                                if(e.target.className.search("fav_star") === -1)
+                                    location.href = "/player?artist="+artist.artist_id+"&album="+album.id+"&song="+albumSong.id;
+                            };
+                            
                             tmpAlbumSongEle.removeAttribute("style");
                             albumList.appendChild(tmpAlbumSongEle);
                             i++;                                

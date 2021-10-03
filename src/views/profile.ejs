@@ -8,23 +8,31 @@
     <title>Profile</title>
 </head>
 <body>
-    <%- include("partials/log_nav") %>
+    <%- include("partials/nav") %>
     <div id="page_container_profile" >
         <div id="container_profile_data">
-            <div id="container_img_profile">
-                <img src="../assets/Img/9dcd0cf7ed5659114bdcddea44ffaab4.png" id="img_profile">
-                <div id="filter_img_profile"></div>
+            <div class="container_img_profile">
+                <img src="#" id="img_profile">
+                <div class="filter_img_profile">cambia img</div>
             </div>
-            <div>
-                <span class="profile_data_label">username</span>
-                <h2 class="profile_data">naturald</h2>
+            <div id="profile_info">
+                <span class="profile_data_label">Username</span>
+                <h2 class="profile_data" id="username"></h2>
                 <span class="profile_data_label">E-mail</span>
-                <h2 class="profile_data">dasdadads@dsadasd.com</h2>
-                <span class="profile_data_label">password</span>
+                <h2 class="profile_data" id="email"></h2>
+                <span class="profile_data_label">Password</span>
                 <h2 class="profile_data">* * * * * * * * * * *</h2>
             </div>
         </div>
     
+        <div class="changeBanner">
+            <h1>Banner</h1>
+            <div class="cointeinerBannerImg">
+                <img src="../assets/Img/9dcd0cf7ed5659114bdcddea44ffaab4.png" class="imgBanner">
+                <div class="filter_img_profile">cambia banner</div>
+            </div>
+        </div>
+
         <div id="container_change_profile">
             <h1>Cambia dati</h1>
             <form method="POST" action="" id="change_form">
@@ -34,12 +42,22 @@
                 <label for="username">nuovo username</label>
                 <input type="text" class="input_text input_change_profile" name="pass" required autocomplete="off">
                 <label for="pass">nuova password</label>
-                <input type="text" class="input_text input_change_profile" name="rep_pass" required autocomplete="off">
-                <label for="rep_pass">comferma password</label><br>
-                <input type="submit" class="button" id="sub_change_profile">
+                <input type="submit" value="Cambia" class="button" id="sub_change_profile">
             </form>
         </div>
     </div>
     <%- include("partials/footer") %> 
+    <script>
+        fetch("http://localhost:4000/v1/auth/isLoggedIn",{method: 'GET',credentials: 'include'})
+        .then(res => res.json())
+        .then(artist => {
+            document.querySelector("#username").innerHTML = artist.artist.artist_name;
+            document.querySelector("#email").innerHTML = artist.artist.artist_email;
+            document.querySelector("#img_profile").src = "http://localhost:4000"+artist.artist.artist_img;
+            document.querySelector(".imgBanner").src = "http://localhost:4000"+artist.artist.artist_banner;
+
+            
+        })
+    </script>
 </body>
 </html>

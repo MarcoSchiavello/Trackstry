@@ -45,11 +45,23 @@ module.exports = {
         })
         .then(newSongId => {
             res.status(200)
-            .json({msg:"canzone aggiunta",songId: newSongId});
+            .json({msg:"song was added successfully",songId: newSongId});
         })
         .catch(err =>{
             res.status(500)
-            .json({error:"errore durante l'aggiunta"});
+            .json({error:"error while adding the new song"});
+        })
+    },
+
+    remSong: (req,res) =>{
+        songsMod.remSong(req.user.artist_id,req.params.songId)
+        .then(succ => {
+            res.status(200)
+            .json({msg:"song was removed successfully"});
+        })
+        .catch(err =>{
+            res.status(500)
+            .json({error:"error while removing the new song"});
         })
     },
 };

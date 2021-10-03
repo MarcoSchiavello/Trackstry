@@ -8,9 +8,9 @@ module.exports = {
             INNER JOIN favorites ON fk_song_id = song_id
             INNER JOIN artists ON songs.fk_artist_id = artist_id
             LEFT JOIN albums ON fk_album_id = album_id
-            WHERE favorites.fk_artist_id = ? OR fk_album_id = null;`;
+            WHERE favorites.fk_artist_id = ?;`;
 
-            conn.query(query,[artId],(err,res) =>{
+            conn.query(query,[Number(artId)],(err,res) =>{
                 if(err === null && res !== undefined)
                 {
                     const favSongs = [];
@@ -44,15 +44,15 @@ module.exports = {
         });
     },
 
-    getFavoriteById: (artId,favoriteId) =>{
+    getFavoriteById: (artId,songId) =>{
         return new Promise((solved,reject) =>{
             const query = `SELECT favorite_id,song_id,song_name,song_img,song_duration,songs.fk_artist_id,artist_name,fk_album_id,album_name
             FROM songs
             INNER JOIN favorites ON fk_song_id = song_id
             INNER JOIN artists ON songs.fk_artist_id = artist_id
             LEFT JOIN albums ON fk_album_id = album_id
-            WHERE (favorites.fk_artist_id = ? || fk_album_id = null) &&  favorite_id = = ?;`;
-            conn.query(query,[artId,favoriteId],(err,res) =>{
+            WHERE favorites.fk_artist_id = ? && fk_song_id = ?;`;
+            conn.query(query,[Number(artId),Number(songId)],(err,res) =>{
                 if(err === null && res !== undefined)
                 {
                     if(res.length > 0)
@@ -92,6 +92,7 @@ module.exports = {
         return new Promise((solved,reject) =>{
             const query = `INSERT INTO favorites VALUES(null,?,?)`;
             conn.query(query,[Number(artId),Number(songId)],(err,res) =>{
+                console.log(err);
                 if(err === null && res !== undefined)
                 {
                     conn.query("SELECT LAST_INSERT_ID();",(err,res) =>{
@@ -109,10 +110,10 @@ module.exports = {
         });
     },
 
-    remFavorite: (artId,favoriteId) =>{
+    remFavorite: (artId,songId) =>{
         return new Promise((solved,reject) =>{
-            const query = `DELETE FROM favorites WHERE fk_artist_id = ? && favorite_id = ?;`;
-            conn.query(query,[Number(artId),Number(favoriteId)],(err,res) =>{
+            const query = `DELETE FROM favorites WHERE fk_artist_id = ? && fk_song_id = ?;`;
+            conn.query(query,[Number(artId),Number(songId)],(err,res) =>{
                 if(err === null && res !== undefined)
                 {
                     solved(true);

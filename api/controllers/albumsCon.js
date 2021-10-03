@@ -72,12 +72,23 @@ module.exports = {
         })
         .then(newAlbumId => {
             res.status(200)
-            .json({msg:"album caricato corretamente",albumId:newAlbumId});
+            .json({msg:"album was created successfully",albumId:newAlbumId});
         })
         .catch(err => {
             res.status(500)
-            .json({error: "errore durante l'aggiunta" });
+            .json({error: "error while creating the album" });
         });
     },
 
+    remAlbum: (req,res) =>{
+        albumsMod.remAlbum(req.params.artistId,req.params.albumId)
+        .then(succ => {
+            res.status(200)
+            .json({msg:"album was removed successfully"});
+        })
+        .catch(err => {
+            res.status(500)
+            .json({error: "error while removing the album" });
+        });
+    },
 };

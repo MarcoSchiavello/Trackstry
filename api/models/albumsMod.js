@@ -109,4 +109,27 @@ module.exports = {
             });
         });
     },
+
+    remAlbum:  (artId,albumId) =>{
+        return new Promise((solved,reject) =>{
+            const query = "DELETE FROM songs WHERE fk_album_id = ?;";
+            conn.query(query,[Number(albumId)],(err,res) =>{
+                console.log(err);
+                if(err === null && res !== undefined)
+                {
+                    const query = "DELETE FROM albums WHERE fk_artist_id = ? && album_id = ?;";
+                    conn.query(query,[Number(artId),Number(albumId)],(err,res) =>{
+                        if(err === null)
+                            solved(true);
+                        else
+                            reject(false);
+                    });  
+                }
+                else
+                {
+                    reject(false);
+                }
+            });
+        });
+    },
 }

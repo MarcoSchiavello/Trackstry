@@ -38,7 +38,7 @@ fetch("http://localhost:4000/v1/auth/isLoggedIn",{method: "GET",credentials: 'in
                 </span>
                 <div id="three_dot_cont" style="width: 150px;">
                     <ul style="display: flex;padding: 0;flex-direction: column;margin: 0;">
-                        <li class="cont_voice"><a href="">Modifica profilo</a></li>
+                        <li class="cont_voice"><a href="/profilo/${artist.artId}">Modifica profilo</a></li>
                         <li class="cont_voice" style="border-bottom: none;"><a id="logout">Logout</a></li>
                     </ul>
                 </div>

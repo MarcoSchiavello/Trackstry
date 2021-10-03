@@ -217,7 +217,8 @@ header
 }
 #img_user_nav
 {
-  width: 45px;
+  width: 48px;
+  height: 48px;
   border-radius: 25px;
   margin-right: 20px;
 }
@@ -603,7 +604,18 @@ header
   color: rgb(55, 223, 55);
   background-color:white;
 }
-.remove_song
+.removeSong
+{
+  width: 22px;
+  height: 22px;
+  border-radius: 100%;
+  border:rgb(255, 75, 75)solid 2px;
+  background-color:transparent;
+  position: absolute;
+  right: 0;
+  cursor: default;
+}
+.removeAlbum
 {
   width: 22px;
   height: 22px;
@@ -625,8 +637,8 @@ header
   border:rgb(255, 75, 75)solid 1px;
   transition: 0.2s;
 }
-.remove_song:hover .remove_line{border-color:white;}
-.remove_song:hover{background-color:rgb(255, 75, 75);}
+.removeAlbum:hover .remove_line,.removeSong:hover .remove_line{border-color:white;}
+.removeSong:hover,.removeAlbum:hover{background-color:rgb(255, 75, 75);}
 .single_song .remove_song
 {
   top: 50%;
@@ -655,8 +667,9 @@ header
 {
   width: 100%;
   height: 100%;
+  transition: 0.5s;
 }
-#container_img_profile
+.container_img_profile
 {
   width: 150px;
   height: 150px;
@@ -664,7 +677,7 @@ header
   border-radius: 100%;
   overflow: hidden;
 }
-#filter_img_profile
+.filter_img_profile
 {
   position: absolute;
   top: 0;
@@ -674,10 +687,19 @@ header
   background-color: rgba(0, 0, 0, 0.5);
   opacity: 0;
   transition: 0.4s;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  cursor: pointer;
 }
-#container_img_profile:hover #filter_img_profile
+.container_img_profile:hover .filter_img_profile
 {
   opacity: 1;
+}
+.container_img_profile:hover #img_profile
+{
+  transform: scale(1.2);
 }
 #container_profile_data
 {
@@ -686,7 +708,7 @@ header
   width: 70vh;
   justify-content: space-evenly;
   margin: auto;
-  margin-bottom: 150px;
+  margin-bottom: 50px;
   box-shadow: 10px 10px 40px -25px;
   padding: 10px;
   border-radius: 50px;
@@ -736,6 +758,35 @@ header
 {
   display: flex;
   flex-direction: column;
+}
+.cointeinerBannerImg
+{
+  overflow: hidden;
+  position: relative;
+  border-radius: 50px;
+}
+.cointeinerBannerImg:hover .filter_img_profile
+{
+  opacity: 1;
+}
+.cointeinerBannerImg:hover .imgBanner 
+{
+  transform: scale(1.15);
+}
+.changeBanner
+{
+  margin: 0 auto;
+  margin-bottom: 50px;
+  position: relative;
+  width: 551px;
+  min-height: max-content;
+  max-height: 390px;
+}
+.imgBanner
+{
+  width: 100%;
+  transition: 0.5s;
+  transform: scale(1.05);
 }
 /*------------------uploadAlbum----------------------------*/
 #fake_upload

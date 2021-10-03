@@ -73,8 +73,10 @@
                 document.querySelector(".songInfo > h5").innerHTML = song.artist.name;
 
                 document.querySelector("#player").addEventListener("ended",e => {
+                    pause();
                     if(repeatMode !== 0)
                         document.querySelector("#player").currentTime = 0;
+                    start();
                 });
             })
         }

@@ -35,6 +35,7 @@
             <div class="album_header">
                 <img src="../assets/Img/9dcd0cf7ed5659114bdcddea44ffaab4.png" style="width: 138px;height: 128px;">
                 <h1 style="margin-left: 30px;">titolo_album</h1>
+                <span class="removeAlbum"><hr class="remove_line"></span>
             </div>
             <div style="display: flex;">
                 <h3 class="n_track">N°</h3>
@@ -51,7 +52,7 @@
                     <span class="author author_field">naturald</span>
                     <span class="song_title data_song_field">titolo_album</span> 
                     <span class="duration data_song_field">3:30</span>
-                    <span class="remove_song"><hr class="remove_line"></span>
+                    <span class="removeSong"><hr class="remove_line"></span>
                 </li>
             </ul>
 
@@ -69,7 +70,7 @@
                 <h3>autore</h3>
             </div>
             <h3 class="duration single_song_duration">3:30</h3>
-            <span class="remove_song"><hr class="remove_line"></span>
+            <span class="removeSong"><hr class="remove_line"></span>
         </div>
     </div>
 
@@ -102,11 +103,18 @@
                         tmpSigleSong.querySelector("h3").innerHTML = artist.artist_name;
                         tmpSigleSong.querySelector("img").src = "http://localhost:4000"+song.songImg;
                         tmpSigleSong.querySelector(".duration").innerHTML = getTimeFormat(song.songDuration);
-                        tmpSigleSong.querySelector(".remove_song").addEventListener("click",e => {
-                            //remove
-                        });
-                        tmpSigleSong.onclick = () => location.href = "/player?artist="+artist.artist_id+"&song="+song.id;
+                        tmpSigleSong.onclick = e => {
+                            if(e.target.className !== "removeSong")
+                                location.href = "/player?artist="+artist.artist_id+"&song="+song.id
+                        };
 
+                        tmpSigleSong.querySelector(".removeSong").addEventListener("click",e => {
+                            fetch("http://localhost:4000/v1/artists/"+artist.artist_id+"/songs/"+song.id,{method: 'DELETE',credentials: 'include'})
+                            .then(succ => {
+                                const ele = e.target.parentElement.parentElement;
+                                ele.removeChild(ele);
+                            })
+                        });
 
                         tmpSigleSong.removeAttribute("style");
                         document.querySelector(".song_container").appendChild(tmpSigleSong);
@@ -124,6 +132,14 @@
                         tmpAlbumEle.querySelector(".album_header h1").innerHTML = album.albumName;
                         tmpAlbumEle.querySelector(".album_header img").src = "http://localhost:4000"+album.albumImg;
                         
+                        tmpAlbumEle.querySelector(".removeAlbum").addEventListener("click",e => {
+                            fetch("http://localhost:4000/v1/artists/"+artist.artist_id+"/albums/"+album.id,{method: 'DELETE',credentials: 'include'})
+                            .then(succ => {
+                                const ele = e.target.parentElement.parentElement;
+                                ele.parentElement.removeChild(ele);
+                            })
+                        });
+
                         // load album's songs
                         fetch("http://localhost:4000/v1/artists/"+artist.artist_id+"/albums/"+album.id+"/songs",{method: 'GET',credentials: 'include'})
                         .then(res => res.json())
@@ -139,8 +155,18 @@
                                 tmpAlbumSongEle.querySelector(".author").innerHTML = artist.artist_name;
                                 tmpAlbumSongEle.querySelector(".song_title").innerHTML = album.albumName;
                                 tmpAlbumSongEle.querySelector(".duration").innerHTML = getTimeFormat(albumSong.songDuration);
-                                tmpAlbumSongEle.onclick = () => location.href = "/player?artist="+artist.artist_id+"&album="+album.id+"&song="+albumSong.id;
+                                tmpAlbumSongEle.onclick = e => {
+                                    if(e.target.className !== "removeSong")
+                                        location.href = "/player?artist="+artist.artist_id+"&song="+albumSong.id
+                                };
 
+                                tmpAlbumSongEle.querySelector(".removeSong").addEventListener("click",e => {
+                                    fetch("http://localhost:4000/v1/artists/"+artist.artist_id+"/songs/"+albumSong.id,{method: 'DELETE',credentials: 'include'})
+                                    .then(succ => {
+                                        const ele = e.target.parentElement;
+                                        ele.parentElement.removeChild(ele);
+                                    })
+                                });
                                 tmpAlbumSongEle.removeAttribute("style");
                                 albumList.appendChild(tmpAlbumSongEle);
                                 i++;                                
