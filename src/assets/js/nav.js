@@ -1,11 +1,12 @@
 
 fetch("http://localhost:4000/v1/auth/isLoggedIn",{method: "GET",credentials: 'include'})
 .then(res => {
+    if(res.status > 399)
+        throw new Error(res.status);
     return res.json(); 
 })
 .then(artist => {
     document.querySelector("#header").innerHTML = `
-    <header id="header_log">
         <a href="/">
             <img src="../assets/Img/Logo.png" alt="icon" id="logo">
         </a>
@@ -17,8 +18,8 @@ fetch("http://localhost:4000/v1/auth/isLoggedIn",{method: "GET",credentials: 'in
                     <span>Username</span>
                     <div id="user_cont">
                         <ul id="drop_user_cont">
-                            <li class="cont_voice"><a href="/mia_musica/${artist.artId}">Musica</a></li>
-                            <li class="cont_voice" style="border-bottom: none;"><a href="/preferiti/${artist.artId}">Preferiti</a></li>
+                            <li class="cont_voice"><a href="/mia_musica/${artist.id}">Musica</a></li>
+                            <li class="cont_voice" style="border-bottom: none;"><a href="/preferiti/${artist.id}">Preferiti</a></li>
                         </ul>
                     </div>
                 </li>       
@@ -27,7 +28,7 @@ fetch("http://localhost:4000/v1/auth/isLoggedIn",{method: "GET",credentials: 'in
             <img src="../assets/Img/nav/selector.png" alt="selector" id="selector">
             <hr class="splitbar_nav">
             <div style="display: flex;align-items: center;">
-                <img src="../../assets/Img/Logo.png" id="img_user_nav">
+                <img src="#" id="img_user_nav">
                 <div id="welcome_user">
                     Ciao, <br>
                 </div>
@@ -38,21 +39,16 @@ fetch("http://localhost:4000/v1/auth/isLoggedIn",{method: "GET",credentials: 'in
                 </span>
                 <div id="three_dot_cont" style="width: 150px;">
                     <ul style="display: flex;padding: 0;flex-direction: column;margin: 0;">
-                        <li class="cont_voice"><a href="/profilo/${artist.artId}">Modifica profilo</a></li>
+                        <li class="cont_voice"><a href="/profilo/${artist.id}">Modifica profilo</a></li>
                         <li class="cont_voice" style="border-bottom: none;"><a id="logout">Logout</a></li>
                     </ul>
                 </div>
             </div>
-        </div>
-    </header>`;
-
-    fetch("http://localhost:4000/v1/artists/"+artist.artId,{method: "GET",credentials: 'include'})
-    .then(res => res.json())
-    .then(res => {
-        document.querySelector("#img_user_nav").src = "http://localhost:4000"+res.artist_img;
-        document.querySelector("#welcome_user").innerHTML += res.artist_name;
-        document.querySelector("#nav_user > span").innerHTML = res.artist_name;
-    });
+        </div>`;
+        
+    document.querySelector("#img_user_nav").src = "http://localhost:4000"+artist.img;
+    document.querySelector("#welcome_user").innerHTML += artist.name;
+    document.querySelector("#nav_user > span").innerHTML = artist.name;
 
     //drop menu three dot
     document.querySelector("#three_dot").onclick = ()=>{
@@ -80,12 +76,9 @@ fetch("http://localhost:4000/v1/auth/isLoggedIn",{method: "GET",credentials: 'in
     document.querySelector("#nav_user").addEventListener("mouseleave",e => {
         document.querySelector("#user_cont").style.display = "none";
     });
-
-    movePointer(0);
 })
 .catch(err =>{
     document.querySelector("#header").innerHTML = `
-    <header id="header">
         <a href="/">
             <img src="../assets/Img/Logo.png" alt="icon" id="logo">
         </a>
@@ -104,10 +97,10 @@ fetch("http://localhost:4000/v1/auth/isLoggedIn",{method: "GET",credentials: 'in
                     Sign up
                 </button>
             </div>
-        </div>
-    </header>`;
+        </div>`;
 })
 .finally(() => {
+    movePointer(0);
     //------------------puntatore nav-bar---------------------
     document.addEventListener('mousemove', e =>{
         var on_ele = document.elementFromPoint(e.pageX - window.pageXOffset, e.pageY - window.pageYOffset);
@@ -141,12 +134,11 @@ fetch("http://localhost:4000/v1/auth/isLoggedIn",{method: "GET",credentials: 'in
             header.style.borderBottom="";
         }
     };
+ 
 });
-
 
 function movePointer(voce)
 {
-    var lista = document.getElementsByTagName("ul")[0];
     var voce = document.getElementsByTagName("li")[voce];
     var selector = document.getElementById("selector");
     selector.style.left= (voce.offsetLeft + (voce.offsetWidth/2)-(selector.offsetWidth/2) + "px");

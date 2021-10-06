@@ -23,9 +23,9 @@ const storageSong = multer.diskStorage({
     destination: (req,file,cb) =>{
         const mimetype = file.mimetype.split("/")[0];
         if(mimetype === "audio")
-            cb(null,"./files/songs/"+req.user.artist_id);
+            cb(null,"./files/songs/"+req.user.id);
         else if(mimetype === "image")
-            cb(null,"./files/icons/songs/"+req.user.artist_id);
+            cb(null,"./files/icons/songs/"+req.user.id);
     },
     filename: (req,file,cb) =>{
         const crypto = require("crypto");
@@ -38,7 +38,7 @@ const storageSong = multer.diskStorage({
 
 const storageAlbum = multer.diskStorage({
     destination: (req,file,cb) =>{
-        cb(null,"./files/icons/albums/"+req.user.artist_id);
+        cb(null,"./files/icons/albums/"+req.user.id);
     },
     filename: (req,file,cb) =>{
         const crypto = require("crypto");

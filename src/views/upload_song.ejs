@@ -74,6 +74,7 @@
 
             body.append("song",document.querySelector(".uploadSong").files[0]);
             body.append("songImg",document.querySelector(".upload").files[0]);
+            
             getDuration(document.querySelector(".uploadSong"))
             .then(songDuration => body.append("songDuration",Math.floor(songDuration)))
             .then(() => {           
@@ -83,9 +84,9 @@
                 fetch("http://localhost:4000/v1/auth/isLoggedIn",{method: 'GET',credentials: 'include'})
                 .then(res => res.json())
                 .then(artist => {
-                    fetch("http://localhost:4000/v1/artists/"+artist.artId+"/songs",{method: 'POST',credentials: 'include',body:body})
+                    fetch("http://localhost:4000/v1/artists/"+artist.id+"/songs",{method: 'POST',credentials: 'include',body:body})
                     .then(newSongId => {
-                        location.href = "/mia_musica/"+artist.artId;
+                        location.href = "/mia_musica/"+artist.id;
                     })
                     .catch(() => {
                         //do something

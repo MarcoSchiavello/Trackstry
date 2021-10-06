@@ -27,13 +27,13 @@
     <script>
         fetch("http://localhost:4000/v1/artists",{method: 'GET',credentials: 'include',})
         .then(res => res.json())
-        .then(res => {
+        .then(artists => {
             const list = document.querySelector(".cointeiner_card");
-            res.forEach(ele => {
+            artists.forEach(artist => {
                 const clone = document.querySelector(".card_artisti").cloneNode(true);
-                clone.querySelector("img").src = "http://localhost:4000"+ele.artist_img;
-                clone.querySelector(".name_artista").innerHTML = ele.artist_name;
-                clone.addEventListener("click",e => location.href = "/artista/"+ele.artist_id);
+                clone.querySelector("img").src = "http://localhost:4000"+artist.img;
+                clone.querySelector(".name_artista").innerHTML = artist.name;
+                clone.addEventListener("click",e => location.href = "/artista/"+artist.id);
 
                 clone.removeAttribute("style");
                 list.appendChild(clone);

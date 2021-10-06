@@ -38,8 +38,8 @@
         fetch("http://localhost:4000/v1/auth/isLoggedIn",{method: 'GET',credentials: 'include'})
         .then(res => res.json())
         .then(artist => {
-            document.querySelector(".img_cover").src = "http://localhost:4000"+artist.artist.artist_banner;
-            fetch("http://localhost:4000/v1/artists/"+artist.artId+"/favorites",{method: 'GET',credentials: 'include',})
+            document.querySelector(".img_cover").src = "http://localhost:4000"+artist.banner;
+            fetch("http://localhost:4000/v1/artists/"+artist.id+"/favorites",{method: 'GET',credentials: 'include',})
             .then(res => res.json())
             .then(favorites => {
                 const list = document.querySelector("#album_list");

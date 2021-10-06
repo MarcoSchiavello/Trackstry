@@ -32,11 +32,12 @@ module.exports = {
     },
 
     addSong: (req,res) =>{
+        
         let songImgPath = "/files/icons/songs/default/default.png";
         if(req.files.songImg !== undefined)
             songImgPath = req.files.songImg[0].destination.replace(".","")+"/"+req.files.songImg[0].filename;
         const songPath = req.files.song[0].destination.replace(".","")+"/"+req.files.song[0].filename;
-        songsMod.addSong(req.user.artist_id,{
+        songsMod.addSong(req.user.id,{
             songAudio: songPath,
             songImg: songImgPath,
             songDuration: Number(req.body.songDuration),
@@ -54,7 +55,7 @@ module.exports = {
     },
 
     remSong: (req,res) =>{
-        songsMod.remSong(req.user.artist_id,req.params.songId)
+        songsMod.remSong(req.user.id,req.params.songId)
         .then(succ => {
             res.status(200)
             .json({msg:"song was removed successfully"});

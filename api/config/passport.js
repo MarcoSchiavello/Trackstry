@@ -16,10 +16,12 @@ passport.use(new JwtStrategy({
     passReqToCallback: true
 },
 (req,jwt_payload, done) => {
-    /*if(Number(jwt_payload.userId) !== Number(req.params.artistId) && req.url.search("isLoggedIn") === -1) //TODO: fix
+    console.log(jwt_payload.userId,req.params.artistId,req.url,req.url.search("isLoggedIn"));
+    if(Number(jwt_payload.userId) !== Number(req.params.artistId) && req.url.search("isLoggedIn") === -1)
     {
         return done("Unauthorized", user);
-    }*/
+    }
+    
     user.getUserById(jwt_payload.userId,true)
     .then(user =>{
         return done(null, user);

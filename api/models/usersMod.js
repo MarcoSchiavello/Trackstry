@@ -79,10 +79,20 @@ module.exports = {
                     if(res.length === 0)
                         reject(false);
                     else
-                    {
+                    { 
+                        const user = {
+                            id: res[0].artist_id,
+                            name: res[0].artist_name,
+                            img: res[0].artist_img,
+                            banner: res[0].artist_banner,
+                            email: res[0].artist_email 
+                        };
+
                         if(tokenUserId === false)
-                            delete res[0].artist_email;
-                        solved(res[0]);
+                        {
+                            delete user.email;
+                        }
+                        solved(user);
                     }
                 } 
                 else 
@@ -97,7 +107,17 @@ module.exports = {
             conn.query(query,(err,res) => {
                 if(err === null && res !== undefined)
                 {
-                    solved(res);
+                    const users = [];
+                    
+                    res.forEach(ele => {
+                        users.push({
+                            id: ele.artist_id,
+                            name: ele.artist_name,
+                            img: ele.artist_img,
+                            banner: ele.artist_banner
+                        });
+                    });
+                    solved(users);
                 } 
                 else 
                     reject(-1);
@@ -124,6 +144,9 @@ module.exports = {
             if(newUserData.email !== undefined)
                 fieldToSet = fieldToSet+"artist_email = "+conn.escape(newUserData.email);
         
+            if(fieldToSet[fieldToSet.length-1] === ",")
+                fieldToSet = fieldToSet.substr(0,fieldToSet.length-1);
+                
             const query = "UPDATE artists SET "+fieldToSet+" WHERE artist_id = ?;";
             conn.query(query,[Number(artId)],(err,res) => {
                 if(err === null && res !== undefined)

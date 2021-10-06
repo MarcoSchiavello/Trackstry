@@ -11,8 +11,8 @@ module.exports = {
                     res.forEach(ele => {
                         albums.push({
                             id: ele.album_id,
-                            albumName: ele.album_name,
-                            albumImg: ele.album_img,
+                            name: ele.album_name,
+                            img: ele.album_img,
                             artist: {
                                 id: ele.fk_artist_id,
                                 name: ele.artist_name,
@@ -39,8 +39,8 @@ module.exports = {
                     {
                         const album = {
                             id: res[0].album_id,
-                            albumName: res[0].album_name,
-                            albumImg: res[0].album_img,
+                            name: res[0].album_name,
+                            img: res[0].album_img,
                             artist: {
                                 id: res[0].fk_artist_id,
                                 name: res[0].artist_name,
@@ -65,21 +65,21 @@ module.exports = {
             conn.query(query,[artId,albumId],(err,res) =>{
                 if(err === null && res !== undefined)
                 {
-                    const songs = [];
+                    const songsFromAlbum = [];
                     res.forEach(ele => {
-                        songs.push({
+                        songsFromAlbum.push({
                             id: ele.song_id,
-                            songName: ele.song_name,
-                            songAudio: ele.song_audio,
-                            songImg: ele.song_img,
-                            songDuration: ele.song_duration,
+                            name: ele.song_name,
+                            audio: ele.song_audio,
+                            img: ele.song_img,
+                            duration: ele.song_duration,
                             artist: {
                                 id: ele.fk_artist_id,
                                 name: ele.artist_name,
                             }
                         });
                     });
-                    solved(songs);
+                    solved(songsFromAlbum);
                 }
                 else
                 {
@@ -93,6 +93,7 @@ module.exports = {
         return new Promise((solved,reject) =>{
             const query = "INSERT INTO albums VALUES(null,?,?,?);";
             conn.query(query,[album.albumName,album.albumImg,artId],(err,res) =>{
+                console.log(err);
                 if(err === null && res !== undefined)
                 {
                     conn.query("SELECT LAST_INSERT_ID();",(err,res) =>{
@@ -110,20 +111,52 @@ module.exports = {
         });
     },
 
-    remAlbum:  (artId,albumId) =>{
+    remAlbum:  (artId,albumId) =>{ //FIXME: CALLBACK HELLLLLLLLLL
         return new Promise((solved,reject) =>{
-            const query = "DELETE FROM songs WHERE fk_album_id = ?;";
-            conn.query(query,[Number(albumId)],(err,res) =>{
-                console.log(err);
-                if(err === null && res !== undefined)
+            const fs = require('fs');
+            const query = "SELECT song_img,song_audio FROM songs WHERE fk_artist_id = ? && fk_album_id = ?;";
+            conn.query(query,[Number(artId),Number(albumId)],(err,res) =>{
+                if(err === null)
                 {
-                    const query = "DELETE FROM albums WHERE fk_artist_id = ? && album_id = ?;";
-                    conn.query(query,[Number(artId),Number(albumId)],(err,res) =>{
-                        if(err === null)
-                            solved(true);
+                    if(res !== [])
+                    {
+                        res.forEach(song => {
+                            if(song.song_img.search("default/default") === -1)
+                                fs.unlinkSync("."+song.song_img);
+                            fs.unlinkSync("."+song.song_audio);
+                        });
+                    }
+                    
+                    const query = "DELETE FROM songs WHERE fk_album_id = ?;";
+                    conn.query(query,[Number(albumId)],(err,res) =>{
+                        if(err === null && res !== undefined)
+                        {
+                            const query = "SELECT album_img FROM albums WHERE fk_artist_id = ? && album_id = ?;";
+                            conn.query(query,[Number(artId),Number(albumId)],(err,res) =>{
+                                if(err === null)
+                                {
+                                    const fs = require('fs');
+                                    if(res[0].album_img.search("default/default") === -1)
+                                        fs.unlinkSync("."+res[0].album_img);
+                                        
+                                    const query = "DELETE FROM albums WHERE fk_artist_id = ? && album_id = ?;";
+                                    conn.query(query,[Number(artId),Number(albumId)],(err,res) =>{
+                                        if(err === null)
+                                            solved(true);
+                                        else
+                                            reject(false);
+                                    });  
+                                }
+                                else
+                                    reject(false);
+                            });  
+                        }
                         else
+                        {
                             reject(false);
-                    });  
+                        }
+                    });
+
                 }
                 else
                 {

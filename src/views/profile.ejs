@@ -51,10 +51,10 @@
         fetch("http://localhost:4000/v1/auth/isLoggedIn",{method: 'GET',credentials: 'include'})
         .then(res => res.json())
         .then(artist => {
-            document.querySelector("#username").innerHTML = artist.artist.artist_name;
-            document.querySelector("#email").innerHTML = artist.artist.artist_email;
-            document.querySelector("#img_profile").src = "http://localhost:4000"+artist.artist.artist_img;
-            document.querySelector(".imgBanner").src = "http://localhost:4000"+artist.artist.artist_banner;
+            document.querySelector("#username").innerHTML = artist.name;
+            document.querySelector("#email").innerHTML = artist.email;
+            document.querySelector("#img_profile").src = "http://localhost:4000"+artist.img;
+            document.querySelector(".imgBanner").src = "http://localhost:4000"+artist.banner;
 
             
         })

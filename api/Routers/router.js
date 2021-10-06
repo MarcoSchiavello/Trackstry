@@ -9,7 +9,7 @@ require('../config/passport');
 
 module.exports = (app) => {
     //auth
-    app.get('/v1/auth/isLoggedIn',passport.authenticate("jwt",{ session: false }),(req,res) =>{ res.status(200).json({artId: req.user.artist_id, artist:req.user}); });
+    app.get('/v1/auth/isLoggedIn',passport.authenticate("jwt",{ session: false }),(req,res) => res.status(200).json(req.user) );
     app.post('/v1/auth/login',usersCon.login);
     app.post('/v1/auth/signup',usersCon.signup);
     app.post('/v1/logout',usersCon.logout);

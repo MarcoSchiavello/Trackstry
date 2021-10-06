@@ -12,15 +12,17 @@ module.exports = {
                     res.forEach(ele => {
                         songs.push({
                             id: ele.song_id,
-                            songAudio: ele.song_audio,
-                            songName: ele.song_name,
-                            songImg: ele.song_img,
-                            songDuration: ele.song_duration,
+                            audio: ele.song_audio,
+                            name: ele.song_name,
+                            img: ele.song_img,
+                            duration: ele.song_duration,
                             artist: {
                                 id: ele.fk_artist_id,
                                 name: ele.artist_name,
                             },
-                            albumId: ele.fk_album_id,
+                            album: {
+                                id: ele.fk_album_id
+                            }
                         });
                     });
                     solved(songs);
@@ -43,15 +45,17 @@ module.exports = {
                     {
                         const song = {
                             id: res[0].song_id,
-                            songAudio: res[0].song_audio,
-                            songName: res[0].song_name,
-                            songImg: res[0].song_img,
-                            songDuration: res[0].song_duration,
+                            audio: res[0].song_audio,
+                            name: res[0].song_name,
+                            img: res[0].song_img,
+                            duration: res[0].song_duration,
                             artist: {
                                 id: res[0].fk_artist_id,
                                 name: res[0].artist_name,
                             },
-                            albumId: res[0].fk_album_id
+                            album: {
+                                id:res[0].fk_album_id
+                            }
                         };
                         solved(song);
                     }
@@ -96,10 +100,22 @@ module.exports = {
             conn.query(query,[Number(songId)],(err,res) =>{
                 if(err === null)
                 {
-                    const query = "DELETE FROM songs WHERE fk_artist_id = ? && song_id = ?;";
+                    const query = "SELECT song_img,song_audio FROM songs WHERE fk_artist_id = ? && song_id = ?;";
                     conn.query(query,[Number(artId),Number(songId)],(err,res) =>{
                         if(err === null)
-                            solved(true);
+                        {
+                            const fs = require('fs');
+                            if(res[0].song_img.search("default/default") === -1)
+                                fs.unlinkSync("."+res[0].song_img);
+                            fs.unlinkSync("."+res[0].song_audio);
+                            const query = "DELETE FROM songs WHERE fk_artist_id = ? && song_id = ?;";
+                            conn.query(query,[Number(artId),Number(songId)],(err,res) =>{
+                                if(err === null)
+                                    solved(true);
+                                else
+                                    reject(false);
+                            });
+                        }
                         else
                             reject(false);
                     });

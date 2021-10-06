@@ -84,10 +84,15 @@
                 bodyAlbum.append("albumName",document.querySelector("input[name='title_album']").value);
                 bodyAlbum.append("albumImg",document.querySelector(".upload").files[0]);
 
-                fetch("http://localhost:4000/v1/artists/"+artist.artId+"/albums",{method: 'POST',credentials: 'include',body:bodyAlbum})
-                .then(albumId => albumId.json()) 
+                fetch("http://localhost:4000/v1/artists/"+artist.id+"/albums",{method: 'POST',credentials: 'include',body:bodyAlbum})
+                .then(res => {
+                    if(res.status > 399)
+                        throw new Error(res.status);
+                    return res.json();
+                }) 
                 .then(async newAlbumId => {
                     const albumSongs = document.querySelector("#album_list").children;
+                    let promises = [];
                     for(const ele of albumSongs) 
                     {
                         let bodySong = new FormData();
@@ -95,10 +100,11 @@
                         bodySong.append("songName",ele.querySelector("input[name='title_song']").value);
                         bodySong.append("albumId",newAlbumId.albumId);
                         bodySong.append("songDuration",Math.floor( await getDuration(document.querySelector(".uploadSong") )));
-                        await fetch("http://localhost:4000/v1/artists/"+artist.artId+"/songs",{method: 'POST',credentials: 'include',body:bodySong});
+                        promises.push(fetch("http://localhost:4000/v1/artists/"+artist.id+"/songs",{method: 'POST',credentials: 'include',body:bodySong}));
                     };
 
-                    location.href = "/mia_musica/"+artist.artId; 
+                    await Promise.all(promises);
+                    location.href = "/mia_musica/"+artist.id; 
                 })
                 
             })

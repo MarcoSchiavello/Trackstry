@@ -20,7 +20,6 @@ module.exports = {
                             song: {
                                id: ele.song_id,
                                name: ele.song_name,
-                               img: ele.song_img,
                                duration: ele.song_duration,
                             },
                             artist: {
@@ -57,12 +56,11 @@ module.exports = {
                 {
                     if(res.length > 0)
                     {
-                        const song = {
+                        const favorite = {
                             id: res[0].song_id,
                             song: {
                                 id: res[0].song_id,
                                 name: res[0].song_name,
-                                img: res[0].song_img,
                                 duration: res[0].song_duration,
                             },
                             artist: {
@@ -75,7 +73,7 @@ module.exports = {
                             },
 
                         };
-                        solved(song);
+                        solved(favorite);
                     }
                     else
                         reject(false);

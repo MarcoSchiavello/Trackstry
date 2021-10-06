@@ -47,7 +47,7 @@ module.exports = {
     getSongFromAlbum: (req,res) =>{
         require("../models/songsMod").getSongById(req.params.artistId,req.params.songId)
         .then(song => {
-            if(Number(song.albumId) === Number(req.params.albumId))
+            if(Number(song.album.id) === Number(req.params.albumId))
                 res.status(200)
                 .json(song);
             else
@@ -66,7 +66,7 @@ module.exports = {
 
     addAlbum: (req,res) =>{
         const albumImgPath = req.files.albumImg[0].destination.replace(".","")+"/"+req.files.albumImg[0].filename;
-        albumsMod.addAlbum(req.user.artist_id,{
+        albumsMod.addAlbum(req.user.id,{
             albumName: req.body.albumName,
             albumImg: albumImgPath,
         })

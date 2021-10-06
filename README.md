@@ -28,5 +28,3 @@ for run the servers, do:
 ```
 npm run all
 ```
----
-# API doc

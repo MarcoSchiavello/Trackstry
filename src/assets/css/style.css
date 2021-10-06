@@ -460,6 +460,7 @@ header
 }
 .album
 {
+  min-width: 430px;
   display: flex;
   flex-direction: column;
   width: 60%;
@@ -476,6 +477,7 @@ header
 .album_song
 {
   display: flex;
+  position: relative;
   border-bottom: black solid 1px;
   padding: 5px;
   box-sizing: border-box;
@@ -609,9 +611,12 @@ header
   width: 22px;
   height: 22px;
   border-radius: 100%;
-  border:rgb(255, 75, 75)solid 2px;
-  background-color:transparent;
+  border: rgb(255, 75, 75)solid 2px;
+  background-color: transparent;
   position: absolute;
+  top: 50%;
+  margin-right: 5px;
+  transform: translateY(-50%);
   right: 0;
   cursor: default;
 }
@@ -620,10 +625,11 @@ header
   width: 22px;
   height: 22px;
   border-radius: 100%;
-  border:rgb(255, 75, 75)solid 2px;
-  background-color:transparent;
+  border: rgb(255, 75, 75)solid 2px;
+  background-color: transparent;
   position: absolute;
-  right: 0;
+  right: 10px;
+  top: 10px;
   cursor: default;
 }
 .remove_line
@@ -898,8 +904,8 @@ header
 {
   width: 40px;
   height: 40px;
-  margin: 10px;
-  margin-left: 160px;
+  margin-left: 20px;
+  margin-right: 10px;
 }
 .uploadSong
 {
