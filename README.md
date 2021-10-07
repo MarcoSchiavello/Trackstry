@@ -45,7 +45,7 @@ GET /v1/auth/isLoggedIn
 ```
 Check the token send in the cookie and if it's valid and the user inside the cookie exist returns the user object
 
-Cookie params:<br />
+Cookies params:<br />
 + jwt (required): jwt token that identify the user in the subsequent apis requests
 
 Response:<br />
@@ -135,7 +135,7 @@ Response:
 POST /v1/auth/logout
 ```
 
-Remove the token from the cookie
+Remove the token from the Cookies
 
 Response:
 
