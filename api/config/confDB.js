@@ -13,8 +13,10 @@ conn.connect(err =>{
         console.log("errore con la connesione al DB");
 });
 
-conn.query(`
-CREATE TABLE IF NOT EXISTS artists(
+let promises = [];
+
+promises.push(new Promise(solved =>{ 
+conn.query(`CREATE TABLE IF NOT EXISTS artists(
 	artist_id INT UNSIGNED auto_increment,
     artist_name VARCHAR(50) UNIQUE NOT NULL,
     artist_img VARCHAR(150) NOT NULL DEFAULT "/files/icons/profiles/default/default.png",
@@ -22,8 +24,10 @@ CREATE TABLE IF NOT EXISTS artists(
     artist_pwd VARCHAR(100) NOT NULL,
 	artist_email VARCHAR(60) UNIQUE NOT NULL,
     primary key(artist_id)
-) ENGINE=InnoDB;`)
+) ENGINE=InnoDB;`,() => solved(true))})
+)
 
+promises.push(new Promise(solved =>{ 
 conn.query(`
 CREATE TABLE IF NOT EXISTS albums(
 	album_id INT UNSIGNED auto_increment,
@@ -32,8 +36,10 @@ CREATE TABLE IF NOT EXISTS albums(
     fk_artist_id INT UNSIGNED,
     primary key(album_id),
     foreign key (fk_artist_id) references artists(artist_id)
-) ENGINE=InnoDB;`)
+) ENGINE=InnoDB;`,() => solved(true))})
+)
 
+promises.push(new Promise(solved =>{ 
 conn.query(`
 CREATE TABLE IF NOT EXISTS songs(
 	song_id INT UNSIGNED auto_increment,
@@ -46,8 +52,10 @@ CREATE TABLE IF NOT EXISTS songs(
 	foreign key (fk_artist_id) references artists(artist_id),
     foreign key (fk_album_id) references albums(album_id),
     primary key(song_id)
-) ENGINE=InnoDB;`)
+) ENGINE=InnoDB;`,() => solved(true))})
+)
 
+promises.push(new Promise(solved =>{ 
 conn.query(`
 CREATE TABLE IF NOT EXISTS favorites(
 	favorite_id INT UNSIGNED auto_increment,
@@ -56,4 +64,10 @@ CREATE TABLE IF NOT EXISTS favorites(
 	foreign key (fk_artist_id) references artists(artist_id),
     foreign key (fk_song_id) references songs(song_id),
     primary key(favorite_id)
-) ENGINE=InnoDB;`)
+) ENGINE=InnoDB;`,() => solved(true))})
+)
+
+Promise.all(promises)
+.then(() => {
+    process.exit();
+});

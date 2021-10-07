@@ -41,7 +41,7 @@ module.exports = {
         .catch(noEntry => {//else if there is no entry it proceeds to insert 
             if(noEntry === -1)
                 res.status(500)
-                .json({error: "internal error" });
+                .json({error: "error while adding the favorite" });
             else
             {
                 favoritesMod.addFavorite(req.params.artistId,req.body.songId)
@@ -51,7 +51,7 @@ module.exports = {
                 })
                 .catch(err => {
                     res.status(500)
-                    .json({error: "internal error" });
+                    .json({error: "error while adding the favorite" });
                 });
             }
         });
@@ -65,7 +65,7 @@ module.exports = {
         })
         .catch(err => {
             res.status(500)
-            .json({error: "internal error" });
+            .json({error: "error while removing the favorite" });
         });
     },
 };

@@ -1,11 +1,12 @@
 
-fetch("http://localhost:4000/v1/auth/isLoggedIn",{method: "GET",credentials: 'include'})
+fetch("http://localhost:4000/v1/auth/isLoggedIn",{method: "GET",credentials: 'include'}) //check if the user is logged in
 .then(res => {
-    if(res.status > 399)
+    if(res.status > 399) //throw an error if the api goes wrong
         throw new Error(res.status);
     return res.json(); 
 })
 .then(artist => {
+    //in case of success load the nav for logged user and his action
     document.querySelector("#header").innerHTML = `
         <a href="/">
             <img src="../assets/Img/Logo.png" alt="icon" id="logo">
@@ -60,7 +61,7 @@ fetch("http://localhost:4000/v1/auth/isLoggedIn",{method: "GET",credentials: 'in
     };
 
     document.querySelector("#logout").onclick = e =>{
-        fetch("http://localhost:4000/v1/logout",{method: "POST",credentials: 'include'})
+        fetch("http://localhost:4000/v1/auth/logout",{method: "POST",credentials: 'include'})
         .then(res => {
             location.href = "/login";
         });
@@ -78,6 +79,7 @@ fetch("http://localhost:4000/v1/auth/isLoggedIn",{method: "GET",credentials: 'in
     });
 })
 .catch(err =>{
+    //nav for users that are not logged in
     document.querySelector("#header").innerHTML = `
         <a href="/">
             <img src="../assets/Img/Logo.png" alt="icon" id="logo">
@@ -100,6 +102,7 @@ fetch("http://localhost:4000/v1/auth/isLoggedIn",{method: "GET",credentials: 'in
         </div>`;
 })
 .finally(() => {
+    //instructions that have to be done regardless of the user auth
     movePointer(0);
     //------------------puntatore nav-bar---------------------
     document.addEventListener('mousemove', e =>{
@@ -137,6 +140,7 @@ fetch("http://localhost:4000/v1/auth/isLoggedIn",{method: "GET",credentials: 'in
  
 });
 
+//moves the navbar cursor in the position indicated as parameter
 function movePointer(voce)
 {
     var voce = document.getElementsByTagName("li")[voce];

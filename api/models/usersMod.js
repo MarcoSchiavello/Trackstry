@@ -6,8 +6,8 @@ const jwt = require('jsonwebtoken');
 module.exports = {
     login: (email,pwd) =>{
         return new Promise((solved,reject) => { //reurns a promise to wait the query
-            const query = "SELECT artist_pwd,artist_id FROM artists WHERE artist_email = "+conn.escape(email)+";"; // conn.escape adds already '' around the value
-            conn.query(query,(err,res) =>{
+            const query = "SELECT artist_pwd,artist_id FROM artists WHERE artist_email = ? ;"; // conn.escape adds already '' around the value
+            conn.query(query,[email],(err,res) =>{
                 if(err === null && res !== undefined && res.length) 
                 {
                     const salt = res[0].artist_pwd.split(".")[1];
@@ -21,7 +21,7 @@ module.exports = {
                 }
                 else
                 {
-                    if(!err)
+                    if(err !== null)
                         reject(false);
                     else
                         reject(-1);
@@ -35,8 +35,9 @@ module.exports = {
             const randNum = Math.floor(Math.random() * 3 + 1); //random number for banner img
             const salt = crypto.randomBytes(16).toString("hex");
             const hash = crypto.createHash("SHA256").update(pwd+salt).digest("hex");
-            const query = "INSERT INTO artists(artist_id,artist_name,artist_email,artist_pwd,artist_banner) VALUES(null,"+conn.escape(username)+","+conn.escape(email)+","+conn.escape(hash+"."+salt)+",'/files/banners/default/default"+randNum+".png');"; // conn.escape adds already '' around the value
-            conn.query(query,(err,res) =>{
+            const query = "INSERT INTO artists(artist_id,artist_name,artist_email,artist_pwd,artist_banner) VALUES(null,?,?,?,'/files/banners/default/default?.png');"; // conn.escape adds already '' around the value
+            conn.query(query,[username,email,hash+"."+salt,Number(randNum)],(err,res) =>{
+                console.log(err);
                 if(err === null && res != undefined)
                 {
                     const tokenPacket = {};

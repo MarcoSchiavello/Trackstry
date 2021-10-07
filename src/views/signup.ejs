@@ -27,6 +27,7 @@
             <input type="password" name="password" required  autocomplete="off" class="input_text" style="margin-top: 50px;width: 320px;">
             <label for="password">Password</label>
             <input type="submit"  style="margin: auto; margin-top: 100px;width: 220px;min-width: 100px;" class="button">
+            <h5 class="err"></h5>
         </form>
     </div>
     <%- include('partials/footer') %>
@@ -55,9 +56,18 @@
                 body: JSON.stringify(data)
             })
             .then(res => {
+                if(res.status > 399)
+                    throw new Error(res.status);       
+
                 if(res.status === 200)
                     location.href = "/";
             })
+            .catch(err => {
+                if(Number(err.message) === 500)
+                    document.querySelector(".err").innerHTML = "Errore con il server";
+                else if(Number(err.message) === 409)
+                    document.querySelector(".err").innerHTML = "Email o username gia esistenti";
+            });
 
         });
     </script>

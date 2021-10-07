@@ -12,7 +12,7 @@ module.exports = (app) => {
     app.get('/v1/auth/isLoggedIn',passport.authenticate("jwt",{ session: false }),(req,res) => res.status(200).json(req.user) );
     app.post('/v1/auth/login',usersCon.login);
     app.post('/v1/auth/signup',usersCon.signup);
-    app.post('/v1/logout',usersCon.logout);
+    app.post('/v1/auth/logout',usersCon.logout);
 
     //artist/user
     app.get('/v1/artists',usersCon.getAllArtists);
