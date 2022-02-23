@@ -47,7 +47,10 @@
         <button class="button" id="sub_upload_album">Crea</button>
     </div>
     <%- include('partials/footer') %>
-    <script>
+    <script type="module">
+        import Config from '/config.json' assert { type: 'json' };
+        import Req from '/assets/js/requests.js'; 
+
          document.querySelector(".fake_upload").onclick = e => {
             document.querySelector(".upload").click();
         }
@@ -76,7 +79,7 @@
         document.querySelector("#sub_upload_album").onclick = e => {
             e.preventDefault();
             
-            fetch("http://localhost:4000/v1/auth/isLoggedIn",{method: 'GET',credentials: 'include'})
+            Req.APIRequest('auth/isLoggedIn', 'GET')
             .then(res => res.json())
             .then(artist => {
                 let promises = [];
@@ -84,7 +87,7 @@
                 bodyAlbum.append("albumName",document.querySelector("input[name='title_album']").value);
                 bodyAlbum.append("albumImg",document.querySelector(".upload").files[0]);
 
-                fetch("http://localhost:4000/v1/artists/"+artist.id+"/albums",{method: 'POST',credentials: 'include',body:bodyAlbum})
+                Req.APIRequest(`artists/${artist.id}/albums`, 'POST', bodyAlbum, false)//FIXME: forse problema con il body
                 .then(res => {
                     if(res.status > 399)
                         throw new Error(res.status);
@@ -100,11 +103,11 @@
                         bodySong.append("songName",ele.querySelector("input[name='title_song']").value);
                         bodySong.append("albumId",newAlbumId.albumId);
                         bodySong.append("songDuration",Math.floor( await getDuration(document.querySelector(".uploadSong") )));
-                        promises.push(fetch("http://localhost:4000/v1/artists/"+artist.id+"/songs",{method: 'POST',credentials: 'include',body:bodySong}));
+                        promises.push(Req.APIRequest(`artists/${artist.id}/songs`, 'POST', bodySong, false));
                     };
 
                     await Promise.all(promises);
-                    location.href = "/mia_musica/"+artist.id; 
+                    location.href = "/mia_musica/" + artist.id; 
                 })
                 
             })

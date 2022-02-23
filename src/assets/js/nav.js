@@ -1,5 +1,9 @@
+"use strict";
 
-fetch("http://localhost:4000/v1/auth/isLoggedIn",{method: "GET",credentials: 'include'}) //check if the user is logged in
+import Config from '/config.json' assert { type: 'json' };
+import Req from '/assets/js/requests.js'; 
+
+Req.APIRequest('auth/isLoggedIn', 'GET')
 .then(res => {
     if(res.status > 399) //throw an error if the api goes wrong
         throw new Error(res.status);
@@ -47,12 +51,12 @@ fetch("http://localhost:4000/v1/auth/isLoggedIn",{method: "GET",credentials: 'in
             </div>
         </div>`;
         
-    document.querySelector("#img_user_nav").src = "http://localhost:4000"+artist.img;
+    document.querySelector("#img_user_nav").src = `http://${Config.API}` + artist.img;
     document.querySelector("#welcome_user").innerHTML += artist.name;
     document.querySelector("#nav_user > span").innerHTML = artist.name;
 
     //drop menu three dot
-    document.querySelector("#three_dot").onclick = ()=>{
+    document.querySelector("#three_dot").onclick = () => {
         var ele = document.getElementById("three_dot_cont");
         if(ele.style.display == "block")
             ele.style.display = "none";
@@ -61,7 +65,7 @@ fetch("http://localhost:4000/v1/auth/isLoggedIn",{method: "GET",credentials: 'in
     };
 
     document.querySelector("#logout").onclick = e =>{
-        fetch("http://localhost:4000/v1/auth/logout",{method: "POST",credentials: 'include'})
+        Req.APIRequest('auth/logout', 'POST')
         .then(res => {
             location.href = "/login";
         });

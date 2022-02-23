@@ -34,7 +34,10 @@
         <button class="button" id="sub_upload_song">Crea</button>
     </div>
     <%- include('partials/footer') %>
-    <script>
+    <script type="module">
+        import Config from '/config.json' assert { type: 'json' };
+        import Req from '/assets/js/requests.js'; 
+
         const urlParams = new URLSearchParams(location.search);
 
         if(urlParams.get("album") !== null)
@@ -66,6 +69,7 @@
 
         document.querySelector("#sub_upload_song").onclick = e => {
             e.preventDefault();
+
             let body = new FormData();
             body.append("songName",document.querySelector("input[name='title_song']").value);
             let fileName = document.querySelector(".uploadSong").value;
@@ -81,12 +85,12 @@
                 if(urlParams.get("album") !== null)
                     body.append("albumId",urlParams.get("album"));
 
-                fetch("http://localhost:4000/v1/auth/isLoggedIn",{method: 'GET',credentials: 'include'})
+                Req.APIRequest(`auth/isLoggedIn`, 'GET')
                 .then(res => res.json())
                 .then(artist => {
-                    fetch("http://localhost:4000/v1/artists/"+artist.id+"/songs",{method: 'POST',credentials: 'include',body:body})
+                    Req.APIRequest(`artists/${artist.id}/songs`, 'POST', body, false)
                     .then(newSongId => {
-                        location.href = "/mia_musica/"+artist.id;
+                        location.href = "/mia_musica/" + artist.id;
                     })
                     .catch(() => {
                         //do something

@@ -1,2 +1,13 @@
 node_modules
 api/.env
+api/files/songs/*
+!api/files/songs/.padding
+api/files/icons/songs/*
+!api/files/icons/songs/default
+api/files/icons/albums/*
+!api/files/icons/albums/default
+api/files/icons/profiles/*
+!api/files/icons/profiles/default
+api/files/banners/*
+!api/files/banners/default
+src/config.json

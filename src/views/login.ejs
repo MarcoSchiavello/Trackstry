@@ -27,7 +27,9 @@
         </form>
     </div>
     <%- include('partials/footer') %>
-    <script>
+    <script type="module">
+        import Req from '../assets/js/requests.js'; 
+
         document.querySelector(".form").addEventListener("submit", e =>{
             let email = document.querySelector(".form > input[name='email']").value;
             let password = document.querySelector(".form > input[name='password']").value;
@@ -36,15 +38,8 @@
                 password: password
             };
             event.preventDefault();
-            fetch("http://localhost:4000/v1/auth/login",{
-                method: 'POST',
-                mode: 'cors',
-                credentials: 'include',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(data)
-            })
+
+            Req.APIRequest('auth/login', 'POST', data)
             .then(res => {
                 if(res.status > 399)
                     throw new Error(res.status);                

@@ -24,14 +24,17 @@
         </div>
     </div>
     <%- include("partials/footer") %> 
-    <script>
-        fetch("http://localhost:4000/v1/artists",{method: 'GET',credentials: 'include',})
+    <script type="module">
+        import Config from '/config.json' assert { type: 'json' };
+        import Req from '/assets/js/requests.js'; 
+
+        Req.APIRequest('artists', 'GET')
         .then(res => res.json())
         .then(artists => {
             const list = document.querySelector(".cointeiner_card");
             artists.forEach(artist => {
                 const clone = document.querySelector(".card_artisti").cloneNode(true);
-                clone.querySelector("img").src = "http://localhost:4000"+artist.img;
+                clone.querySelector("img").src = `http://${Config.API}` + artist.img;
                 clone.querySelector(".name_artista").innerHTML = artist.name;
                 clone.addEventListener("click",e => location.href = "/artista/"+artist.id);
 

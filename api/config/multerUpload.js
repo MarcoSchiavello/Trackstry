@@ -1,4 +1,5 @@
 const multer = require("multer");
+const fs = require('fs');
 
 //filters
 const fileFilterSong = (req,file,cb) => {
@@ -21,11 +22,18 @@ const fileFilterImgOnly = (req,file,cb) => {
 //storages
 const storageSong = multer.diskStorage({
     destination: (req,file,cb) =>{
+        console.log(file);
         const mimetype = file.mimetype.split("/")[0];
-        if(mimetype === "audio")
-            cb(null,"./files/songs/"+req.user.id);
-        else if(mimetype === "image")
-            cb(null,"./files/icons/songs/"+req.user.id);
+        if(mimetype === "audio") {
+            const path = "./files/songs/" + req.user.id;
+            fs.mkdirSync(path, { recursive: true })
+            cb(null, path);
+        }
+        else if(mimetype === "image") {
+            const path = "./files/icons/songs/" + req.user.id;
+            fs.mkdirSync(path, { recursive: true })
+            cb(null, path);
+        }
     },
     filename: (req,file,cb) =>{
         const crypto = require("crypto");
@@ -38,7 +46,9 @@ const storageSong = multer.diskStorage({
 
 const storageAlbum = multer.diskStorage({
     destination: (req,file,cb) =>{
-        cb(null,"./files/icons/albums/"+req.user.id);
+        const path = "./files/icons/albums/" + req.user.id;
+        fs.mkdirSync(path, { recursive: true })
+        cb(null, path);
     },
     filename: (req,file,cb) =>{
         const crypto = require("crypto");

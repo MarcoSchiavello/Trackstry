@@ -1,3 +1,6 @@
+import Config from '/config.json' assert { type: 'json' };
+import Req from '/assets/js/requests.js'; 
+
 let artId = location.href.split("/");
 artId = artId[artId.length-1].split("?")[0];
 
@@ -7,16 +10,16 @@ if(location.href.search("mia_musica") !== -1)
     document.querySelector("#addSong").addEventListener("click",e => location.href = "/uploadSong/"+artId);
 }
 
-fetch("http://localhost:4000/v1/artists/"+artId,{method: 'GET',credentials: 'include'})
+Req.APIRequest(`artists/${artId}`, 'GET')
 .then(res => res.json())
 .then(artist => { //load profile data
-        document.querySelector(".img_cover").src = "http://localhost:4000"+artist.banner;
+        document.querySelector(".img_cover").src = `http://${Config.API}`+artist.banner;
         document.querySelector("#name_artista").innerHTML = artist.name;
-        document.querySelector("#img_artista").src = "http://localhost:4000"+artist.img;
+        document.querySelector("#img_artista").src = `http://${Config.API}`+artist.img;
         return artist;
 })
 .then(artist => {
-    fetch("http://localhost:4000/v1/artists/"+artist.id+"/songs",{method: 'GET',credentials: 'include'})
+    Req.APIRequest(`artists/${artist.id}/songs`, 'GET')
     .then(res => res.json())
     .then(songs => { // load single song
         const sigleSong = document.querySelector(".single_song");
@@ -33,7 +36,7 @@ fetch("http://localhost:4000/v1/artists/"+artId,{method: 'GET',credentials: 'inc
     })
 
     // load albums
-    fetch("http://localhost:4000/v1/artists/"+artist.id+"/albums",{method: 'GET',credentials: 'include'})
+    Req.APIRequest(`artists/${artist.id}/albums`, 'GET')
     .then(res => res.json())
     .then(albums => {
         const albumEle = document.querySelector(".album");
@@ -41,10 +44,10 @@ fetch("http://localhost:4000/v1/artists/"+artId,{method: 'GET',credentials: 'inc
         albums.forEach(album => {
             const tmpAlbumEle = albumEle.cloneNode(true);
             tmpAlbumEle.querySelector(".album_header h1").innerHTML = album.name;
-            tmpAlbumEle.querySelector(".album_header img").src = "http://localhost:4000"+album.img;
+            tmpAlbumEle.querySelector(".album_header img").src = `http://${Config.API}`+album.img;
             
             // load album's songs
-            fetch("http://localhost:4000/v1/artists/"+artist.id+"/albums/"+album.id+"/songs",{method: 'GET',credentials: 'include'})
+            Req.APIRequest(`artists/${artist.id}/albums/${album.id}/songs`, 'GET')
             .then(res => res.json())
             .then(albumSongs => {
                 const albumSongEle = tmpAlbumEle.querySelector(".album_song");
@@ -69,7 +72,7 @@ fetch("http://localhost:4000/v1/artists/"+artId,{method: 'GET',credentials: 'inc
             if(location.href.search("mia_musica") !== -1)
             {
                 tmpAlbumEle.querySelector(".removeAlbum").addEventListener("click",e => {
-                    fetch("http://localhost:4000/v1/artists/"+artist.id+"/albums/"+album.id,{method: 'DELETE',credentials: 'include'})
+                    Req.APIRequest(`artists/${artist.id}/albums/${album.id}`, 'DELETE')
                     .then(succ => {
                         const ele = e.target.parentElement.parentElement;
                         document.querySelector(".song_container").removeChild(ele);
@@ -91,7 +94,7 @@ function fillfields(element,data,isAlbumSong = false)
     {
         element.querySelector("h1").innerHTML = data.song.name;
         element.querySelector("h3").innerHTML = data.artist.name;
-        element.querySelector("img").src = "http://localhost:4000"+data.song.img;
+        element.querySelector("img").src = `http://${Config.API}`+data.song.img;
         element.querySelector(".duration").innerHTML = getTimeFormat(data.song.duration);
         pathForPlayer = "/player?artist="+data.artist.id+"&song="+data.song.id;
     }
@@ -107,7 +110,7 @@ function fillfields(element,data,isAlbumSong = false)
 
     if(location.href.search("mia_musica") === -1)
     {
-        fetch("http://localhost:4000/v1/auth/isLoggedIn",{method: 'GET',credentials: 'include'})
+        Req.APIRequest(`auth/isLoggedIn`, 'GET')
         .then(res => res.json())
         .then(artistLoggedIn => {
             setFavoriteButton(artistLoggedIn,element,data.song);
@@ -124,12 +127,12 @@ function fillfields(element,data,isAlbumSong = false)
     else
     {
         element.querySelector(".removeSong").addEventListener("click",e => {
-            fetch("http://localhost:4000/v1/artists/"+data.artist.id+"/songs/"+data.song.id,{method: 'DELETE',credentials: 'include'})
+            Req.APIRequest(`artists/${data.artist.id}/songs/${data.song.id}`, 'DELETE')
             .then(succ => {
                 console.log(element.parentElement );
                 if(element.parentElement.children.length <= 2 && element.parentElement.children.length !== undefined)
                 {
-                    fetch("http://localhost:4000/v1/artists/"+data.artist.id+"/albums/"+data.album.id,{method: 'DELETE',credentials: 'include'})
+                    Req.APIRequest(`artists/${data.artist.id}/albums/${data.album.id}`, 'DELETE')
                     .then(succ => {
                         console.log(element.parentElement);
                         document.querySelector(".song_container").removeChild(element.parentElement.parentElement);
@@ -152,7 +155,7 @@ function setFavoriteButton(artistLoggedIn,element,song)
 {
     const star = element.querySelector(".fav_star");
 
-    fetch("http://localhost:4000/v1/artists/"+artistLoggedIn.id+"/favorites/"+song.id,{method: 'GET',credentials: 'include'})
+    Req.APIRequest(`artists/${artistLoggedIn.id}/favorites/${song.id}`, 'GET')
     .then(res => res.json())
     .then(favorite => {
         if(favorite.error !== undefined)// if it find an error it means that the song is not in the favorite
@@ -164,22 +167,14 @@ function setFavoriteButton(artistLoggedIn,element,song)
     element.querySelector(".fav_star").addEventListener("click",e => {
         if(star.src.search("piena") !== -1)
         {
-            fetch("http://localhost:4000/v1/artists/"+artistLoggedIn.id+"/favorites/"+song.id,{
-                method: 'DELETE',
-                credentials: 'include',
-            })
+            Req.APIRequest(`artists/${artistLoggedIn.id}/favorites/${song.id}`, 'DELETE')
             .then(succ =>{
                 star.setAttribute("src","../assets/Img/preferiti/stella_vuota.png");
             })
         }
         else
         {
-            fetch("http://localhost:4000/v1/artists/"+artistLoggedIn.id+"/favorites",{
-                method: 'POST',
-                credentials: 'include',
-                headers:{'Content-Type': 'application/json'},
-                body:JSON.stringify({songId: song.id})
-            })
+            Req.APIRequest(`artists/${artistLoggedIn.id}/favorites`, 'POST', {songId: song.id})
             .then(succ =>{
                 star.setAttribute("src","../assets/Img/preferiti/stella_piena.png");
             })

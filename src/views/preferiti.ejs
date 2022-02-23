@@ -34,12 +34,16 @@
         </ul>
     </div>
     <%- include("partials/footer") %>
-    <script>
-        fetch("http://localhost:4000/v1/auth/isLoggedIn",{method: 'GET',credentials: 'include'})
+    <script type="module">
+        import Config from '/config.json' assert { type: 'json' };
+        import Req from '/assets/js/requests.js'; 
+        
+        Req.APIRequest('auth/isLoggedIn', 'GET')
         .then(res => res.json())
         .then(artist => {
-            document.querySelector(".img_cover").src = "http://localhost:4000"+artist.banner;
-            fetch("http://localhost:4000/v1/artists/"+artist.id+"/favorites",{method: 'GET',credentials: 'include',})
+            document.querySelector(".img_cover").src = `http://${Config.API}` + artist.banner;
+
+            Req.APIRequest(`artists/${artist.id}/favorites`, 'GET')
             .then(res => res.json())
             .then(favorites => {
                 const list = document.querySelector("#album_list");

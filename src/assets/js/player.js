@@ -1,3 +1,6 @@
+import Config from '/config.json' assert { type: 'json' };
+import Req from '/assets/js/requests.js'; 
+
 var audio = document.getElementById("player");
 document.getElementById("duration").addEventListener('click',chageTime);
 audio.volume = 0.50;
@@ -14,11 +17,11 @@ if(urlParams.get("album") === null)
     document.querySelector("#back").style.display = "none";
     document.querySelector("#random").style.opacity = 0;
 
-    fetch("http://localhost:4000/v1/artists/"+urlParams.get("artist")+"/songs/"+urlParams.get("song"),{method:"GET",credentials:"include"})
+    Req.APIRequest(`artists/${urlParams.get("artist")}/songs/${urlParams.get("song")}`, 'GET')
     .then(res => res.json())
     .then(song => {
-        document.querySelector("#img_player").src = "http://localhost:4000"+song.img;
-        document.querySelector("#player").src = "http://localhost:4000"+song.audio; 
+        document.querySelector("#img_player").src = `http://${Config.API}`+song.img;
+        document.querySelector("#player").src = `http://${Config.API}`+song.audio; 
         document.querySelector(".songInfo > h1").innerHTML = song.name;
         document.querySelector(".songInfo > h5").innerHTML = song.artist.name;
 
@@ -36,13 +39,13 @@ if(urlParams.get("album") === null)
 }
 else
 {
-    fetch("http://localhost:4000/v1/artists/"+urlParams.get("artist")+"/albums/"+urlParams.get("album"),{method:"GET",credentials:"include"})
+    Req.APIRequest(`artists/${urlParams.get("artist")}/albums/${urlParams.get("album")}`, 'GET')
     .then(res => res.json())
     .then(album => {
-        document.querySelector("#img_player").src = "http://localhost:4000"+album.img;
+        document.querySelector("#img_player").src = `http://${Config.API}`+album.img;
     })
 
-    fetch("http://localhost:4000/v1/artists/"+urlParams.get("artist")+"/albums/"+urlParams.get("album")+"/songs",{method:"GET",credentials:"include"})
+    Req.APIRequest(`artists/${urlParams.get("artist")}/albums/${urlParams.get("album")}/songs`, 'GET')
     .then(res => res.json())
     .then(fetchedSongs => {
 
@@ -139,6 +142,10 @@ document.querySelector("#random").addEventListener("click",e => {
     }
 });
 
+document.querySelector('#button-play').addEventListener('click', start);
+document.querySelector('#player').addEventListener('timeupdate', updateTime);
+document.querySelector('#seek').addEventListener('change', chageAudio);
+
 function start()
 {
     if(document.getElementById("pause-icon").style.display == "block")
@@ -156,9 +163,9 @@ function pause()
     document.getElementById("play-icon").style.display = "block";
     document.getElementById("pause-icon").style.display = "none";
 } 
-function chageAudio(time)
+function chageAudio(e)
 {
-    audio.volume = time /100;
+    audio.volume = e.target.value /100;
 }
 function chageTime()
 {
@@ -178,7 +185,7 @@ function updateTime()
 
 function fillFiled(songAlbumObj)
 {
-    document.querySelector("#player").src = "http://localhost:4000"+songAlbumObj.audio; 
+    document.querySelector("#player").src = `http://${Config.API}`+songAlbumObj.audio; 
     document.querySelector(".songInfo > h1").innerHTML = songAlbumObj.name;
     document.querySelector(".songInfo > h5").innerHTML = songAlbumObj.artist.name;
 }
