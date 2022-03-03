@@ -1,65 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="../assets/Img/Logo.png">
-    <link rel="stylesheet" href="../assets/css/style.css">
-    <title>Trackstry Preferiti</title>
-</head>
-<body>
-    <%- include("partials/nav") %>  
-    <div id="cover_artista">
-        <div style="width: 100%;height: 100%;overflow: hidden;">
-            <img src="../assets/Img/home/bg_home.jpg" class="img_cover">
-        </div>
-        <img src="../assets/Img/preferiti/preferiti.png" id="img_preferiti">
-        <h1 id="title_preferiti">Canzoni preferite</h1>
+<%- include("partials/head", { title: 'Preferiti', js: [ { file: 'pages/preferiti.js' } ] }) %> 
+<%- include("partials/nav") %>  
+
+<div id="cover_artista">
+    <div style="width: 100%;height: 100%;overflow: hidden;">
+        <img src="../assets/Img/home/bg_home.jpg" class="img_cover">
     </div>
-    <div class="album" style="margin-top: 200px;">
-        <div style="display: flex;">
-            <h3>nome_canzone</h3>
-            <h3 class="author">autore</h3>
-            <h3 class="song_title">album</h3>
-            <h3 class="duration" style="right: 42px;">durata</h3>
-        </div>
-        <hr style="width: 100%;margin: 0;border: black solid 1px;">
-        <ul style="padding: 0;margin: 0;list-style: none;" id="album_list">
-            <li class="album_song" style="display: none;">
-                <span class="song_name" style="margin: 0;">ciao</span> 
-                <span class="author" id="author_field">naturald</span>
-                <span class="song_title data_song_field">titolo_album</span> 
-                <span class="duration data_song_field">3:30</span>
-            </li>
-        </ul>
-    </div>
-    <%- include("partials/footer") %>
-    <script type="module">
-        import Config from '/config.json' assert { type: 'json' };
-        import Req from '/assets/js/requests.js'; 
-        
-        Req.APIRequest('auth/isLoggedIn', 'GET')
-        .then(res => res.json())
-        .then(artist => {
-            document.querySelector(".img_cover").src = `http://${Config.API}` + artist.banner;
+    <img src="../assets/Img/preferiti/preferiti.png" id="img_preferiti">
+    <h1 id="title_preferiti">Canzoni preferite</h1>
+</div>
 
-            Req.APIRequest(`artists/${artist.id}/favorites`, 'GET')
-            .then(res => res.json())
-            .then(favorites => {
-                const list = document.querySelector("#album_list");
+<%- include('components/album', { heading: false, trackNumber: false, visible: true}) %>
 
-                favorites.forEach(ele => {
-                    const clone = document.querySelector(".album_song").cloneNode(true);
-                    clone.querySelector(".song_name").innerHTML = ele.song.name;
-                    clone.querySelector(".duration").innerHTML = getTimeFormat(ele.song.duration);
-                    clone.querySelector(".author").innerHTML = ele.artist.name;
-                    clone.querySelector(".song_title").innerHTML = ele.album.name;
-
-                    clone.removeAttribute("style");
-                    list.appendChild(clone);
-                });
-            });
-        });
-    </script>
-</body>
-</html>
+<%- include('partials/footer') %>

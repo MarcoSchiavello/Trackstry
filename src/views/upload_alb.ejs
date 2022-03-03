@@ -1,117 +1,41 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="../assets/Img/Logo.png">
-    <link rel="stylesheet" href="../assets/css/style.css">
-    <title>Trackstry Upload</title>
-</head>
-<body>
-    <%- include("partials/nav") %>
+<%- include("partials/head", { title: 'Upload album', js: [ { file: 'pages/uploadAlbum.js' } ] }) %> 
+<%- include("partials/nav") %>
     
-    <div class="album" style="margin-top: 150px;">
-        <div id="header_album">
-            <div class="fake_upload">
-                <img src="" class="preview">
-                <h3>
-                    Inserisci IMG
-                </h3>
-            </div>
-            <input type="file" class="upload" accept="image/*">
-            <div class="container_input_text" >
-                <input name="title_album" type="text" class="input_text" required autocomplete="off">
-                <label for="title_album">Titolo album</label>
-            </div>
+<div class="album" style="margin-top: 150px;">
+    <div id="header_album">
+        <div class="fake_upload">
+            <img src="" class="preview">
+            <h3>
+                Inserisci IMG
+            </h3>
         </div>
-        <hr style="width: 100%;margin: 0;border: black solid 1px;">
-        <ul style="padding: 0;margin: 0;list-style: none;" id="album_list">
-            <li class="album_song" style="padding: 20px;">
-                <span class="n_track" >1</span>
-                <div class="container_input_text" >
-                    <input name="title_song" type="text" class="input_text" required autocomplete="off">
-                    <label for="title_song">Titolo canzone</label>
-                </div>
-                <img src="../assets/Img/upload_icon.png" class="fakeUploadSong">
-                <input type="file" class="uploadSong" accept="audio/*">
-                <h5 id="uploadSongName"></h5>
-                <span class="removeSong" style="margin-right: 20px;" onclick="remove_songAlbum(this)" ><hr class="remove_line"></span>
-            </li>
-        </ul>
-
-        <button class="plus_cross" onclick="add_songAlbum()"> 
-            <span class="line1_cross"></span>
-            <span class="line1_cross line2_cross"></span>
-        </button>
-
-        <button class="button" id="sub_upload_album">Crea</button>
+        <input type="file" class="upload" accept="image/*">
+        <div class="container_input_text" >
+            <input name="title_album" type="text" class="input_text" required autocomplete="off">
+            <label for="title_album">Titolo album</label>
+        </div>
     </div>
-    <%- include('partials/footer') %>
-    <script type="module">
-        import Config from '/config.json' assert { type: 'json' };
-        import Req from '/assets/js/requests.js'; 
+    <hr style="width: 100%;margin: 0;border: black solid 1px;">
+    <ul style="padding: 0;margin: 0;list-style: none;" id="album_list">
+        <li class="album_song" style="padding: 20px;">
+            <span class="n_track" >1</span>
+            <div class="container_input_text" >
+                <input name="title_song" type="text" class="input_text" required autocomplete="off">
+                <label for="title_song">Titolo canzone</label>
+            </div>
+            <img src="../assets/Img/upload_icon.png" class="fakeUploadSong">
+            <input type="file" class="uploadSong" accept="audio/*">
+            <h5 id="uploadSongName"></h5>
+            <span class="removeSong" style="margin-right: 20px;" onclick="remove_songAlbum(this)" ><hr class="remove_line"></span>
+        </li>
+    </ul>
 
-         document.querySelector(".fake_upload").onclick = e => {
-            document.querySelector(".upload").click();
-        }
-        document.querySelector(".upload").onchange = e => {
-            const tmpfile = document.querySelector(".upload");
-            const [file] = tmpfile.files;
-            if(file) 
-            {
-                document.querySelector(".preview").src = URL.createObjectURL(file);
-                document.querySelector(".preview").style.display = "block";
-            }
-        }
-       
-        document.querySelector(".fakeUploadSong").onclick = e => {
-            document.querySelector(".uploadSong").click();
-        }
-        
-        document.querySelector(".uploadSong").onchange = e => {
+    <button class="plus_cross" onclick="add_songAlbum()"> 
+        <span class="line1_cross"></span>
+        <span class="line1_cross line2_cross"></span>
+    </button>
 
-            let fileName = document.querySelector(".uploadSong").value;
-            fileName = fileName.split("/").length > fileName.split("\\").length ? fileName.split("/") : fileName.split("\\");
-            fileName = fileName[fileName.length-1];
-            document.querySelector("#uploadSongName").innerHTML = fileName;
-        }
+    <button class="button" id="sub_upload_album">Crea</button>
+</div>
 
-        document.querySelector("#sub_upload_album").onclick = e => {
-            e.preventDefault();
-            
-            Req.APIRequest('auth/isLoggedIn', 'GET')
-            .then(res => res.json())
-            .then(artist => {
-                let promises = [];
-                let bodyAlbum = new FormData();
-                bodyAlbum.append("albumName",document.querySelector("input[name='title_album']").value);
-                bodyAlbum.append("albumImg",document.querySelector(".upload").files[0]);
-
-                Req.APIRequest(`artists/${artist.id}/albums`, 'POST', bodyAlbum, false)//FIXME: forse problema con il body
-                .then(res => {
-                    if(res.status > 399)
-                        throw new Error(res.status);
-                    return res.json();
-                }) 
-                .then(async newAlbumId => {
-                    const albumSongs = document.querySelector("#album_list").children;
-                    let promises = [];
-                    for(const ele of albumSongs) 
-                    {
-                        let bodySong = new FormData();
-                        bodySong.append("song",ele.querySelector(".uploadSong").files[0]);
-                        bodySong.append("songName",ele.querySelector("input[name='title_song']").value);
-                        bodySong.append("albumId",newAlbumId.albumId);
-                        bodySong.append("songDuration",Math.floor( await getDuration(document.querySelector(".uploadSong") )));
-                        promises.push(Req.APIRequest(`artists/${artist.id}/songs`, 'POST', bodySong, false));
-                    };
-
-                    await Promise.all(promises);
-                    location.href = "/mia_musica/" + artist.id; 
-                })
-                
-            })
-        }
-    </script>
-</body>
-</html>
+<%- include('partials/footer') %>

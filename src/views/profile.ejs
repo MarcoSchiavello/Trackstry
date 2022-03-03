@@ -1,64 +1,42 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../assets/css/style.css">
-    <link rel="icon" href="../assets/Img/Logo.png">
-    <title>Profile</title>
-</head>
-<body>
-    <%- include("partials/nav") %>
-    <div id="page_container_profile" >
-        <div id="container_profile_data">
-            <div class="container_img_profile">
-                <img src="#" id="img_profile">
-                <div class="filter_img_profile">cambia img</div>
-            </div>
-            <div id="profile_info">
-                <span class="profile_data_label">Username</span>
-                <h2 class="profile_data" id="username"></h2>
-                <span class="profile_data_label">E-mail</span>
-                <h2 class="profile_data" id="email"></h2>
-                <span class="profile_data_label">Password</span>
-                <h2 class="profile_data">* * * * * * * * * * *</h2>
-            </div>
-        </div>
-    
-        <div class="changeBanner">
-            <h1>Banner</h1>
-            <div class="cointeinerBannerImg">
-                <img src="../assets/Img/9dcd0cf7ed5659114bdcddea44ffaab4.png" class="imgBanner">
-                <div class="filter_img_profile">cambia banner</div>
-            </div>
-        </div>
+<%- include("partials/head", { title: 'Profile', js: [ { file: 'pages/preferiti.js' } ] }) %> 
+<%- include("partials/nav") %>
 
-        <div id="container_change_profile">
-            <h1>Cambia dati</h1>
-            <form method="POST" action="" id="change_form">
-                <input type="text" class="input_text input_change_profile" name="email" required autocomplete="off">
-                <label for="email">nuova mail</label>
-                <input type="text" class="input_text input_change_profile" name="username" required autocomplete="off">
-                <label for="username">nuovo username</label>
-                <input type="text" class="input_text input_change_profile" name="pass" required autocomplete="off">
-                <label for="pass">nuova password</label>
-                <input type="submit" value="Cambia" class="button" id="sub_change_profile">
-            </form>
+<div id="page_container_profile" >
+    <div id="container_profile_data">
+        <div class="container_img_profile">
+            <img src="#" id="img_profile">
+            <div class="filter_img_profile">cambia img</div>
+        </div>
+        <div id="profile_info">
+            <span class="profile_data_label">Username</span>
+            <h2 class="profile_data" id="username"></h2>
+            <span class="profile_data_label">E-mail</span>
+            <h2 class="profile_data" id="email"></h2>
+            <span class="profile_data_label">Password</span>
+            <h2 class="profile_data">* * * * * * * * * * *</h2>
         </div>
     </div>
-    <%- include("partials/footer") %> 
-    <script type="module">
-        import Config from '/config.json' assert { type: 'json' };
-        import Req from '/assets/js/requests.js'; 
-        
-        Req.APIRequest('auth/isLoggedIn', 'GET')
-        .then(res => res.json())
-        .then(artist => {
-            document.querySelector("#username").innerHTML = artist.name;
-            document.querySelector("#email").innerHTML = artist.email;
-            document.querySelector("#img_profile").src = `http://${Config.API}` + artist.img;
-            document.querySelector(".imgBanner").src = `http://${Config.API}` + artist.banner;
-        })
-    </script>
-</body>
-</html>
+
+    <div class="changeBanner">
+        <h1>Banner</h1>
+        <div class="cointeinerBannerImg">
+            <img src="#" class="imgBanner">
+            <div class="filter_img_profile">cambia banner</div>
+        </div>
+    </div>
+
+    <div id="container_change_profile">
+        <h1>Cambia dati</h1>
+        <form method="POST" action="" id="change_form">
+            <input type="text" class="input_text input_change_profile" name="email" required autocomplete="off">
+            <label for="email">nuova mail</label>
+            <input type="text" class="input_text input_change_profile" name="username" required autocomplete="off">
+            <label for="username">nuovo username</label>
+            <input type="text" class="input_text input_change_profile" name="pass" required autocomplete="off">
+            <label for="pass">nuova password</label>
+            <input type="submit" value="Cambia" class="button" id="sub_change_profile">
+        </form>
+    </div>
+</div>
+
+<%- include("partials/footer") %> 

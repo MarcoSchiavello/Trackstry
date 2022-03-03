@@ -1,63 +1,22 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="../assets/Img/Logo.png">
-    <link rel="stylesheet" href="../assets/css/style.css">
-    <title>Trackstry Artista</title>
-</head>
-<body>
-    <%- include("partials/nav") %> 
-    <div id="cover_artista">
-        <div style="width: 100%;height: 100%;overflow: hidden;">
-            <img src="#" class="img_cover">
-        </div>
-        <div style="display: flex;">
-            <img src="#" id="img_artista">
-            <h1 id="name_artista" class="shadow_text"></h1>
-        </div>
+<%- include("partials/head", { title: 'Artista', js: [ {file: 'populateSongs.js'} ]}) %> 
+<%- include("partials/nav") %> 
+
+<div id="cover_artista">
+    <div style="width: 100%;height: 100%;overflow: hidden;">
+        <img src="#" class="img_cover">
     </div>
-
-    <div class="song_container">
-
-        <div class="album" style="display: none;">
-            <div class="album_header">
-                <img src="../assets/Img/9dcd0cf7ed5659114bdcddea44ffaab4.png" style="width: 138px;height: 128px;">
-                <h1 style="margin-left: 30px;">titolo_album</h1>
-            </div>
-            <div style="display: flex;">
-                <h3 class="n_track">N°</h3>
-                <h3 class="song_name">nome_canzone</h3>
-                <h3 class="author">autore</h3>
-                <h3 class="song_title">album</h3>
-                <h3 class="duration" style="right: 42px;">durata</h3>
-            </div>
-            <hr class="line">
-            <ul class="album_list">
-                <li class="album_song" style="display: none;">
-                    <span class="n_track" ></span>
-                    <span class="song_name">ciao</span> 
-                    <span class="author author_field">naturald</span>
-                    <span class="song_title data_song_field">titolo_album</span> 
-                    <span class="duration data_song_field">3:30</span>
-                    <span><img src="../assets/Img/preferiti/stella_vuota.png" class="fav_star data_song_field"> </span>
-                </li>
-            </ul>
-        </div>
-
-        <div class="single_song" style="display: none;">
-            <img src="../assets/Img/9dcd0cf7ed5659114bdcddea44ffaab4.png"  style="width: 138px;height: 128px;">
-            <div style="display: flex;flex-direction: column;margin-left: 20px;">
-                <h1>titolo_canzone</h1>
-                <h3>autore</h3>
-            </div>
-            <h3 class="duration single_song_duration">3:30</h3>
-            <img src="../assets/Img/preferiti/stella_vuota.png" class="fav_star single_fav_star">
-        </div>
-            
+    <div style="display: flex;">
+        <img src="#" id="img_artista">
+        <h1 id="name_artista" class="shadow_text"></h1>
     </div>
-    <%- include("partials/footer") %>
-    <script src="../assets/js/populateSongs.js" type="module"></script>
-</body>
-</html>
+</div>
+
+<div class="song_container">    
+
+    <%- include('components/album') %>
+
+    <%- include('components/song') %>
+        
+</div>
+
+<%- include("partials/footer") %>

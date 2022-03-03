@@ -1,0 +1,15 @@
+<!-- song -->
+<div class="single_song" style="display: none;">
+    <img src="#"  style="width: 138px;height: 128px;">
+    <div style="display: flex;flex-direction: column;margin-left: 20px;">
+        <h1>titolo_canzone</h1>
+        <h3>autore</h3>
+    </div>
+    <h3 class="duration single_song_duration">3:30</h3>
+
+    <% if(typeof edit !== 'undefined' && edit) { %>
+        <span class="removeSong"><hr class="remove_line"></span>
+    <% } else { %>
+        <span><img src="../assets/Img/preferiti/stella_vuota.png" class="fav_star data_song_field"></span>
+    <% } %>
+</div>

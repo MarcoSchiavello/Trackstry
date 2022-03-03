@@ -1,47 +1,23 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="../assets/Img/Logo.png">
-    <link rel="stylesheet" href="../assets/css/style.css">
-    <title>Trackstry Artisti</title>
-</head>
-<body>
-    <%- include("partials/nav") %> 
-    <div id="cover_canzoni" >
-        <img src="../assets/Img/home/sec_2.jpg" class="img_cover" >
-        <div id="cover_filter"></div>
-        <h1 style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);margin: 0;z-index: 31;font-size: 50px;">Artisti</h1>
-    </div>
-    <div class="cointeiner_card">
-        <div class="card_artisti" style="display: none;">
-            <div class="card_img">
-                <div class="filter_card"></div>
-                <img src="../assets/Img/home/bg_home.jpg">
-            </div>
-            <h2 class="name_artista">nome_artista</h2>
+<%- include("partials/head", { title: 'Artisti', js: [ { file: 'pages/artisti.js' } ] }) %> 
+<%- include("partials/nav") %> 
+
+<div id="cover_canzoni" >
+    <img src="../assets/Img/home/sec_2.jpg" class="img_cover" >
+    <div id="cover_filter"></div>
+    <h1 style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);margin: 0;z-index: 31;font-size: 50px;">Artisti</h1>
+</div>
+
+<div class="cointeiner_card">
+
+    <div class="card_artisti" style="display: none;">
+        <div class="card_img">
+            <div class="filter_card"></div>
+            <img src="#">
         </div>
+        <h2 class="name_artista"></h2>
     </div>
-    <%- include("partials/footer") %> 
-    <script type="module">
-        import Config from '/config.json' assert { type: 'json' };
-        import Req from '/assets/js/requests.js'; 
 
-        Req.APIRequest('artists', 'GET')
-        .then(res => res.json())
-        .then(artists => {
-            const list = document.querySelector(".cointeiner_card");
-            artists.forEach(artist => {
-                const clone = document.querySelector(".card_artisti").cloneNode(true);
-                clone.querySelector("img").src = `http://${Config.API}` + artist.img;
-                clone.querySelector(".name_artista").innerHTML = artist.name;
-                clone.addEventListener("click",e => location.href = "/artista/"+artist.id);
+</div>
 
-                clone.removeAttribute("style");
-                list.appendChild(clone);
-            });
-        })
-    </script>
-</body>
-</html>
+<%- include("partials/footer") %> 
+

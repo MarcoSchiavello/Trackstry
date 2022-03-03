@@ -1,56 +1,44 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../assets/css/style.css">
-    <link rel="icon" href="../assets/Img/Logo.png">
-    <script defer src="../assets/js/all.js"></script>
-    <title>Player</title>
-</head>
-<body id="body_player" >
-    <a href="#" id="prevPage"><i class="fas fa-arrow-left" id="back_arrow_player"></i></a>  
+<%- include("partials/head", { title: 'Player', js: [ { file: 'player.js', module: false }, { file: 'all.js', module: false } ] }) %> 
 
-    <div id="container_player">
+<a href="#" id="prevPage"><i class="fas fa-arrow-left" id="back_arrow_player"></i></a>  
 
-        <img src="#" id="img_player">
+<div id="container_player">
 
-        <div class="songInfo">
-            <h1></h1>
-            <h5></h5>
+    <img src="#" id="img_player">
+
+    <div class="songInfo">
+        <h1></h1>
+        <h5></h5>
+    </div>
+
+    <div>
+        <div id="icon_row_player">
+            <span id="back"><i class="fas fa-angle-double-left"></i></span>
+            <span id="random"><i class="fas fa-random"></i></span>
+            <div id="button-play">
+                <div id="play-icon" >
+                    <i class="fas fa-play"></i>
+                </div>
+                <div id="pause-icon" >
+                    <i class="fas fa-pause"></i>
+                </div>
+        
+            </div>
+            <span id="reDo"><i class="fas fa-redo-alt"></i></span>
+            <span id="next"><i class="fas fa-angle-double-right"></i></span>
         </div>
 
-        <div>
-            <div id="icon_row_player">
-                <span id="back"><i class="fas fa-angle-double-left"></i></span>
-                <span id="random"><i class="fas fa-random"></i></span>
-                <div id="button-play">
-                    <div id="play-icon" >
-                        <i class="fas fa-play"></i>
-                    </div>
-                    <div id="pause-icon" >
-                        <i class="fas fa-pause"></i>
-                    </div>
-            
-                </div>
-                <span id="reDo"><i class="fas fa-redo-alt"></i></span>
-                <span id="next"><i class="fas fa-angle-double-right"></i></span>
-            </div>
+        <audio id="player" src="#"></audio>
 
-            <audio id="player" src="#"></audio>
-
-            <div class="controlBars">
-                <input type="range" value="0" min="0" max="10000" id="duration" class="range"> <br>
-                <div class="volumeBar"> 
-                    <i class="fas fa-volume-up"></i>
-                    <input type="range" value="50" min="0" max="100" id="seek" class="range">
-                </div>
+        <div class="controlBars">
+            <input type="range" value="0" min="0" max="10000" id="duration" class="range"> <br>
+            <div class="volumeBar"> 
+                <i class="fas fa-volume-up"></i>
+                <input type="range" value="50" min="0" max="100" id="seek" class="range">
             </div>
         </div>
     </div>
-    <script type="text/javascript" src="../assets/js/all.js"></script>
-    <script type="module" src="../assets/js/player.js" ></script>
-</body>
-</html>
+</div>
+
+<%- include('partials/footer') %>
 

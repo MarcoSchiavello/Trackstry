@@ -1,60 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="../assets/Img/Logo.png">
-    <link rel="stylesheet" href="../assets/css/style.css">
-    <title>Trackstry Login</title>
-    <style>
-        .site-footer
-        {
-            margin-top: 0;
-        }
-    </style>
-</head>
-<body class="bg_log">
-    <%- include('partials/nav') %>
-    <div id="container_log">
-        <form action="#" class="form" style="height:55%;padding: 40px;" method="POST">
-            <img src="../assets/Img/Logo.png" class="img_log">
-            <input type="text" name="email" required autocomplete="off" class="input_text" style="width: 320px;">
-            <label for="username">E-mail</label>
-            <input type="password" name="password" required required autocomplete="off" class="input_text" style="margin-top: 100px;width: 320px;">
-            <label for="password">Password</label>
-            <input type="submit"  style="margin: auto; margin-top: 100px;width: 220px;min-width: 100px;" class="button">
-            <h5 class="err"></h5>
-        </form>
-    </div>
-    <%- include('partials/footer') %>
-    <script type="module">
-        import Req from '../assets/js/requests.js'; 
+<%- include("partials/head", { title: 'Login', js: [ { file: 'pages/login.js' } ] }) %> 
+<%- include('partials/nav') %>
 
-        document.querySelector(".form").addEventListener("submit", e =>{
-            let email = document.querySelector(".form > input[name='email']").value;
-            let password = document.querySelector(".form > input[name='password']").value;
-            let data = {
-                email: email,
-                password: password
-            };
-            event.preventDefault();
+<div id="container_log">
+    <form action="#" class="form" style="height:55%;padding: 40px;" method="POST">
+        <img src="../assets/Img/Logo.png" class="img_log">
 
-            Req.APIRequest('auth/login', 'POST', data)
-            .then(res => {
-                if(res.status > 399)
-                    throw new Error(res.status);                
+        <%- include('components/inputText', { name: 'username', label: 'Username' }) %>
+        <%- include('components/inputText', { name: 'password', label: 'Password', type: 'password' }) %>
 
-                if(res.status === 200)
-                    location.href = "/";
-            })
-            .catch(err => {
-                if(Number(err.message) === 500)
-                    document.querySelector(".err").innerHTML = "Errore con il server";
-                else if(Number(err.message) === 401)
-                    document.querySelector(".err").innerHTML = "Email o password sbagliati";
-            });
+        <input type="submit"  style="margin: auto; margin-top: 100px;width: 220px;min-width: 100px;" class="button">
+        <h5 class="err"></h5>
+    </form>
+</div>
 
-        });
-    </script>
-</body>
-</html>
+<%- include('partials/footer') %>

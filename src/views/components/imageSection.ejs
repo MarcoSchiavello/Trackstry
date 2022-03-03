@@ -1,0 +1,23 @@
+<div class="container">
+    <% if(float === 'left') { %>
+        <div style="width: 50%;overflow: hidden;">
+            <img src="../assets/Img/<%= img %>" class="container_img">
+        </div>
+    <% } %>
+    <div style="position: relative;margin-top: 40px;width: 50%;">
+        <div style="margin-left:60px;">
+            <h1 style="margin-bottom:40px;"><%= title %></h1>
+            <p style="font-size: 18px;">
+                <%= text %>
+            </p>
+        </div>
+        <button  class="button" style="position: absolute;right: 50%;top: 70%;transform: translateX(+50%)">
+            <%= btn.text %>
+        </button>
+    </div>
+    <% if(float === 'right') { %>
+        <div style="width: 50%;overflow: hidden;">
+            <img src="../assets/Img/<%= img %>" class="container_img">
+        </div>
+    <% } %>
+</div>

@@ -91,3 +91,11 @@ function getTimeFormat(time)
         sec = "0"+sec;
     return min+":"+sec;
 }
+//moves the navbar cursor in the position indicated as parameter
+function movePointer(voce)
+{
+    var voce = document.getElementsByTagName("li")[voce];
+    var selector = document.getElementById("selector");
+    selector.style.left= (voce.offsetLeft + (voce.offsetWidth/2)-(selector.offsetWidth/2) + "px");
+} 
+
