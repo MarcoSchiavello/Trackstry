@@ -1,13 +1,13 @@
 <%- include("partials/head", { title: 'Trackstry', js: [ { file: 'pages/index.js', module: false } ] }) %> 
 <%- include('partials/nav')%>
 
-<div id="cover">
-    <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);z-index: 98;">
-        <h1 id="title_index">Trackstry</h1>   
-        <h3 style="text-align: center;" id="subtitle_index">Dai vita alla tua musica</h3>   
+<div class="cover container">
+    <div class="cover__cont container container--nogap">
+        <h1 class="cover__cont__title">Trackstry</h1>   
+        <h3 class="cover__cont__subtitle">Dai vita alla tua musica</h3>   
     </div>
 
-    <img src="../assets/Img/home/bg_home.jpg" style="width: 100%;height: 100%;filter: blur(6px); transform: scale(1.1);" >
+    <img class="cover__img" src="../assets/img/slider/bg_home.jpg" >
 </div>
 
 <%- include('components/imageSection', {title: 'La tua musica', 
@@ -15,7 +15,7 @@
                                                crei per far spere a gli altri chi sei veramente attraverso<br>
                                                la tua musica cosa aspetti inizia a caricare le tue canzioni.`, 
                                         btn: { text: 'Clicca qui' }, 
-                                        img: 'home/sec_1.jpg', 
+                                        img: 'slider/sec_1.jpg', 
                                         float: 'left'}) %>
 
 <%- include('components/imageSection', {title: 'Artisti', 
@@ -23,7 +23,7 @@
                                                cosa gli altri artisti hanno da offrire scoprendo novi generi<br>
                                                che più si addicono a te e alla tua personalità.`, 
                                         btn: { text: 'Clicca qui' }, 
-                                        img: 'home/sec_2.jpg', 
+                                        img: 'slider/sec_2.jpg', 
                                         float: 'right'}) %>
 
 <%- include('components/imageSection', {title: 'Iscriviti', 
@@ -31,9 +31,9 @@
                                                ad unirti, iscriviti e dai inizio alla festa con la tua creatività.<br>
                                                Clicca sul bottone per Iscriverti.`, 
                                         btn: { text: 'Clicca qui' }, 
-                                        img: 'home/sec_3.jpg', 
+                                        img: 'slider/sec_3.jpg', 
                                         float: 'left'}) %>
 
-<%- include('components/slider') %>
+<%- include('components/slider', { imgs: [ 'slider/bg_home.jpg', 'slider/sec_1.jpg', 'slider/sec_2.jpg', 'slider/sec_3.jpg' ] }) %>
 
 <%- include('partials/footer') %>

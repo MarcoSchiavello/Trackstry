@@ -1,11 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Quicksand&family=Varela+Round&display=swap');
-html,body
-{
-  font-family: 'Quicksand', sans-serif;
+html,body {
   margin: 0;
   width: 100%;
   height: 100%;
   box-sizing: border-box;
+  font-family: 'Quicksand', sans-serif;
 }
 ::-webkit-scrollbar
 {

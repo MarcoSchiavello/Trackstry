@@ -1,6 +1,7 @@
+@import 'variables.css';
 @import 'base.css';
-@import 'variable.css';
 @import 'layouts.css';
+@import 'animations.css';
 @import 'components.css';
 
 /*------------------index-------------------------*/
@@ -12,13 +13,6 @@
   display: block;
   overflow: hidden;
   min-width: 1200px;
-}
-.container
-{
-    display: block;
-    width: 100%;
-    height: 50%;
-    display: flex;
 }
 .container_img
 {

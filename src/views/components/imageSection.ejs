@@ -1,23 +1,23 @@
-<div class="container">
+<div class="img-sec container container--row container--nogap">
     <% if(float === 'left') { %>
-        <div style="width: 50%;overflow: hidden;">
-            <img src="../assets/Img/<%= img %>" class="container_img">
+        <div class="img-sec__sec">
+            <img src="../assets/img/<%= img %>" class="img-sec__sec__img">
         </div>
     <% } %>
-    <div style="position: relative;margin-top: 40px;width: 50%;">
-        <div style="margin-left:60px;">
-            <h1 style="margin-bottom:40px;"><%= title %></h1>
-            <p style="font-size: 18px;">
+    <div class="img-sec__sec container">
+        <div class="img-sec__sec__text container container--nogap container--noValign">
+            <h1><%= title %></h1>
+            <p>
                 <%= text %>
             </p>
         </div>
-        <button  class="button" style="position: absolute;right: 50%;top: 70%;transform: translateX(+50%)">
+        <button class="button">
             <%= btn.text %>
         </button>
     </div>
     <% if(float === 'right') { %>
-        <div style="width: 50%;overflow: hidden;">
-            <img src="../assets/Img/<%= img %>" class="container_img">
+        <div class="img-sec__sec">
+            <img src="../assets/img/<%= img %>" class="img-sec__sec__img">
         </div>
     <% } %>
 </div>

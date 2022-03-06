@@ -1,24 +1,11 @@
-<div id="container_slider">
-    <div id="slider">
-        <div id="img_container_slider">
-            <div  class="img_slider">
-                <img src="../assets/Img/home/sec_3.jpg" class="inner_img_slider">
-            </div>
-            <div  class="img_slider">
-                <img src="../assets/Img/home/bg_home.jpg" class="inner_img_slider">
-            </div>
-            <div  class="img_slider">
-                <img src="../assets/Img/home/sec_1.jpg" class="inner_img_slider">
-            </div>
-            <div  class="img_slider">
-                <img src="../assets/Img/home/sec_2.jpg" class="inner_img_slider">
-            </div>
-            <div  class="img_slider">
-                <img src="../assets/Img/home/sec_3.jpg" class="inner_img_slider">
-            </div>
-            <div  class="img_slider">
-                <img src="../assets/Img/home/bg_home.jpg" class="inner_img_slider">
-            </div>
+<div class="slider-cont">
+    <div class="slider">
+        <div class="slider__img-cont container container--row container--nogap">
+            <img src="../assets/img/<%= imgs[imgs.length - 1] %>" class="slider__img-cont__img">
+            <% for( let i = 0; i < imgs.length; i++ ) { %>
+                <img src="../assets/img/<%= imgs[i] %>" class="slider__img-cont__img">
+            <% } %>
+            <img src="../assets/img/<%= imgs[0] %>" class="slider__img-cont__img">
         </div>
     </div>
 </div>

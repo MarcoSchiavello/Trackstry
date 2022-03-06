@@ -53,7 +53,7 @@ function recount()
 //swap to the next img in the slider show
 function slideNext()
 {
-    const slider = document.getElementById("img_container_slider");
+    const slider = document.querySelector(".slider__img-cont");
     if(slider.childElementCount-1 == offset)
     {
         slider.style.transition = "unset";
