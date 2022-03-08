@@ -95,7 +95,7 @@ function getTimeFormat(time)
 function movePointer(voce)
 {
     var voce = document.getElementsByTagName("li")[voce];
-    var selector = document.querySelector(".nav__opt-cont__selector");
+    var selector = document.querySelector(".nav__selector");
     selector.style.left= (voce.offsetLeft + (voce.offsetWidth/2)-(selector.offsetWidth/2) + "px");
 } 
 

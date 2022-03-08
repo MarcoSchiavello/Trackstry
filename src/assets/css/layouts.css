@@ -21,6 +21,15 @@
 .container--justBtwn {
     justify-content: space-between;
 }
+
 .container--noValign {
     align-items: flex-start;
+}
+
+.container--SMarginH {
+    margin: 0 1rem;
+}
+
+.container--SMarginV {
+    margin: 1rem 0;
 }

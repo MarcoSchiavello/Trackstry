@@ -15,12 +15,12 @@ Req.APIRequest('auth/isLoggedIn', 'GET')
         <a href="/">
             <img src="../assets/img/Logo.png" alt="icon" class="nav__logo">
         </a>
-        <div class="container container--row">
-            <ul style="display: flex;padding: 0;padding: 10px 20px;">
-                <li onmouseover="movePointer(0)" class="voice_nav" ><a href="/">Home</a></li>
-                <li onmouseover="movePointer(1)" class="voice_nav" ><a href="/artisti">artisti</a></li>
-                <li class="voice_nav" id="nav_user" >
-                    <span>Username</span>
+        <div class="nav__opt-cont container container--row container--nogap">
+            <ul class="nav__opt-cont__voices container container--row container--nogap">
+                <li onmouseover="movePointer(0)"><a href="/">Home</a></li>
+                <li onmouseover="movePointer(1)"><a href="/artisti">artisti</a></li>
+                <li id="nav_user" >
+                    <span></span>
                     <div id="user_cont">
                         <ul id="drop_user_cont">
                             <li class="cont_voice"><a href="/mia_musica/${artist.id}">Musica</a></li>
@@ -30,11 +30,11 @@ Req.APIRequest('auth/isLoggedIn', 'GET')
                 </li>       
             </ul>
 
-            <img src="../assets/Img/nav/selector.png" alt="selector" id="selector">
+            <img src="../assets/img/nav/selector.png" alt="selector" class="nav__opt-cont__selector">
+                
+            <hr class="nav__opt-cont__separator">
             
-            <hr class="splitbar_nav">
-            
-            <div style="display: flex;align-items: center;">
+            <div class="container container--row container--Sgap container--SMarginH">
                 <img src="#" id="img_user_nav">
                 <div id="welcome_user">
                     Ciao, <br>
@@ -86,26 +86,71 @@ Req.APIRequest('auth/isLoggedIn', 'GET')
 })
 .catch(err =>{
     //nav for users that are not logged in
-    document.querySelector(".nav").innerHTML = `
+    /*document.querySelector(".nav").innerHTML = `
             <a href="/">
                 <img src="../assets/img/Logo.png" alt="icon" class="nav__logo">
             </a>
             <div class="nav__opt-cont container container--row container--nogap">
-                <ul class="nav__opt-cont__voices container container--row container--nogap">
-                    <li onmouseover="movePointer(0)" class="voice_nav" ><a href="/">Home</a></li>
-                    <li onmouseover="movePointer(1)" class="voice_nav" ><a href="/artisti">artisti</a></li>
+                <ul class="nav__voices container container--row container--nogap">
+                    <li onmouseover="movePointer(0)"><a href="/">Home</a></li>
+                    <li onmouseover="movePointer(1)"><a href="/artisti">artisti</a></li>
                 </ul>
-                <img src="../assets/img/nav/selector.png" alt="selector" class="nav__opt-cont__selector">
+                <img src="../assets/img/nav/selector.png" alt="selector" class="nav__selector">
                 
-                <hr class="nav__opt-cont__separator">
+                <hr class="nav__separator">
                 
-                <div class="container container--row container--nogap">
+                <div class="container container--row container--Sgap container--SMarginH">
                     <a href="/login">
                         Login
                     </a>
                     <button class="button" onclick="location.href = '/signup'">
                         Sign up
                     </button>
+                </div>
+            </div>`;*/
+
+        const artist = { id: 2 };
+        document.querySelector(".nav").innerHTML = `
+            <a href="/">
+                <img src="../assets/img/Logo.png" alt="icon" class="nav__logo">
+            </a>
+            <div class="nav__opt-cont container container--row container--nogap">
+                <ul class="nav__voices container container--row container--nogap">
+                    <li onmouseover="movePointer(0)"><a href="/">Home</a></li>
+                    <li onmouseover="movePointer(1)"><a href="/artisti">artisti</a></li>
+                    <li id="nav_user" >
+                        <span>sdadas</span>
+                        <div class="nav-menu" id="user_cont">
+                            <ul id="drop_user_cont">
+                                <li class="cont_voice"><a href="/mia_musica/${artist.id}">Musica</a></li>
+                                <li class="cont_voice" style="border-bottom: none;"><a href="/preferiti/${artist.id}">Preferiti</a></li>
+                            </ul>
+                        </div>
+                    </li>       
+                </ul>
+    
+                <img src="../assets/img/nav/selector.png" alt="selector" class="nav__selector">
+                    
+                <hr class="nav__separator">
+                
+                <div class="nav__usr-cont container container--row container--Sgap container--SMarginH">
+                    <img src="#" id="img_user_nav">
+                    <div id="welcome_user">
+                        Ciao, <br>dsadadads
+                    </div>
+
+                    <span class="nav__dot-menu">
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                    </span>
+
+                    <div class="nav-menu" id="nav__dot-menu" style="width: 150px;">
+                        <ul style="display: flex;padding: 0;flex-direction: column;margin: 0;">
+                            <li class="cont_voice"><a href="/profilo/${artist.id}">Modifica profilo</a></li>
+                            <li class="cont_voice" style="border-bottom: none;"><a id="logout">Logout</a></li>
+                        </ul>
+                    </div>
                 </div>
             </div>`;
 })
