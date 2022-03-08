@@ -1,6 +1,6 @@
 :root {
     /*________Colors_________*/
-    --clr-primary: black;
+    --clr-primary: #26272b;
     --clr-background: white;    
     --clr-filter: rgba(75, 75, 75, 0.301);
     --clr-error: red;

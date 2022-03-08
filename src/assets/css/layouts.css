@@ -14,6 +14,13 @@
     gap: 0;
 }
 
+.container--Sgap {
+    gap: 1rem;
+}
+
+.container--justBtwn {
+    justify-content: space-between;
+}
 .container--noValign {
     align-items: flex-start;
 }

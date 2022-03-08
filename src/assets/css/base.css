@@ -10,13 +10,14 @@ html,body {
 {
     display: none;
 }
-a
-{
+a {
   text-decoration: none;
-  color: black;
+  color: var(--clr-primary);
 }
-h3  
-{
+a:hover {
+  text-decoration: underline;
+}
+h3 {
     margin: 0;
     padding: 0;
 }

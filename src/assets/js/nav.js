@@ -11,11 +11,11 @@ Req.APIRequest('auth/isLoggedIn', 'GET')
 })
 .then(artist => {
     //in case of success load the nav for logged user and his action
-    document.querySelector("#header").innerHTML = `
+    document.querySelector(".nav").innerHTML = `
         <a href="/">
-            <img src="../assets/Img/Logo.png" alt="icon" id="logo">
+            <img src="../assets/img/Logo.png" alt="icon" class="nav__logo">
         </a>
-        <div style="display: flex; align-items: center;margin: 0 7px;">
+        <div class="container container--row">
             <ul style="display: flex;padding: 0;padding: 10px 20px;">
                 <li onmouseover="movePointer(0)" class="voice_nav" ><a href="/">Home</a></li>
                 <li onmouseover="movePointer(1)" class="voice_nav" ><a href="/artisti">artisti</a></li>
@@ -31,7 +31,9 @@ Req.APIRequest('auth/isLoggedIn', 'GET')
             </ul>
 
             <img src="../assets/Img/nav/selector.png" alt="selector" id="selector">
+            
             <hr class="splitbar_nav">
+            
             <div style="display: flex;align-items: center;">
                 <img src="#" id="img_user_nav">
                 <div id="welcome_user">
@@ -84,26 +86,28 @@ Req.APIRequest('auth/isLoggedIn', 'GET')
 })
 .catch(err =>{
     //nav for users that are not logged in
-    document.querySelector("#header").innerHTML = `
-        <a href="/">
-            <img src="../assets/Img/Logo.png" alt="icon" id="logo">
-        </a>
-        <div style="display: flex; align-items: center;margin: 0 20px;">
-            <ul style="display: flex;padding: 0;">
-                <li onmouseover="movePointer(0)" class="voice_nav" ><a href="/">Home</a></li>
-                <li onmouseover="movePointer(1)" class="voice_nav" ><a href="/artisti">artisti</a></li>
-            </ul>
-            <img src="../assets/Img/nav/selector.png" alt="selector" id="selector">
-            <hr style="transform: rotate(90deg);width: 40px;border:solid black 1px;">
-            <div style="display: flex;align-items: center;">
-                <a href="/login" id="logIn">
-                    Login
-                </a>
-                <button class="button" onclick="location.href = '/signup'">
-                    Sign up
-                </button>
-            </div>
-        </div>`;
+    document.querySelector(".nav").innerHTML = `
+            <a href="/">
+                <img src="../assets/img/Logo.png" alt="icon" class="nav__logo">
+            </a>
+            <div class="nav__opt-cont container container--row container--nogap">
+                <ul class="nav__opt-cont__voices container container--row container--nogap">
+                    <li onmouseover="movePointer(0)" class="voice_nav" ><a href="/">Home</a></li>
+                    <li onmouseover="movePointer(1)" class="voice_nav" ><a href="/artisti">artisti</a></li>
+                </ul>
+                <img src="../assets/img/nav/selector.png" alt="selector" class="nav__opt-cont__selector">
+                
+                <hr class="nav__opt-cont__separator">
+                
+                <div class="container container--row container--nogap">
+                    <a href="/login">
+                        Login
+                    </a>
+                    <button class="button" onclick="location.href = '/signup'">
+                        Sign up
+                    </button>
+                </div>
+            </div>`;
 })
 .finally(() => {
     //instructions that have to be done regardless of the user auth
@@ -122,7 +126,7 @@ Req.APIRequest('auth/isLoggedIn', 'GET')
             movePointer(0);
     });
 
-    var header = document.getElementById("header");
+    var header = document.querySelector(".nav");
     if (document.documentElement.scrollTop >= 150) 
     {
         header.style.background="white";
