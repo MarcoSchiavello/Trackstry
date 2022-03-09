@@ -3,6 +3,14 @@
 import Config from '/config.json' assert { type: 'json' };
 import Req from '/assets/js/requests.js'; 
 
+//moves the navbar cursor in the position indicated as parameter
+function movePointer(voce)
+{
+    const voceEle = document.querySelectorAll('.nav__voices > li')[voce];
+    const selector = document.querySelector('.nav__selector');
+    selector.style.left= (voceEle.offsetLeft + (voceEle.offsetWidth/2)-(selector.offsetWidth/2) + 'px');
+} 
+
 Req.APIRequest('auth/isLoggedIn', 'GET')
 .then(res => {
     if(res.status > 399) //throw an error if the api goes wrong
@@ -11,184 +19,125 @@ Req.APIRequest('auth/isLoggedIn', 'GET')
 })
 .then(artist => {
     //in case of success load the nav for logged user and his action
-    document.querySelector(".nav").innerHTML = `
-        <a href="/">
-            <img src="../assets/img/Logo.png" alt="icon" class="nav__logo">
-        </a>
-        <div class="nav__opt-cont container container--row container--nogap">
-            <ul class="nav__opt-cont__voices container container--row container--nogap">
-                <li onmouseover="movePointer(0)"><a href="/">Home</a></li>
-                <li onmouseover="movePointer(1)"><a href="/artisti">artisti</a></li>
-                <li id="nav_user" >
-                    <span></span>
-                    <div id="user_cont">
-                        <ul id="drop_user_cont">
-                            <li class="cont_voice"><a href="/mia_musica/${artist.id}">Musica</a></li>
-                            <li class="cont_voice" style="border-bottom: none;"><a href="/preferiti/${artist.id}">Preferiti</a></li>
-                        </ul>
-                    </div>
-                </li>       
-            </ul>
+    document.querySelector('.nav').innerHTML = `
+    <a href="/">
+        <img src="../assets/img/Logo.png" alt="icon" class="nav__logo">
+    </a>
+    <div class="container container--row container--nogap">
+        <ul class="nav__voices container container--row container--nogap">
+            <li on0)"><a href="/">Home</a></li>
+            <li><a href="/artisti">artisti</a></li>
+            <li class="user-menu container " id="userMenu" >
+                <span class="user-menu__voice" >sdadas</span>
+                <ul class="user-menu__list" id="userMenuCont">
+                    <li><a href="/mia_musica/${artist.id}">Musica</a></li>
+                    <li><a href="/preferiti/${artist.id}">Preferiti</a></li>
+                </ul>
+            </li>       
+        </ul>
 
-            <img src="../assets/img/nav/selector.png" alt="selector" class="nav__opt-cont__selector">
-                
-            <hr class="nav__opt-cont__separator">
+        <img src="../assets/img/nav/selector.png" alt="selector" class="nav__selector">
             
-            <div class="container container--row container--Sgap container--SMarginH">
-                <img src="#" id="img_user_nav">
-                <div id="welcome_user">
-                    Ciao, <br>
-                </div>
-                <span id="three_dot">
-                    <div class="dot"></div>
-                    <div class="dot"></div>
-                    <div class="dot"></div>
-                </span>
-                <div id="three_dot_cont" style="width: 150px;">
-                    <ul style="display: flex;padding: 0;flex-direction: column;margin: 0;">
-                        <li class="cont_voice"><a href="/profilo/${artist.id}">Modifica profilo</a></li>
-                        <li class="cont_voice" style="border-bottom: none;"><a id="logout">Logout</a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>`;
+        <hr class="nav__separator">
         
-    document.querySelector("#img_user_nav").src = `http://${Config.API}` + artist.img;
-    document.querySelector("#welcome_user").innerHTML += artist.name;
-    document.querySelector("#nav_user > span").innerHTML = artist.name;
+        <div class="nav__user-cont container container--row container--Sgap container--SMarginH">
+            <img src="../assets/img/slider/sec_1.jpg" class="nav__user-img">
+
+            <div class="nav__username">
+                Ciao, <br>dsadadads
+            </div>
+
+            <div class="dot-menu"> 
+                <span class="dot-menu__icon container container--nogap" id="dotMenuIcon">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </span>
+
+                <ul class="dot-menu__list user-menu__list" id="dotMenuCont">
+                    <li><a href="/profilo/${artist.id}">Modifica profilo</a></li>
+                    <li><a id="logout">Logout</a></li>
+                </ul>
+            </div>
+            
+        </div>
+    </div>`;
+        
+    document.querySelector('.nav__user-img').src = `http://${Config.API}` + artist.img;
+    document.querySelector('.nav__username').innerHTML += artist.name;
+    document.querySelector('.user-menu__voice').innerHTML = artist.name;
 
     //drop menu three dot
-    document.querySelector("#three_dot").onclick = () => {
-        var ele = document.getElementById("three_dot_cont");
-        if(ele.style.display == "block")
-            ele.style.display = "none";
+    document.querySelector('#dotMenuIcon').onclick = () => {
+        const dotMenuCont = document.querySelector('#dotMenuCont');
+        if(dotMenuCont.style.display == 'block')
+            dotMenuCont.style.display = 'none';
         else
-            ele.style.display = "block";
+            dotMenuCont.style.display = 'block';
     };
 
-    document.querySelector("#logout").onclick = e =>{
+    document.querySelector('#logout').onclick = e =>{
         Req.APIRequest('auth/logout', 'POST')
         .then(res => {
             location.href = "/login";
         });
     }
-
-    document.querySelector("#nav_user").addEventListener("mouseover",e => {
-        movePointer(2);
-        document.querySelector("#user_cont").style.display = "block";
-    });
-
-    document.querySelector("#nav_user").addEventListener("mouseover",e => movePointer(2));
-    
-    document.querySelector("#nav_user").addEventListener("mouseleave",e => {
-        document.querySelector("#user_cont").style.display = "none";
-    });
 })
 .catch(err =>{
     //nav for users that are not logged in
-    /*document.querySelector(".nav").innerHTML = `
-            <a href="/">
-                <img src="../assets/img/Logo.png" alt="icon" class="nav__logo">
+    document.querySelector(".nav").innerHTML = `
+    <a href="/">
+    <img src="../assets/img/Logo.png" alt="icon" class="nav__logo">
+    </a>
+    <div class="container container--row container--nogap">
+        <ul class="nav__voices container container--row container--nogap">
+            <li><a href="/">Home</a></li>
+            <li><a href="/artisti">artisti</a></li>    
+        </ul>
+
+        <img src="../assets/img/nav/selector.png" alt="selector" class="nav__selector">
+            
+        <hr class="nav__separator">
+        
+        <div class="nav__user-cont container container--row container--Sgap container--SMarginH">
+            <a class="nav__login" href="/login">
+                Login
             </a>
-            <div class="nav__opt-cont container container--row container--nogap">
-                <ul class="nav__voices container container--row container--nogap">
-                    <li onmouseover="movePointer(0)"><a href="/">Home</a></li>
-                    <li onmouseover="movePointer(1)"><a href="/artisti">artisti</a></li>
-                </ul>
-                <img src="../assets/img/nav/selector.png" alt="selector" class="nav__selector">
-                
-                <hr class="nav__separator">
-                
-                <div class="container container--row container--Sgap container--SMarginH">
-                    <a href="/login">
-                        Login
-                    </a>
-                    <button class="button" onclick="location.href = '/signup'">
-                        Sign up
-                    </button>
-                </div>
-            </div>`;*/
-
-        const artist = { id: 2 };
-        document.querySelector(".nav").innerHTML = `
-            <a href="/">
-                <img src="../assets/img/Logo.png" alt="icon" class="nav__logo">
-            </a>
-            <div class="nav__opt-cont container container--row container--nogap">
-                <ul class="nav__voices container container--row container--nogap">
-                    <li onmouseover="movePointer(0)"><a href="/">Home</a></li>
-                    <li onmouseover="movePointer(1)"><a href="/artisti">artisti</a></li>
-                    <li id="nav_user" >
-                        <span>sdadas</span>
-                        <div class="nav-menu" id="user_cont">
-                            <ul id="drop_user_cont">
-                                <li class="cont_voice"><a href="/mia_musica/${artist.id}">Musica</a></li>
-                                <li class="cont_voice" style="border-bottom: none;"><a href="/preferiti/${artist.id}">Preferiti</a></li>
-                            </ul>
-                        </div>
-                    </li>       
-                </ul>
-    
-                <img src="../assets/img/nav/selector.png" alt="selector" class="nav__selector">
-                    
-                <hr class="nav__separator">
-                
-                <div class="nav__usr-cont container container--row container--Sgap container--SMarginH">
-                    <img src="#" id="img_user_nav">
-                    <div id="welcome_user">
-                        Ciao, <br>dsadadads
-                    </div>
-
-                    <span class="nav__dot-menu">
-                        <div></div>
-                        <div></div>
-                        <div></div>
-                    </span>
-
-                    <div class="nav-menu" id="nav__dot-menu" style="width: 150px;">
-                        <ul style="display: flex;padding: 0;flex-direction: column;margin: 0;">
-                            <li class="cont_voice"><a href="/profilo/${artist.id}">Modifica profilo</a></li>
-                            <li class="cont_voice" style="border-bottom: none;"><a id="logout">Logout</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>`;
+            <button class="button" onclick="location.href = '/signup'">
+                Sign up
+            </button>
+        </div>
+    </div>`;
 })
 .finally(() => {
-    //instructions that have to be done regardless of the user auth
-    movePointer(0);
-    //------------------puntatore nav-bar---------------------
-    document.addEventListener('mousemove', e =>{
-        var on_ele = document.elementFromPoint(e.pageX - window.pageXOffset, e.pageY - window.pageYOffset);
-        /*
-            window.pageYOffset dice di quanto ho "scrollato" avendo questo posso prendere la posizione assoluta del cursore e togliergli 
-            di quanto scrollato in modo da avere la posizione del mouse relativa alla mia finestra facendo credere che il mio cursore sia in alto nel documento
-            in modo da triggerare l'evento e al coltempo essere nella mia finestra come deve essere
-        */
-        if(on_ele == null)
-            return;
-        if( !on_ele.matches("ul") && !on_ele.matches("li")  && !on_ele.matches("a") && !on_ele.matches("span"))
-            movePointer(0);
+    
+    document.querySelectorAll('.nav__voices > li').forEach((voice, i) => {
+        voice.addEventListener('mouseover', e => { movePointer(i) });
+        voice.addEventListener('mouseleave', e => { movePointer(0) });
     });
 
-    var header = document.querySelector(".nav");
+    movePointer(0);
+
+    const nav = document.querySelector(".nav");
     if (document.documentElement.scrollTop >= 150) 
     {
-        header.style.background="white";
-        header.style.borderBottom="solid black 1px";
+        nav.style.background="white";
+        nav.style.borderBottom="solid black 1px";
     }
 
     window.onscroll = () => {
         if (document.documentElement.scrollTop >= 10) 
         {
-            header.style.background="white";
-            header.style.borderBottom="solid black 1px";
+            nav.style.background="white";
+            nav.style.borderBottom="solid black 1px";
         }
         else 
         {
-            header.style.background="transparent";
-            header.style.borderBottom="";
+            nav.style.background="transparent";
+            nav.style.borderBottom="";
         }
     };
+
+    window.onresize = () => movePointer(0);
  
 });
