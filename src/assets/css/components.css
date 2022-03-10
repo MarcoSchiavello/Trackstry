@@ -4,8 +4,8 @@
   color: var(--clr-background);
   background-color: var(--clr-primary);
   border: solid 1px var(--clr-primary);
-  padding: 5px;
-  font-size: 20px;
+  padding: 0.4rem;
+  font-size: var(--font-size-M);
   font-family: var(--font-text);
   transition: 0.3s;
   font-weight: bold;
@@ -24,19 +24,19 @@
   border: none;
   border-bottom: solid var(--clr-primary) 2px;
   outline: none;
-  padding: 3px;
-  font-size: 18px;
+  padding: 0.3rem;
+  font-size: var(--font-size-S);
   transition: 0.3s;
-  min-width: 220px;
+  min-width: 10rem;
   background-color: transparent;
 }
 .input_text + label
 {
   opacity: 0.6;
   position: relative;
-  top: -17px;
-  left: 3px;
-  font-size: 18px;
+  top: -1rem;
+  left: 0.3rem;
+  font-size: var(--font-size-S);
   pointer-events: none;
   transition: 0.3s;
   height: 0;
@@ -50,18 +50,18 @@
 .input_text:valid + label
 {
   opacity: 1;
-  font-size: 14px;
-  top: -40px;
+  font-size: 0.7rem;
+  top: -3rem;
 }
 .input_text:focus + label
 {
   opacity: 1;
-  font-size: 14px;
-  top: -40px;
+  font-size: 0.7rem;
+  top: -3rem;
 }
 /*________Slider________*/
 .slider-cont {
-  background-color: #26272b;
+  background-color: var(--clr-primary);
 }
 .slider {
   width: 100%;
@@ -128,7 +128,7 @@
   object-fit: cover;
 }
 .img-sec__text {
-  margin: 0 3.5rem;
+  width: 70ch;
   box-sizing: border-box;
 }
 /*________Nav-bar_______*/
