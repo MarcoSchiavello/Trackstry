@@ -3,11 +3,14 @@ html,body {
   margin: 0;
   width: 100%;
   height: 100%;
+
   box-sizing: border-box;
-  font-family: 'Quicksand', sans-serif;
+  font-family: var(--font-text);
 }
-::-webkit-scrollbar
-{
+main {
+  min-height: 1500px;
+}
+::-webkit-scrollbar {
     display: none;
 }
 a {
@@ -18,12 +21,10 @@ h3 {
     margin: 0;
     padding: 0;
 }
-.shadow_text
-{
+.shadow_text {
   text-shadow:0 0 10px white;
 }
-li
-{
+li {
   list-style: none;
 }
 input[type="range"]::-moz-focus-outer {
@@ -42,16 +43,17 @@ input[type="range"]::-webkit-slider-thumb {
   border-radius: 100%;
   outline:none;
 }
-.line
-{
+.line {
   width: 100%;
   margin: 0;
   border: black solid 1px;
 }
-.err
-{
+.err {
   width: max-content;
   margin: 10px auto;
   color: red;
   height: 0;
+}
+.template {
+  display: none;
 }

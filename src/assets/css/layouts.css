@@ -33,3 +33,18 @@
 .container--SMarginV {
     margin: 1rem 0;
 }
+
+.card-cont {
+    display: grid;
+    justify-items: center;
+    justify-content: center;  
+    grid-template-columns: repeat(auto-fill, 15rem); 
+}
+
+.card-cont--fullWidth {
+    width: 100%;
+}
+
+.card-cont--VMargin {
+    margin: 2rem 0;
+}

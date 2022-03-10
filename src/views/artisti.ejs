@@ -2,20 +2,14 @@
 <%- include("partials/nav") %> 
 
 <div id="cover_canzoni" >
-    <img src="../assets/Img/home/sec_2.jpg" class="img_cover" >
+    <img src="../assets/img/slider/sec_2.jpg" class="img_cover" >
     <div id="cover_filter"></div>
     <h1 style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);margin: 0;z-index: 31;font-size: 50px;">Artisti</h1>
 </div>
 
-<div class="cointeiner_card">
+<div class="artists-cont card-cont card-cont--fullWidth card-cont--VMargin">
 
-    <div class="card_artisti" style="display: none;">
-        <div class="card_img">
-            <div class="filter_card"></div>
-            <img src="#">
-        </div>
-        <h2 class="name_artista"></h2>
-    </div>
+    <%- include("components/artistCard") %> 
 
 </div>
 

@@ -25,7 +25,7 @@ Req.APIRequest('auth/isLoggedIn', 'GET')
     </a>
     <div class="container container--row container--nogap">
         <ul class="nav__voices container container--row container--nogap">
-            <li on0)"><a href="/">Home</a></li>
+            <li><a href="/">Home</a></li>
             <li><a href="/artisti">artisti</a></li>
             <li class="user-menu container " id="userMenu" >
                 <span class="user-menu__voice" >sdadas</span>
@@ -41,7 +41,7 @@ Req.APIRequest('auth/isLoggedIn', 'GET')
         <hr class="nav__separator">
         
         <div class="nav__user-cont container container--row container--Sgap container--SMarginH">
-            <img src="../assets/img/slider/sec_1.jpg" class="nav__user-img">
+            <img src="#" class="nav__user-img">
 
             <div class="nav__username">
                 Ciao, <br>dsadadads
