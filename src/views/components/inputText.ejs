@@ -1,2 +1,4 @@
-<input type="<%= typeof type === 'undefined'  ? 'text' : type %>" name="<%= name %>" required autocomplete="off" class="input_text" style="width: 320px;">
-<label for="<%= name %>"><%= label %></label>
+<div class="input_text">
+    <input class="input_text__input" type="<%= typeof type === 'undefined'  ? 'text' : type %>" name="<%= name %>" required autocomplete="off">
+    <label class="input_text__label" for="<%= name %>"><%= label %></label>
+</div>

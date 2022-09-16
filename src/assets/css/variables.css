@@ -4,6 +4,9 @@
     --clr-background: white;    
     --clr-filter: rgba(75, 75, 75, 0.301);
     --clr-error: red;
+    --clr-rem-btn: rgb(255, 75, 75);
+    --clr-add-btn: rgb(55, 223, 55);
+    --clr-hover: rgb(160, 160, 160);
 
     /*________Fonts_________*/
     --font-text: 'Quicksand', sans-serif;
@@ -15,4 +18,7 @@
     --font-size-M: 1.4rem;
     --font-size-S: 1rem;
     --font-size-XS: 0.5rem;
+
+    /*________Box-Shadows_________*/
+    --box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 }

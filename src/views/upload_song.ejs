@@ -1,29 +1,21 @@
-<%- include("partials/head", { title: 'Upload song', js: [ { file: 'pages/uploadSong.js' } ] }) %> 
+<%- include("partials/head", { title: 'Upload song', js: [ { file: 'pages/uploadSong.js' }, { file: 'fakeUpload.js' } ] }) %> 
 <%- include("partials/nav") %>
 
-<div id="container_upload_song">
-    
-    <div id="header_album">
-
-        <div class="fake_upload">
-            <img src="" class="preview">
-            <h3>
-                Inserisci IMG
+<div class="abs-center container">
+    <div class="container container--row">
+        <div class="pivot" fakeUpload="albumImg">
+            <img class="album__img img" preview="albumImg">
+            <h3 class="abs-center">
+                Inserisci immagine
             </h3>
         </div>
+        <input realUpload="albumImg" type="file" class="upload" accept="image/*">
 
-        <input type="file" class="upload" accept="image/*">
-
-        <div class="container_input_text" style="margin-left: 80px;">
-            <input name="title_song" type="text" class="input_text" required autocomplete="off">
-            <label for="title_song">Titolo canzone</label>
-        </div>
-
-        <div class="songUpload">
-            <img src="../assets/Img/upload_icon.png" class="fakeUploadSong">
-            <input type="file" class="uploadSong" accept="audio/*">
-            <h5 id="uploadSongName"></h5>
-        </div>
+        <%- include("components/inputText", { name: 'albumTitle', label: 'Titolo album'}) %> 
+        
+        <img src="../assets/img/upload_icon.png" class="icon" fakeUpload="songFile">
+        <input type="file" realUpload="songFile" accept="audio/*">
+        <h5 fileName="songFile"></h5>
     </div>
 
     <button class="button" id="sub_upload_song">Crea</button>

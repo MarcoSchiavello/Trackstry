@@ -1,13 +1,10 @@
 <%- include("partials/head", { title: 'Artisti', js: [ { file: 'pages/artisti.js' } ] }) %> 
 <%- include("partials/nav") %> 
 
-<div id="cover_canzoni" >
-    <img src="../assets/img/slider/sec_2.jpg" class="img_cover" >
-    <div id="cover_filter"></div>
-    <h1 style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);margin: 0;z-index: 31;font-size: 50px;">Artisti</h1>
-</div>
+<%- include('components/cover', { title: 'Artisti', 
+                                  img: { src: 'assets/img/slider/sec_2.jpg', contrast: true } }) %>
 
-<div class="artists-cont card-cont card-cont--fullWidth card-cont--VMargin">
+<div class="card-cont card-cont--Hborders card-cont--VMargin">
 
     <%- include("components/artistCard") %> 
 

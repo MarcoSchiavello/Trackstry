@@ -4,8 +4,8 @@ import Req from '/assets/js/requests.js';
 
 document.querySelector(".form").addEventListener("submit", e =>{
     e.preventDefault();
-    let email = document.querySelector(".form > input[name='email']").value;
-    let password = document.querySelector(".form > input[name='password']").value;
+    let email = document.querySelector(".form input[name='email']").value;
+    let password = document.querySelector(".form input[name='password']").value;
     let data = {
         email: email,
         password: password

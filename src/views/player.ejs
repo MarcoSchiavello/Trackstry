@@ -1,43 +1,44 @@
-<%- include("partials/head", { title: 'Player', js: [ { file: 'player.js', module: false }, { file: 'all.js', module: false } ] }) %> 
+<%- include("partials/head", { title: 'Player', css: [ 'player.css' ], js: [ { file: 'player.js', module: false }, { file: 'all.js', module: false } ] }) %> 
+<%- include("partials/nav", { hidden: true }) %>
 
 <a href="#" id="prevPage"><i class="fas fa-arrow-left" id="back_arrow_player"></i></a>  
 
-<div id="container_player">
+<div class="abs-center container container--Sgap">
 
-    <img src="#" id="img_player">
+    <img src="https://media-exp2.licdn.com/dms/image/C560BAQH9Cnv1weU07g/company-logo_200_200/0/1575479070098?e=2147483647&v=beta&t=i4Pp6zVfz5VAznPIik_ua4I75sKlu4yAdGKgHC9vpTo" class="player__img" field="songImg">
 
-    <div class="songInfo">
-        <h1></h1>
-        <h5></h5>
+    <div class="player__info container container--nogap">
+        <h1 field="songName" >adsda</h1>
+        <h5 field="songAuthor">dads</h5>
     </div>
 
-    <div>
-        <div id="icon_row_player">
-            <span id="back"><i class="fas fa-angle-double-left"></i></span>
-            <span id="random"><i class="fas fa-random"></i></span>
-            <div id="button-play">
-                <div id="play-icon" >
-                    <i class="fas fa-play"></i>
-                </div>
-                <div id="pause-icon" >
-                    <i class="fas fa-pause"></i>
-                </div>
+    <div class="container container--row">
+        <span id="back"><i class="fas fa-angle-double-left"></i></span>
+        <span id="random"><i class="fas fa-random"></i></span>
+        <div id="button-play">
+            <div id="play-icon" >
+                <i class="fas fa-play"></i>
+            </div>
+            <div id="pause-icon" class="hidden">
+                <i class="fas fa-pause"></i>
+            </div>
+    
+        </div>
+        <span id="reDo"><i class="fas fa-redo-alt"></i></span>
+        <span id="next"><i class="fas fa-angle-double-right"></i></span>
+    </div>
+
+    <audio field="songFile" src="#"></audio>
+
+    <div class="player__bars container container--nogap">
+        <input type="range" value="0" min="0" max="10000" id="duration" class="player__bar range"> <br>
         
-            </div>
-            <span id="reDo"><i class="fas fa-redo-alt"></i></span>
-            <span id="next"><i class="fas fa-angle-double-right"></i></span>
-        </div>
-
-        <audio id="player" src="#"></audio>
-
-        <div class="controlBars">
-            <input type="range" value="0" min="0" max="10000" id="duration" class="range"> <br>
-            <div class="volumeBar"> 
-                <i class="fas fa-volume-up"></i>
-                <input type="range" value="50" min="0" max="100" id="seek" class="range">
-            </div>
+        <div class="player__bar container container--Sgap container--row"> 
+            <div class="icon--small"><i class="fas fa-volume-up"></i></div>
+            <input type="range" value="50" min="0" max="100" id="seek" class="range player__bar">
         </div>
     </div>
+
 </div>
 
 <%- include('partials/footer') %>

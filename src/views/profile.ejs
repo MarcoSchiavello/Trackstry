@@ -1,40 +1,37 @@
 <%- include("partials/head", { title: 'Profile', js: [ { file: 'pages/preferiti.js' } ] }) %> 
 <%- include("partials/nav") %>
 
-<div id="page_container_profile" >
-    <div id="container_profile_data">
-        <div class="container_img_profile">
-            <img src="#" id="img_profile">
-            <div class="filter_img_profile">cambia img</div>
+<div class="profile container">
+    <div class="profile__card container--Lgap container container--row">
+        <div class="pivot">
+            <img class="profile__card__img img" src="/assets/img/slider/sec_1.jpg" field="profileImg">
+            <div class="img-filter container">cambia img</div>
         </div>
-        <div id="profile_info">
-            <span class="profile_data_label">Username</span>
-            <h2 class="profile_data" id="username"></h2>
-            <span class="profile_data_label">E-mail</span>
-            <h2 class="profile_data" id="email"></h2>
-            <span class="profile_data_label">Password</span>
-            <h2 class="profile_data">* * * * * * * * * * *</h2>
+        <div class="container container--nogap container--noValign">
+            <span>Username</span>
+            <h2 class="profile__card__value" field="username">dsadad</h2>
+            <span>E-mail</span>
+            <h2 class="profile__card__value" field="email">dsadad</h2>
+            <span>Password</span>
+            <h2 class="profile__card__value">* * * * * * * * * * *</h2>
         </div>
     </div>
 
-    <div class="changeBanner">
+    <div class="container container--Sgap full-screen-section">
         <h1>Banner</h1>
-        <div class="cointeinerBannerImg">
-            <img src="#" class="imgBanner">
-            <div class="filter_img_profile">cambia banner</div>
+        <div class="pivot">
+            <img class="profile__banner img" src="/assets/img/slider/sec_1.jpg" field="profileBanner">
+            <div class="img-filter container">cambia banner</div>
         </div>
     </div>
 
-    <div id="container_change_profile">
+    <div class="container full-screen-section">
         <h1>Cambia dati</h1>
-        <form method="POST" action="" id="change_form">
-            <input type="text" class="input_text input_change_profile" name="email" required autocomplete="off">
-            <label for="email">nuova mail</label>
-            <input type="text" class="input_text input_change_profile" name="username" required autocomplete="off">
-            <label for="username">nuovo username</label>
-            <input type="text" class="input_text input_change_profile" name="pass" required autocomplete="off">
-            <label for="pass">nuova password</label>
-            <input type="submit" value="Cambia" class="button" id="sub_change_profile">
+        <form method="POST" action="" id="change_form" class="full-screen-section container container--noValign">
+            <%- include('components/inputText', { name: 'newEmail', label: 'Nuova E-mail' }) %>
+            <%- include('components/inputText', { name: 'newUsername', label: 'Nuovo Username' }) %>
+            <%- include('components/inputText', { name: 'newPassword', label: 'Nuova Password' }) %>
+            <button type="button" class="button button--fit-cont">Cambia</button>
         </form>
     </div>
 </div>

@@ -1,13 +1,15 @@
-<%- include("partials/head", { title: 'Signup', js: [ { file: 'pages/signup.js' } ] }) %> 
-<%- include('partials/nav') %>
-<div>
-    <form action="/signup" class="form" style="height:55%;padding: 40px;" method="POST">
-        <img src="../assets/Img/Logo.png" class="img_log">
-        <%- include('components/inputText', { name: 'username', label: 'Username' }) %>
-        <%- include('components/inputText', { name: 'email', label: 'E-mail', type: 'email'}) %>
-        <%- include('components/inputText', { name: 'password', label: 'Password', type: 'password' }) %>
-        <input type="submit"  style="margin: auto; margin-top: 100px;width: 220px;min-width: 100px;" class="button">
-        <h5 class="err"></h5>
-    </form>
-</div>
+<%- include("partials/head", { title: 'Login', js: [ { file: 'pages/login.js' } ] }) %> 
+<%- include('partials/nav', { bgGradient: true, hidden: true }) %>
+
+<form action="#" class="form container" method="POST">
+    <img src="../assets/img/Logo.png" class="from__logo">
+
+    <%- include('components/inputText', { name: 'username', label: 'Username' }) %>
+    <%- include('components/inputText', { name: 'email', label: 'E-mail', type: 'email'}) %>
+    <%- include('components/inputText', { name: 'password', label: 'Password', type: 'password' }) %>
+
+    <input type="submit" value="SignUp" class="form__btn button">
+    <h5 class="form__err err"></h5>
+</form>
+
 <%- include('partials/footer') %>

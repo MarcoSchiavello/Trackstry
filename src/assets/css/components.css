@@ -1,62 +1,206 @@
+/*_________Profile_________*/
+.profile {
+  transform: translateY(8rem);
+}
+.profile__card {
+  box-shadow: var(--box-shadow);
+  padding: 1.5rem 6rem;
+  border-radius: 2rem;
+}
+.profile__card__value {
+  font-size: 1.3rem;
+  margin: 0;
+  margin-bottom: 1rem;
+} 
+*:has(>.profile__card__img) {
+  border-radius: 10rem;
+  overflow: hidden;
+}
+.profile__card__img {
+  border: none;
+  width: 10rem;
+  height: 10rem;
+}
+.profile__card__img:hover + .img-filter {
+  opacity: 1;
+}
+*:has(>.profile__banner) {
+  border-radius: 2rem;
+  overflow: hidden;
+}
+.profile__banner {
+  width: 45rem;
+  height: 25rem;
+}
+.profile__banner:hover + .img-filter {
+  opacity: 1;
+}
+/*_________AddBtn_________*/
+.add-btn {
+  font-family: "quicksand";
+  display: flex;
+  align-items: center;
+  border: solid 2px var(--clr-add-btn);
+  background-color: var(--clr-add-btn);
+  color: var(--clr-background);
+  font-size: 1.1rem;
+  border-radius: 3.1rem;
+  margin: 0.3rem;
+  transition: 0.4s;
+  outline: none;
+  font-weight: bold;
+  position: relative;
+  transition: 0.2s ease;
+}
+.add-btn__cross {
+  font-size: 1.5rem;
+  margin-right: 0.6rem;
+  line-height: 100%;
+  display: inline-block;
+  padding: 0.1rem;
+  position: relative;
+  top: -0.1rem;
+}
+.add-btn:hover {
+  background-color: var(--clr-background);
+  color: var(--clr-add-btn);
+}
+/*_________RemoveBtn_________*/
+.remove-btn {
+  border-radius: 100%;
+  border: var(--clr-rem-btn) solid 2px;
+  background-color: transparent;
+  position: absolute;
+  top: 50%;
+  margin-right: 5px;
+  transform: translateY(-50%);
+  right: 0;
+  cursor: default;
+  transition: 0.2s;
+}
+.remove-line {
+  position: absolute;
+  top: 50%;
+  right: 50%;
+  width: 50%;
+  transform: translate(50%,-50%);
+  margin: 0;
+  border: var(--clr-rem-btn) solid 1px;
+  transition: 0.2s;
+  pointer-events: none;
+}
+.remove-btn:hover .remove-line{ border-color: var(--clr-background); }
+.remove-btn:hover { background-color: var(--clr-rem-btn); }
+/*_________Song_________*/
+.song {
+  width: 80%;
+  margin: auto;
+  position: relative;
+  margin-bottom: 100px;
+  transition: 0.3s;
+  cursor: pointer;
+}
+.song__duration {
+  position: absolute;
+  right: 4rem;
+}
+.song__img {
+  width: 8.6rem;
+  height: 8.6rem;
+}
+.album__song:hover, .song:hover{ background-color: var(--clr-hover); }
+/*_________Album_________*/
+.album {
+  position: relative;
+  width: 80%;
+  margin: 8rem auto;
+}
+.album__heading {
+  margin-bottom: 1rem;
+  position: relative;
+}
+.album__img {
+  width: 8.6rem;
+  height: 8.6rem;
+}
+.album__song-list {
+  width: 100%;
+  padding: 0;
+  margin: 0;
+}
+.album__song {
+  position: relative;
+  padding: 0.5rem 0;
+  width: 100%;
+  font-size: var(--font-size-M);
+  border-bottom: 1px solid var(--clr-primary);
+  transition: 0.4s ease;
+}
+.album__song:hover {
+  background-color: var(--clr-filter);
+}
+.album__fav-star {
+  width: 2rem;
+  position: absolute;
+  right: 0.2rem;
+  top: 50%;
+  transform: translateY(-50%);
+}
 /*_________Button_________*/
-.button
-{
+.button {
   color: var(--clr-background);
   background-color: var(--clr-primary);
   border: solid 1px var(--clr-primary);
-  padding: 0.4rem;
+  padding: 0.4rem 1rem;
   font-size: var(--font-size-M);
   font-family: var(--font-text);
   transition: 0.3s;
   font-weight: bold;
   outline: none;
 }
-.button:hover
-{
+.button:hover {
   background-color: transparent;
   color: var(--clr-primary);
   border: solid 1px var(--clr-primary);
 }
+.button--fit-cont {
+  width: max-content;
+  margin: auto;
+}
 /*_________InputText_______*/
-.input_text
+.input_text {
+  display: flex;
+  flex-direction: column;
+}
+.input_text__input
 {
   font-family: var(--font-text);
   border: none;
   border-bottom: solid var(--clr-primary) 2px;
   outline: none;
-  padding: 0.3rem;
-  font-size: var(--font-size-S);
+  padding: 0.3rem 0.1rem;
+  font-size: var(--font-size-M);
   transition: 0.3s;
   min-width: 10rem;
   background-color: transparent;
 }
-.input_text + label
+.input_text__label
 {
   opacity: 0.6;
   position: relative;
   top: -1rem;
   left: 0.3rem;
-  font-size: var(--font-size-S);
+  font-size: var(--font-size-M);
   pointer-events: none;
   transition: 0.3s;
   height: 0;
   line-height: 0;
 }
-.container_input_text
-{
-  display: flex;
-  flex-direction: column;
-}
-.input_text:valid + label
+.input_text__input:valid + .input_text__label,
+.input_text__input:focus + .input_text__label
 {
   opacity: 1;
-  font-size: 0.7rem;
-  top: -3rem;
-}
-.input_text:focus + label
-{
-  opacity: 1;
-  font-size: 0.7rem;
+  font-size: var(--font-size-S);
   top: -3rem;
 }
 /*________Slider________*/
@@ -82,25 +226,38 @@
   object-fit: cover;
 }
 /*________Cover_________*/
+.cover__cont {
+  position: relative;
+}
 .cover {
   position: relative;
+  height: 55vh;
   width: 100vw;
-  height: 100vh;
   overflow: hidden;
+}
+.cover--fullScreen {
+  height: 100vh;
 }
 .cover__cont {
   z-index: 50;
+}
+.cover__cont--transition > .cover__title {
+  animation: showTitle 2s ease forwards;
+}
+.cover__cont--transition > .cover__subtitle {
+  animation: showSubTitle 2s ease 2s forwards;
 }
 .cover__title {
   font-size: var(--font-size-XXL);
   margin: 0;
   margin-bottom: 15px;
-  animation: showTitle 2s ease forwards;
+}
+.cover__title--medium {
+  font-size: var(--font-size-XL);
 }
 .cover__subtitle {
   font-size: var(--font-size-S);
   opacity: 0;
-  animation: showSubTitle 2s ease 2s forwards;
 }
 .cover__img {
   position: absolute;
@@ -109,7 +266,58 @@
   object-fit: cover;
   filter: blur(6px);
   transform: scale(1.1);
+  overflow: hidden;
   z-index: 40;
+}
+.cover__img--contrast {
+  filter: blur(6px) contrast(50%);
+}
+/*________UserBox_________*/
+.user-box {
+  position: absolute;
+  z-index: 41;
+  bottom: 0;
+  left: 1rem;
+  transform: translateY(50%);
+}
+.user-box--center {
+  left: 50%;
+  transform: translateY(50%) translateX(-50%);
+}
+.user-box__img {
+  border-radius: 100%;
+  width: 14rem;
+  height: 14rem; 
+  object-fit: cover;
+  border: var(--clr-background) solid 0.5rem;
+}
+.user-box__name {
+  margin: 0 0 4rem;
+  font-size: var(--font-size-L);
+}
+/*________Form_________*/
+.form {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  width: 30rem;
+}
+.from__logo {
+  width: 7rem;
+  height: 7rem;
+  margin: auto;
+  margin-bottom: 3rem;
+}
+.form__btn {
+  margin-top: 3rem;
+  width: 100%;
+}
+.form > .input_text {
+  width: 100%;
+}
+.form__err {
+  display: none;
 }
 /*________Image section_________*/
 .img-sec {
@@ -139,8 +347,8 @@
 }
 .artist-card__img {
   position: relative;
-  width: 15rem;
-  height: 15rem;
+  width: 12rem;
+  height: 12rem;
   border-radius: 1.5rem;
   overflow: hidden;  
 }
@@ -170,7 +378,7 @@
 }
 .artist-card__name {
   margin: 0;
-  font-size: var(--font-size-L);
+  font-size: var(--font-size-M);
 }
 /*________Nav-bar_______*/
 .nav {
@@ -246,6 +454,9 @@
 .user-menu:hover .user-menu__list{
   display: block;
 }
+.user-menu__voice {
+  color: var(--clr-primary);
+}
 .user-menu__list > li {
   font-weight: normal;
   padding: 0.4rem 0.3rem;
@@ -274,7 +485,7 @@
 /*_________Footer_______*/
 .footer {
   background-color: var(--clr-primary);
-  padding: 3rem 0 1.8rem;
+  padding: 3rem 1.8rem 1.8rem;
   font-size: var(--font-size-S);
   line-height: 2rem;
   color: var(--clr-background);

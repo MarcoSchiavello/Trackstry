@@ -1,49 +1,56 @@
 <!-- album -->
-<div class="album" <% if(typeof visible === 'undefined' || !visible) { %> style="display: none;" <% } %>>
+<div class="album <%= typeof visible === 'undefined' || !visible ? 'template' : '' %>">
 
     <% if(typeof heading === 'undefined' || heading) { %>
         <!-- album heading -->
-        <div class="album_header">
-            <img src="#" style="width: 138px;height: 128px;">
-            <h1 style="margin-left: 30px;"></h1>
-            <% if(typeof edit !== 'undefined' && edit) { %>
-                <span class="removeAlbum"><hr class="remove_line"></span>
+        <div class="album__heading container container--row container--Sgap container--noHalign">
+            <% if(typeof img === 'undefined' || img) { %>
+                <img src="#" class="album__img img">
             <% } %>
+            <h1><%= typeof title !== 'undefined' ? title : '' %></h1>
+            <% if(typeof edit !== 'undefined' && edit) { %>
+                <span class="remove-btn icon"><hr class="remove-line"></span>
+                <% } %>
         </div>
     <% } %>
 
     <!-- album song heading -->
-    <div style="display: flex;">
+    <div class="album__header album__col-temp <%= typeof trackNumber === 'undefined' || trackNumber ? '' : 'album__col-temp--noNum' %>">
         <% if(typeof trackNumber === 'undefined' || trackNumber) { %>
-            <h3 class="n_track">N°</h3>
+            <h3>N°</h3>
         <% } %>
-        <h3 class="song_name">nome_canzone</h3>
-        <h3 class="author">autore</h3>
-        <h3 class="song_title">album</h3>
-        <h3 class="duration" style="right: 42px;">durata</h3>
+        <h3>nome_canzone</h3>
+        <h3>autore</h3>
+        <h3>album</h3>
+        <h3>durata</h3>
     </div>
 
     <hr class="line">
 
     <!-- album song -->
-    <ul class="album_list">
-        <li class="album_song" style="display: none;">
-            <span class="n_track" ></span>
-            <span class="song_name"></span> 
-            <span class="author author_field"></span>
-            <span class="song_title data_song_field"></span> 
-            <span class="duration data_song_field"></span>
-            <% if(typeof edit !== 'undefined' && edit) { %>
-                <span class="removeSong"><hr class="remove_line"></span>
-            <% } else { %>
-                <span><img src="../assets/Img/preferiti/stella_vuota.png" class="fav_star data_song_field"></span>
+    <ul class="album__song-list container container--nogap">
+        <li class="album__song album__col-temp <%= typeof trackNumber === 'undefined' || trackNumber ? '' : 'album__col-temp--noNum' %>">
+            <% if(typeof trackNumber === 'undefined' || trackNumber) { %>
+                <span>0</span>
             <% } %>
+            <span></span> 
+            <span></span>
+            <span></span> 
+            <span>0:00</span>
+
+            <div class="controls">
+                <% if(typeof edit !== 'undefined' && edit) { %>
+                    <span class="remove-btn icon"><hr class="remove-line"></span>
+                <% } else { %>
+                    <span><img src="/assets/img/preferiti/stella_vuota.png" class="icon"></span>
+                <% } %>
+            </div>
         </li>
     </ul>
 
     <% if(typeof edit !== 'undefined' && edit) { %>
-        <button id="addSongToAlbum" class="addSong" style="width: max-content;" onclick="add_songAlbum()">
-            <span class="cross_add">+</span>
+        <button class="add-btn" id="addSongToAlbum" onclick="add_songAlbum()">
+            <span class="add-btn__cross">+</span>
             <h3>aggiungi canzone</h3>
         </button>
     <% } %>

@@ -3,18 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="../assets/Img/Logo.png">
+    <link rel="icon" href="/assets/img/Logo.png">
 
-    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/style.css">
     
     <% if(typeof css !== 'undefined' && css.length !== 0) {%>
         <% for(cssFile of css) { %>
-            <link rel="stylesheet" href="../assets/css/<%= cssFile %>">
+            <link rel="stylesheet" href="/assets/css/<%= cssFile %>">
         <% } %>
     <% } %>
 
-    <script type="module" src="../assets/js/nav.js" defer></script>
-    <script src="../assets/js/app.js" defer></script>
+    <script type="module" src="/assets/js/nav.js" defer></script>
+    <script src="/assets/js/app.js" defer></script>
 
     <% if(typeof js !== 'undefined' && js.length !== 0) {%>
         <% for(jsFile of js) { %>

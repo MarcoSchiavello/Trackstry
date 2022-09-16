@@ -30,15 +30,7 @@ function add_songAlbum()
     }
 }
 
-//removes the song entry from the list and recount the track number
-function remove_songAlbum(ele)
-{
-    if(!document.getElementsByClassName("n_track")[1])
-        return;
-    ele.parentElement.remove();
 
-    recount();
-}
 
 //recount the track number
 function recount()

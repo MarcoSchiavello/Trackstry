@@ -1,39 +1,57 @@
-<%- include("partials/head", { title: 'Upload album', js: [ { file: 'pages/uploadAlbum.js' } ] }) %> 
+<%- include("partials/head", { title: 'Upload album', js: [ { file: 'pages/uploadAlbum.js' }, { file: 'fakeUpload.js' } ] }) %> 
 <%- include("partials/nav") %>
     
-<div class="album" style="margin-top: 150px;">
-    <div id="header_album">
-        <div class="fake_upload">
-            <img src="" class="preview">
-            <h3>
-                Inserisci IMG
+<div class="album container container--nogap">
+    <div class="album__heading container container--row" id="header_album">
+        <div class="pivot" fakeUpload="albumImg">
+            <img class="album__img img" preview="albumImg">
+            <h3 class="abs-center">
+                Inserisci immagine
             </h3>
         </div>
-        <input type="file" class="upload" accept="image/*">
-        <div class="container_input_text" >
-            <input name="title_album" type="text" class="input_text" required autocomplete="off">
-            <label for="title_album">Titolo album</label>
-        </div>
+        <input realUpload="albumImg" type="file" class="upload" accept="image/*">
+
+        <%- include("components/inputText", { name: 'albumTitle', label: 'Titolo album'}) %> 
+
     </div>
-    <hr style="width: 100%;margin: 0;border: black solid 1px;">
-    <ul style="padding: 0;margin: 0;list-style: none;" id="album_list">
-        <li class="album_song" style="padding: 20px;">
-            <span class="n_track" >1</span>
-            <div class="container_input_text" >
+
+    <hr class="line">
+
+    <ul class="album__song-list container container--nogap">
+        <li class="album__song container container--row container--noHalign hidden">
+            <span field="trackNum">0</span>
+            <%- include("components/inputText", { name: 'songTitle', label: 'Titolo canzone'}) %> 
+            <img src="../assets/img/upload_icon.png" class="icon" fakeUpload="songFile">
+            <input type="file" realUpload="songFile" accept="audio/*">
+            <h5 fileName="songFile"></h5>
+
+            <div class="controls">
+                <span class="remove-btn icon" role="rmAlbumSong"><hr class="remove-line"></span>
+            </div>
+        </li>
+
+        <li class="album__song container container--row container--noHalign ">
+            <span field="trackNum">1</span>
+            <%- include("components/inputText", { name: 'songTitle', label: 'Titolo canzone'}) %> 
+            <!--<div class="container_input_text" >
                 <input name="title_song" type="text" class="input_text" required autocomplete="off">
                 <label for="title_song">Titolo canzone</label>
+            </div>-->
+            <img src="../assets/img/upload_icon.png" class="icon" fakeUpload="songFile">
+            <input type="file" realUpload="songFile" accept="audio/*">
+            <h5 fileName="songFile"></h5>
+
+            <div class="controls">
+                <span class="remove-btn icon" role="rmAlbumSong"><hr class="remove-line"></span>
             </div>
-            <img src="../assets/Img/upload_icon.png" class="fakeUploadSong">
-            <input type="file" class="uploadSong" accept="audio/*">
-            <h5 id="uploadSongName"></h5>
-            <span class="removeSong" style="margin-right: 20px;" onclick="remove_songAlbum(this)" ><hr class="remove_line"></span>
         </li>
+
+        <button class="add-btn" role="addAlbumSong">
+            <span class="add-btn__cross">+</span>
+            <h3>Aggiungi canzone</h3>
+        </button>    
     </ul>
 
-    <button class="plus_cross" onclick="add_songAlbum()"> 
-        <span class="line1_cross"></span>
-        <span class="line1_cross line2_cross"></span>
-    </button>
 
     <button class="button" id="sub_upload_album">Crea</button>
 </div>

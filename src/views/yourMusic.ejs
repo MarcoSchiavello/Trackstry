@@ -1,32 +1,26 @@
 <%- include("partials/head", { title: 'La tua musica', js: [ { file: 'populateSongs.js' } ] }) %> 
 <%- include("partials/nav") %> 
 
-<div id="cover_artista">
-    <div style="width: 100%;height: 100%;overflow: hidden;">
-        <img src="#" class="img_cover">
-    </div>
-    <div style="display: flex;">
-        <img src="#" id="img_artista">
-        <h1 id="name_artista" class="shadow_text"></h1>
-    </div>
-</div>
+<%- include("components/cover", { artista: { nome: 'dasda', img: '/assets/img/slider/sec_2.jpg' },
+                                  img: { src:'/assets/img/slider/sec_1.jpg', contrast:true } }) %> 
 
-<div id="button_select">
-    <button class="addSong" id="addAlbum">
-        <span class="cross_add">+</span>
-        <h3>aggiungi album</h3>
-    </button>
-    <button class="addSong" id="addSong">
-        <span class="cross_add">+</span>
+<div class="container container--row container--Sgap container--end container--SMarginV container--SMarginH">
+    <button class="add-btn">
+        <span class="add-btn__cross">+</span>
         <h3>aggiungi canzone</h3>
     </button>
+    <button class="add-btn">
+        <span class="add-btn__cross">+</span>
+        <h3>aggiungi album</h3>
+    </button>
 </div>
 
-<div class="song_container">
+<div class="container">
     
     <%- include('components/album', { edit: true }) %>
 
     <%- include('components/song', { edit: true }) %>
+
 </div>
 
 <%- include("partials/footer") %>

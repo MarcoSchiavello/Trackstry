@@ -1,14 +1,11 @@
 <%- include("partials/head", { title: 'Trackstry', js: [ { file: 'pages/index.js', module: false } ] }) %> 
-<%- include('partials/nav')%>
+<%- include('partials/nav') %>
 
-<div class="cover container">
-    <div class="cover__cont container container--nogap">
-        <h1 class="cover__title">Trackstry</h1>   
-        <h3 class="cover__subtitle">Dai vita alla tua musica</h3>   
-    </div>
-
-    <img class="cover__img" src="../assets/img/slider/bg_home.jpg" >
-</div>
+<%- include('components/cover', { title: 'Trackstry', 
+                                  subTitle: 'Dai vita alla tua musica', 
+                                  transition: true,
+                                  img: { src: 'assets/img/slider/bg_home.jpg' }, 
+                                  fullScreen: true }) %>
 
 <%- include('components/imageSection', {title: 'La tua musica', 
                                         text: `Con Trackstry potrai caricare tutta la musica che  

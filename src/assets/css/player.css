@@ -1,24 +1,16 @@
-.controlBars
-{
-  width: max-content;
-  margin: auto;
-}
-.volumeBar
-{
-  display: flex;
-}
-.volumeBar > svg
-{
-  margin-right: 10px;
-}
-.volumeBar > input
-{
-  width: 253px;
-}
-.songInfo > h1,.songInfo > h5
-{ 
+.player__info *{
   margin: 0;
-  margin-bottom: 10px;
+}
+.player__img {
+  width: 17.5rem;
+  height: 17.5rem;
+  object-fit: cover;
+}
+.player__bars {
+  width: 15rem;
+}
+.player__bar {
+  width: 100%;
 }
 .songInfo
 {
@@ -71,10 +63,9 @@
   border-radius: 0;
 }
 .range{
-  width: 280px;
   height: 5px;
   outline: none !important;
-  appearance:none;
+  appearance: none;
   border:none;
   border-radius: 4px;
   background-color: grey;

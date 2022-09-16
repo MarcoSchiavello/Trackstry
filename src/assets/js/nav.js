@@ -21,7 +21,7 @@ Req.APIRequest('auth/isLoggedIn', 'GET')
     //in case of success load the nav for logged user and his action
     document.querySelector('.nav').innerHTML = `
     <a href="/">
-        <img src="../assets/img/Logo.png" alt="icon" class="nav__logo">
+        <img src="/assets/img/Logo.png" alt="icon" class="nav__logo">
     </a>
     <div class="container container--row container--nogap">
         <ul class="nav__voices container container--row container--nogap">
