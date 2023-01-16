@@ -1,11 +1,11 @@
 <!-- song style="display: flex;flex-direction: column;margin-left: 20px;"-->
-<div class="song container container--Sgap container--row container--noHalign <%= typeof visible === 'undefined' || !visible ? 'template' : '' %>">
-    <img src="#" class="song__img img">
+<div template="singleSong" class="song container container--Sgap container--row container--noHalign <%= typeof visible === 'undefined' || !visible ? 'template' : '' %>">
+    <img field="songImg" src="#" class="song__img img">
     <div class="song__info container container--noValign container--nogap" >
-        <h1></h1>
-        <h3></h3>
+        <h1 field="songTitle"></h1>
+        <h3 field="songAuthor"></h3>
     </div>
-    <h3 class="song__duration">0:00</h3>
+    <h3 field="songDuration" class="song__duration">0:00</h3>
 
     <div class="controls">
         <% if(typeof edit !== 'undefined' && edit) { %>

@@ -1,4 +1,4 @@
-<%- include("partials/head", { title: 'Trackstry', js: [ { file: 'pages/index.js', module: false } ] }) %> 
+<%- include("partials/head", { title: 'Trackstry', js: [ { file: 'imgSlider.js' }, { file: 'redirect.js' } ] }) %> 
 <%- include('partials/nav') %>
 
 <%- include('components/cover', { title: 'Trackstry', 
@@ -11,7 +11,7 @@
                                         text: `Con Trackstry potrai caricare tutta la musica che  
                                                crei per far spere a gli altri chi sei veramente attraverso
                                                la tua musica cosa aspetti inizia a caricare le tue canzioni.`, 
-                                        btn: { text: 'Clicca qui' }, 
+                                        btn: { text: 'Clicca qui', redirect: '/mia_musica/1' }, 
                                         img: 'slider/sec_1.jpg', 
                                         float: 'left'}) %>
 
@@ -19,7 +19,7 @@
                                         text: `Trackstry è una comunity perciò perché non vai a vedere  
                                                cosa gli altri artisti hanno da offrire scoprendo novi generi
                                                che più si addicono a te e alla tua personalità.`, 
-                                        btn: { text: 'Clicca qui' }, 
+                                        btn: { text: 'Clicca qui', redirect: '/artisti' }, 
                                         img: 'slider/sec_2.jpg', 
                                         float: 'right'}) %>
 
@@ -27,7 +27,7 @@
                                         text: `Ora che hai visto le potenzialità di Trackstry cosa aspetti 
                                                ad unirti, iscriviti e dai inizio alla festa con la tua creatività.
                                                Clicca sul bottone per Iscriverti.`, 
-                                        btn: { text: 'Clicca qui' }, 
+                                        btn: { text: 'Clicca qui', redirect: '/signup' }, 
                                         img: 'slider/sec_3.jpg', 
                                         float: 'left'}) %>
 

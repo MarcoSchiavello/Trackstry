@@ -11,7 +11,7 @@
                 <%= text %>
             </p>
         </div>
-        <button class="button">
+        <button class="button" <%= typeof btn.redirect !== undefined || btn.redirect ? 'redirect=' + btn.redirect : '' %>>
             <%= btn.text %>
         </button>
     </div>

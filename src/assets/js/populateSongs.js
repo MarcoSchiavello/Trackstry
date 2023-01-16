@@ -1,37 +1,46 @@
 import Config from '/config.json' assert { type: 'json' };
 import Req from '/assets/js/requests.js'; 
 
-let artId = location.href.split("/");
-artId = artId[artId.length-1].split("?")[0];
+let artId = location.href.split('/');
+artId = artId[artId.length-1].split('?')[0];
 
-if(location.href.search("mia_musica") !== -1)
-{
-    document.querySelector("#addAlbum").addEventListener("click",e => location.href = "/uploadAlbum/"+artId);
-    document.querySelector("#addSong").addEventListener("click",e => location.href = "/uploadSong/"+artId);
+const editMode = location.href.search('mia_musica') === -1;
+
+if(editMode) {
+    document.querySelector('#addAlbum').addEventListener('click',e => location.href = '/uploadAlbum/' + artId);
+    document.querySelector('#addSong').addEventListener('click',e => location.href = '/uploadSong/' + artId);
 }
 
 Req.APIRequest(`artists/${artId}`, 'GET')
 .then(res => res.json())
-.then(artist => { //load profile data
-        document.querySelector(".img_cover").src = `http://${Config.API}`+artist.banner;
-        document.querySelector("#name_artista").innerHTML = artist.name;
-        document.querySelector("#img_artista").src = `http://${Config.API}`+artist.img;
-        return artist;
+.then(artist => { 
+    //load profile data
+    document.querySelector('*[field="coverImg"]').src = `http://${Config.API}` + artist.banner;
+    document.querySelector('*[field="coverArtistImg"]').innerHTML = artist.name;
+    document.querySelector('*[field="coverArtistName"]').src = `http://${Config.API}`+artist.img;
+
+    return artist;
 })
 .then(artist => {
+    const songsList = document.querySelector('*[template="singleSong"]').parentElement;
     Req.APIRequest(`artists/${artist.id}/songs`, 'GET')
     .then(res => res.json())
-    .then(songs => { // load single song
-        const sigleSong = document.querySelector(".single_song");
+    .then(songs => { 
+        // load single song
+        const template = document.querySelector('*[template="singleSong"]');
         songs = songs.filter(song => song.album.id === null);
         
         songs.forEach(song => {
-            const tmpSigleSong = sigleSong.cloneNode(true);
+            const sigleSong = template.cloneNode(true);
 
-            fillfields(tmpSigleSong,{song: song, artist: artist});
+            element.querySelector('*[field="songName"]').innerHTML = song.name;
+            element.querySelector('*[field="songAuthor"]').innerHTML = artist.name;
+            element.querySelector('*[field="songImg"]').src = `http://${Config.API}` + song.img;
+            element.querySelector('*[field="songDuration"]').innerHTML = getTimeFormat(song.duration);
+            pathForPlayer = '/player?artist=' + artist.id + '&song=' + data.song.id;
 
-            tmpSigleSong.removeAttribute("style");
-            document.querySelector(".song_container").appendChild(tmpSigleSong);
+            sigleSong.classList.remove('hidden');
+            songsList.appendChild(sigleSong);
         });
     })
 
@@ -39,19 +48,19 @@ Req.APIRequest(`artists/${artId}`, 'GET')
     Req.APIRequest(`artists/${artist.id}/albums`, 'GET')
     .then(res => res.json())
     .then(albums => {
-        const albumEle = document.querySelector(".album");
+        const albumEle = document.querySelector('.album');
 
         albums.forEach(album => {
             const tmpAlbumEle = albumEle.cloneNode(true);
-            tmpAlbumEle.querySelector(".album_header h1").innerHTML = album.name;
-            tmpAlbumEle.querySelector(".album_header img").src = `http://${Config.API}`+album.img;
+            tmpAlbumEle.querySelector('.album_header h1').innerHTML = album.name;
+            tmpAlbumEle.querySelector('.album_header img').src = `http://${Config.API}`+album.img;
             
             // load album's songs
             Req.APIRequest(`artists/${artist.id}/albums/${album.id}/songs`, 'GET')
             .then(res => res.json())
             .then(albumSongs => {
-                const albumSongEle = tmpAlbumEle.querySelector(".album_song");
-                const albumList = tmpAlbumEle.querySelector(".album_list");
+                const albumSongEle = tmpAlbumEle.querySelector('.album_song');
+                const albumList = tmpAlbumEle.querySelector('.album_list');
                 let i = 1;
                 
                 albumSongs.forEach(albumSong =>{
@@ -59,26 +68,25 @@ Req.APIRequest(`artists/${artId}`, 'GET')
 
                     fillfields(tmpAlbumSongEle,{album: album, song: albumSong, artist: artist, trackIndex: i},true);
                     
-                    tmpAlbumSongEle.removeAttribute("style");
+                    tmpAlbumSongEle.removeAttribute('style');
                     albumList.appendChild(tmpAlbumSongEle);
                     i++;                                
                 });
             })
-            .then(() =>{
-                tmpAlbumEle.removeAttribute("style");
-                document.querySelector(".song_container").appendChild(tmpAlbumEle);
+            .then(() => {
+                tmpAlbumEle.removeAttribute('style');
+                document.querySelector('.song_container').appendChild(tmpAlbumEle);
             })
              
-            if(location.href.search("mia_musica") !== -1)
-            {
-                tmpAlbumEle.querySelector(".removeAlbum").addEventListener("click",e => {
+            if(editMode) {
+                tmpAlbumEle.querySelector('.removeAlbum').addEventListener('click',e => {
                     Req.APIRequest(`artists/${artist.id}/albums/${album.id}`, 'DELETE')
                     .then(succ => {
                         const ele = e.target.parentElement.parentElement;
-                        document.querySelector(".song_container").removeChild(ele);
+                        document.querySelector('.song_container').removeChild(ele);
                     })
                 });
-                tmpAlbumEle.querySelector("#addSongToAlbum").addEventListener("click",e => location.href = "/uploadSong/"+artist.id+"?album="+album.id);
+                tmpAlbumEle.querySelector('#addSongToAlbum').addEventListener('click',e => location.href = '/uploadSong/'+artist.id+'?album='+album.id);
             }
         });
     })
@@ -90,25 +98,22 @@ Req.APIRequest(`artists/${artId}`, 'GET')
 function fillfields(element,data,isAlbumSong = false)
 {
     let pathForPlayer;
-    if(!isAlbumSong)
-    {
-        element.querySelector("h1").innerHTML = data.song.name;
-        element.querySelector("h3").innerHTML = data.artist.name;
-        element.querySelector("img").src = `http://${Config.API}`+data.song.img;
-        element.querySelector(".duration").innerHTML = getTimeFormat(data.song.duration);
-        pathForPlayer = "/player?artist="+data.artist.id+"&song="+data.song.id;
-    }
-    else
-    {
-        element.querySelector(".n_track").innerHTML += (" "+data.trackIndex);
-        element.querySelector(".song_name").innerHTML = data.song.name;
-        element.querySelector(".author").innerHTML = data.song.name;
-        element.querySelector(".song_title").innerHTML = data.album.name;
-        element.querySelector(".duration").innerHTML = getTimeFormat(data.song.duration);
-        pathForPlayer = "/player?artist="+data.artist.id+"&album="+data.album.id+"&song="+data.song.id;
+    if(!isAlbumSong) {
+        element.querySelector('h1').innerHTML = data.song.name;
+        element.querySelector('h3').innerHTML = data.artist.name;
+        element.querySelector('img').src = `http://${Config.API}`+data.song.img;
+        element.querySelector('.duration').innerHTML = getTimeFormat(data.song.duration);
+        pathForPlayer = '/player?artist='+data.artist.id+'&song='+data.song.id;
+    } else {
+        element.querySelector('.n_track').innerHTML += (' '+data.trackIndex);
+        element.querySelector('.song_name').innerHTML = data.song.name;
+        element.querySelector('.author').innerHTML = data.song.name;
+        element.querySelector('.song_title').innerHTML = data.album.name;
+        element.querySelector('.duration').innerHTML = getTimeFormat(data.song.duration);
+        pathForPlayer = '/player?artist='+data.artist.id+'&album='+data.album.id+'&song='+data.song.id;
     }
 
-    if(location.href.search("mia_musica") === -1)
+    if(location.href.search('mia_musica') === -1)
     {
         Req.APIRequest(`auth/isLoggedIn`, 'GET')
         .then(res => res.json())
@@ -119,14 +124,14 @@ function fillfields(element,data,isAlbumSong = false)
             console.log(err);
         });
         element.onclick = e => {
-            if(e.target.className.search("fav_star") === -1)
+            if(e.target.className.search('fav_star') === -1)
                 location.href = pathForPlayer;
         };
     
     }
     else
     {
-        element.querySelector(".removeSong").addEventListener("click",e => {
+        element.querySelector('.removeSong').addEventListener('click',e => {
             Req.APIRequest(`artists/${data.artist.id}/songs/${data.song.id}`, 'DELETE')
             .then(succ => {
                 console.log(element.parentElement );
@@ -135,7 +140,7 @@ function fillfields(element,data,isAlbumSong = false)
                     Req.APIRequest(`artists/${data.artist.id}/albums/${data.album.id}`, 'DELETE')
                     .then(succ => {
                         console.log(element.parentElement);
-                        document.querySelector(".song_container").removeChild(element.parentElement.parentElement);
+                        document.querySelector('.song_container').removeChild(element.parentElement.parentElement);
                     })
                 }
                 else
@@ -144,7 +149,7 @@ function fillfields(element,data,isAlbumSong = false)
         });
 
         element.onclick = e => {
-            if(e.target.className.search("removeSong") === -1)
+            if(e.target.className.search('removeSong') === -1)
                 location.href = pathForPlayer;
         };
     }
@@ -153,30 +158,30 @@ function fillfields(element,data,isAlbumSong = false)
 
 function setFavoriteButton(artistLoggedIn,element,song)
 {
-    const star = element.querySelector(".fav_star");
+    const star = element.querySelector('.fav_star');
 
     Req.APIRequest(`artists/${artistLoggedIn.id}/favorites/${song.id}`, 'GET')
     .then(res => res.json())
     .then(favorite => {
         if(favorite.error !== undefined)// if it find an error it means that the song is not in the favorite
-            star.setAttribute("src","../assets/Img/preferiti/stella_vuota.png");
+            star.setAttribute('src','../assets/Img/preferiti/stella_vuota.png');
         else
-            star.setAttribute("src","../assets/Img/preferiti/stella_piena.png");
+            star.setAttribute('src','../assets/Img/preferiti/stella_piena.png');
     })
 
-    element.querySelector(".fav_star").addEventListener("click",e => {
-        if(star.src.search("piena") !== -1)
+    element.querySelector('.fav_star').addEventListener('click',e => {
+        if(star.src.search('piena') !== -1)
         {
             Req.APIRequest(`artists/${artistLoggedIn.id}/favorites/${song.id}`, 'DELETE')
             .then(succ =>{
-                star.setAttribute("src","../assets/Img/preferiti/stella_vuota.png");
+                star.setAttribute('src','../assets/Img/preferiti/stella_vuota.png');
             })
         }
         else
         {
             Req.APIRequest(`artists/${artistLoggedIn.id}/favorites`, 'POST', {songId: song.id})
             .then(succ =>{
-                star.setAttribute("src","../assets/Img/preferiti/stella_piena.png");
+                star.setAttribute('src','../assets/Img/preferiti/stella_piena.png');
             })
         }
     })   

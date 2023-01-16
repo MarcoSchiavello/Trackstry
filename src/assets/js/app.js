@@ -42,24 +42,6 @@ function recount()
     }
 }
 
-//swap to the next img in the slider show
-function slideNext()
-{
-    const slider = document.querySelector(".slider__img-cont");
-    if(slider.childElementCount-1 == offset)
-    {
-        slider.style.transition = "unset";
-        slider.style.left = "0%";
-        offset = 0;
-    }
-    else
-    {
-        slider.style.transition = "2s ease";
-        slider.style.left = "-"+offset+"00%";
-    }
-    offset++;
-}
-
 //given a file taken from input of type audio returns his duration
 function getDuration(file)
 {

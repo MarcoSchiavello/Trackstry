@@ -6,14 +6,18 @@ import Req from '/assets/js/requests.js';
 Req.APIRequest('artists', 'GET')
 .then(res => res.json())
 .then(artists => {
-    const list = document.querySelector(".cointeiner_card");
-    artists.forEach(artist => {
-        const clone = document.querySelector(".card_artisti").cloneNode(true);
-        clone.querySelector("img").src = `http://${Config.API}` + artist.img;
-        clone.querySelector(".name_artista").innerHTML = artist.name;
-        clone.addEventListener("click",e => location.href = "/artista/"+artist.id);
+    const clone = document.querySelector('*[template="artistCard"]');
+    const list = clone.parentElement;
 
-        clone.removeAttribute("style");
-        list.appendChild(clone);
+    artists.forEach(artist => {
+        const newClone = clone.cloneNode(true);
+
+        newClone.removeAttribute('template');
+        newClone.querySelector('*[field="artistImg"]').src = `http://${Config.API}` + artist.img;
+        newClone.querySelector('*[field="artistName"]').innerHTML = artist.name;
+        newClone.addEventListener('click', e => location.href = '/artista/' + artist.id);
+
+        newClone.classList.remove('hidden');
+        list.appendChild(newClone);
     });
 })
