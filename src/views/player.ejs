@@ -1,11 +1,20 @@
-<%- include("partials/head", { title: 'Player', css: [ 'player.css' ], js: [ { file: 'player.js', module: false }, { file: 'all.js', module: false } ] }) %> 
+<%- include("partials/head", { title: 'Player', css: [ 'player.css' ], js: [ { file: 'player.js', module: true } ] }) %> 
 <%- include("partials/nav", { hidden: true }) %>
 
-<a href="#" id="prevPage"><i class="fas fa-arrow-left" id="back_arrow_player"></i></a>  
+<a href="#" id="prevPage">
+    <svg class="back-arrow" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
+ viewBox="0 0 60.731 60.73"
+	xml:space="preserve">
+
+	    <polygon points="0,30.365 29.737,60.105 29.737,42.733 60.731,42.729 60.731,18.001 29.737,17.999 29.737,0.625 		"/>
+    </svg>
+</a>
+
+</a>  
 
 <div class="abs-center container container--Sgap">
 
-    <img src="https://media-exp2.licdn.com/dms/image/C560BAQH9Cnv1weU07g/company-logo_200_200/0/1575479070098?e=2147483647&v=beta&t=i4Pp6zVfz5VAznPIik_ua4I75sKlu4yAdGKgHC9vpTo" class="player__img" field="songImg">
+    <img src="#" class="player__img" field="songImg">
 
     <div class="player__info container container--nogap">
         <h1 field="songName" >adsda</h1>
@@ -13,19 +22,58 @@
     </div>
 
     <div class="container container--row">
-        <span id="back"><i class="fas fa-angle-double-left"></i></span>
-        <span id="random"><i class="fas fa-random"></i></span>
+        <span id="back" class="player-icon prev">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M6.5 6.5L12.2093 12.2093V12.2093C12.3698 12.3698 12.6302 12.3698 12.7907 12.2093V12.2093L18.5 6.5" stroke="#323232" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M6.5 11.5L12.2492 17.2492V17.2492C12.3877 17.3877 12.6123 17.3877 12.7508 17.2492V17.2492L18.5 11.5" stroke="#323232" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        </span>
+        <span id="random" class="player-icon">
+            <svg version="1.1"
+                id="svg2" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:svg="http://www.w3.org/2000/svg" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" sodipodi:docname="random.svg" inkscape:version="0.48.4 r9939"
+                xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
+                viewBox="0 0 1200 1200" enable-background="new 0 0 1200 1200" xml:space="preserve">
+                <path id="path18074" inkscape:connector-curvature="0" d="M935.926,42.203v186.061H763.958c-54.408,0-114.484,26.559-164.729,77.32
+                    c-50.242,50.761-104.842,126.065-191.527,249.904c-87.076,124.394-135.567,199.565-165.807,233.346
+                    c-30.24,33.78-25.376,30.882-69.388,30.882H2.08H0v147.863h2.08h170.427c66.078,0,132.54-27.619,179.515-80.093
+                    c46.975-52.475,91.312-125.164,176.742-247.208c85.82-122.601,140.381-195.159,175.512-230.651
+                    c35.129-35.491,36.641-33.5,59.685-33.5h171.967v194.147L1200,306.276L935.926,42.203z M0,228.263v147.863h2.08h170.427
+                    c44.012,0,39.148-2.975,69.388,30.805c19.456,21.734,51.507,67.826,91.49,125.915c5.419-7.773,7.973-11.521,13.708-19.716
+                    c21.78-31.114,41.563-59.187,59.838-84.79c6.36-8.91,11.688-15.939,17.714-24.259c-27.021-39.039-49.525-70.001-72.623-95.803
+                    c-46.975-52.474-113.437-80.015-179.515-80.015H2.079H0L0,228.263z M935.926,629.727v189.988H763.958
+                    c-23.043,0-24.554,1.915-59.684-33.577c-23.237-23.477-56.146-65.093-99.809-124.76c-5.281,7.49-9.555,13.418-15.095,21.333
+                    c-30.571,43.674-51.648,75.183-73.777,107.816c31.395,41.578,58.12,73.875,83.637,99.652
+                    c50.242,50.763,110.319,77.397,164.729,77.397h171.968v190.22L1200,893.801L935.926,629.727z"/>
+            </svg>
+        </span>
         <div id="button-play">
-            <div id="play-icon" >
-                <i class="fas fa-play"></i>
+            <div id="play-icon" class="player-icon">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M3 5.49686C3 3.17662 5.52116 1.73465 7.52106 2.91106L18.5764 9.41423C20.5484 10.5742 20.5484 13.4259 18.5764 14.5858L7.52106 21.089C5.52116 22.2654 3 20.8234 3 18.5032V5.49686Z" fill="#323232"/>
+                </svg>
             </div>
             <div id="pause-icon" class="hidden">
-                <i class="fas fa-pause"></i>
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M20 5L20 19C20 20.6569 18.6569 22 17 22L16 22C14.3431 22 13 20.6569 13 19L13 5C13 3.34314 14.3431 2 16 2L17 2C18.6569 2 20 3.34315 20 5Z" fill="#323232"/>
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M8 2C9.65685 2 11 3.34315 11 5L11 19C11 20.6569 9.65685 22 8 22L7 22C5.34315 22 4 20.6569 4 19L4 5C4 3.34314 5.34315 2 7 2L8 2Z" fill="#323232"/>
+                </svg>
             </div>
     
         </div>
-        <span id="reDo"><i class="fas fa-redo-alt"></i></span>
-        <span id="next"><i class="fas fa-angle-double-right"></i></span>
+        <span id="reDo" class="player-icon">
+            <svg version="1.1" id="Uploaded to svgrepo.com" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
+                viewBox="0 0 32 32" xml:space="preserve">
+
+                <path class="linesandangles_een" d="M16,4v2c5.514,0,10,4.486,10,10s-4.486,10-10,10S6,21.514,6,16c0-3.594,1.937-6.866,5-8.64V11h2
+                    V4H6v2h3.375C6.059,8.199,4,11.933,4,16c0,6.617,5.383,12,12,12s12-5.383,12-12S22.617,4,16,4z"/>
+                </svg>
+            </span>
+        <span id="next" class="player-icon next">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M6.5 6.5L12.2093 12.2093V12.2093C12.3698 12.3698 12.6302 12.3698 12.7907 12.2093V12.2093L18.5 6.5" stroke="#323232" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M6.5 11.5L12.2492 17.2492V17.2492C12.3877 17.3877 12.6123 17.3877 12.7508 17.2492V17.2492L18.5 11.5" stroke="#323232" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        </span>
     </div>
 
     <audio field="songFile" src="#"></audio>
@@ -34,7 +82,13 @@
         <input type="range" value="0" min="0" max="10000" id="duration" class="player__bar range"> <br>
         
         <div class="player__bar container container--Sgap container--row"> 
-            <div class="icon--small"><i class="fas fa-volume-up"></i></div>
+            <div class="player-icon">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M3 14V10C3 9.44772 3.44772 9 4 9H6.64922C6.87629 9 7.0966 8.92272 7.27391 8.78087L10.3753 6.29976C11.0301 5.77595 12 6.24212 12 7.08062V16.9194C12 17.7579 11.0301 18.2241 10.3753 17.7002L7.27391 15.2191C7.0966 15.0773 6.87629 15 6.64922 15H4C3.44772 15 3 14.5523 3 14Z" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M15.8302 15.2139C16.5435 14.3639 16.9537 13.3008 16.9963 12.1919C17.0389 11.0831 16.7114 9.99163 16.0655 9.08939" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M18.8944 17.7851C20.2406 16.1807 20.9852 14.1571 20.9998 12.0628C21.0144 9.96855 20.2982 7.93473 18.9745 6.31174" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </div>
             <input type="range" value="50" min="0" max="100" id="seek" class="range player__bar">
         </div>
     </div>

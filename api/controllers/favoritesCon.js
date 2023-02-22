@@ -10,6 +10,7 @@ module.exports = {
             .json(favList);
         })
         .catch(err => {
+        
             if(err === -1)
                 res.status(500)
                 .json({error: "internal error" });

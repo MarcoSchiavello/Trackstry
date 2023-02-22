@@ -72,29 +72,27 @@ module.exports = {
         });
     },
 
-    chngeArtist: (req,res) =>{
+    changeArtist: (req,res) =>{
         const fs = require('fs');
         const regexEmail = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        if(req.files.artistImg[0].path !== undefined)
-        {
-            fs.rename(req.files.artistImg[0].path,"files/icons/profiles/"+req.files.artistImg[0].filename,err => { if (err) throw err });
-            req.body.artistImg = "/files/icons/profiles/"+req.files.artistImg[0].filename;
+        if(req.files.newImg !== undefined) {
+            fs.rename(req.files.newImg[0].path, "files/icons/profiles/"+req.files.newImg[0].filename, err => { if (err) throw err });
+            req.body.newImg = "/files/icons/profiles/"+req.files.newImg[0].filename;
         }
-        if(req.files.bannerImg[0].path !== undefined)
-        {
-            req.body.bannerImg = req.files.bannerImg[0].path;
-            req.body.bannerImg = "/"+req.body.bannerImg.replace(/\\/g,"/");
+
+        if(req.files.newBanner !== undefined) {
+            req.body.newBanner = req.files.newBanner[0].path;
+            req.body.newBanner = "/"+req.body.newBanner.replace(/\\/g,"/");
         }
-        if(req.body.email !== undefined)
-        {
-            if(!regexEmail.test(String(req.body.email).toLowerCase()))
-            {
+        if(req.body.newEmail !== undefined) {
+            if(!regexEmail.test(String(req.body.newEmail).toLowerCase())) {
                 //422 stans for Unprocessable Entity for more info look at: https://en.wikipedia.org/wiki/List_of_HTTP_status_codes
+                
                 return res.status(422) 
                 .json({err:"invalid email"});
             }
         }
-        usersMod.chngeArtist(req.artist_id,req.body)
+        usersMod.changeArtist(req.params.artistId,req.body)
         .then(artistList => {
             res.status(200)
             .json(artistList);

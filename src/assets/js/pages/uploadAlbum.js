@@ -1,6 +1,7 @@
 "use strict";
 
 import Req from '/assets/js/requests.js'; 
+import FakeUpload from '/assets/js/fakeUpload.js'
 
 const removeEvent = e => {
     const rmBtn = e.target;
@@ -15,55 +16,60 @@ const removeEvent = e => {
 
     const trackNums = songList.querySelectorAll('*[field="trackNum"]');
 
-    for(let i = 0; i < trackNums.length; i++)
-        trackNums[i+1].innerHTML = i+1;
+    for(let i = 0; i < trackNums.length - 1; i++)
+        trackNums[i + 1].innerHTML = i+1;
 };
 
 //removes the song entry from the list and recount the track number
 document.querySelectorAll('*[role="rmAlbumSong"]').forEach(remBtn => remBtn.addEventListener('click', removeEvent) );
 
-//removes the song entry from the list and recount the track number
-document.querySelectorAll('*[role="addAlbumSong"]').forEach(addBtn => {
-    addBtn.addEventListener('click', e => {
-        const songList = addBtn.parentElement;
+let numberOfSongs = 2;
+document.querySelector('*[role="addAlbumSong"]').addEventListener('click', e => {
+    const songList = document.querySelector('*[role="addAlbumSong"]').parentElement;
 
-        const newElement = songList.firstElementChild.cloneNode(true);
-        newElement.classList.remove('hidden'); 
-        newElement.querySelector('*[field="trackNum"]').innerHTML = Number(songList.children[songList.children.length - 2].querySelector('*[field="trackNum"]').innerHTML) + 1;
-        newElement.querySelector('*[role="rmAlbumSong"]').onclick = removeEvent;
-
-        addBtn.insertAdjacentElement('beforebegin', newElement);
-    });
+    const newElement = songList.firstElementChild.cloneNode(true);
+    newElement.classList.remove('hidden'); 
+    newElement.querySelector('*[field="trackNum"]').innerHTML = Number(songList.children[songList.children.length - 2].querySelector('*[field="trackNum"]').innerHTML) + 1;
+    newElement.querySelector('*[role="rmAlbumSong"]').onclick = removeEvent;
+    newElement.querySelector('*[fakeUpload="songFile"]').setAttribute('fakeUpload', 'songFile' + numberOfSongs);
+    newElement.querySelector('*[realUpload="songFile"]').setAttribute('realUpload', 'songFile' + numberOfSongs);
+    newElement.querySelector('*[fileName="songFile"]').setAttribute('fileName', 'songFile' + numberOfSongs);
+    numberOfSongs++;
+    
+    document.querySelector('*[role="addAlbumSong"]').insertAdjacentElement('beforebegin', newElement);
+    FakeUpload.bindElements();
 });
 
 
-document.querySelector("#sub_upload_album").onclick = e => {
+document.querySelector('*[action="submitAlbum"]').onclick = e => {
     e.preventDefault();
-    
+
     Req.APIRequest('auth/isLoggedIn', 'GET')
     .then(res => res.json())
     .then(artist => {
-        let promises = [];
-        let bodyAlbum = new FormData();
-        bodyAlbum.append("albumName",document.querySelector("input[name='title_album']").value);
-        bodyAlbum.append("albumImg",document.querySelector(".upload").files[0]);
-
+        const bodyAlbum = new FormData();
+        bodyAlbum.append("albumName",document.querySelector("input[name='albumTitle']").value);
+        bodyAlbum.append("albumImg",document.querySelector('*[field="albumImg"]').files[0]);
+        
         Req.APIRequest(`artists/${artist.id}/albums`, 'POST', bodyAlbum, false)//FIXME: forse problema con il body
         .then(res => {
             if(res.status > 399)
                 throw new Error(res.status);
-            return res.json();
+            const json = res.json();
+            json.artist = artist;
+            return json;
         }) 
         .then(async newAlbumId => {
-            const albumSongs = document.querySelector("#album_list").children;
-            let promises = [];
+            const albumSongs = document.querySelectorAll('.album__song-list > li:not(:first-child)');
+            const promises = [];
             for(const ele of albumSongs) 
             {
                 let bodySong = new FormData();
-                bodySong.append("song",ele.querySelector(".uploadSong").files[0]);
-                bodySong.append("songName",ele.querySelector("input[name='title_song']").value);
-                bodySong.append("albumId",newAlbumId.albumId);
-                bodySong.append("songDuration",Math.floor( await getDuration(document.querySelector(".uploadSong") )));
+                bodySong.append("song",ele.querySelector('*[field="songFile"]').files[0]);
+                bodySong.append("songName",ele.querySelector("input[name='songTitle']").value);
+                bodySong.append("albumId", newAlbumId.albumId);
+                console.log(document.querySelector('*[field="songFile"]'));
+                bodySong.append("songDuration",Math.floor( await getDuration(ele.querySelector('*[field="songFile"]'))));
                 promises.push(Req.APIRequest(`artists/${artist.id}/songs`, 'POST', bodySong, false));
             };
 

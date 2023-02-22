@@ -2,13 +2,13 @@
 <%- include("partials/nav") %> 
 
 <%- include("components/cover", { artista: { nome: '', img: '#' },
-                                  img: { src:'#', contrast:true } }) %> 
+                                img: { src:'#', contrast:true } }) %> 
 
-<div class="container">    
+<div class="container container--LMarginV" field="mediaContainer">    
 
-    <%- include('components/album') %>
+    <%- include('components/album', { visible: false }) %>
 
-    <%- include('components/song') %>
+    <%- include('components/song', { visible: false }) %>
         
 </div>
 

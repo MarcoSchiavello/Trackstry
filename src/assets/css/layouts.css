@@ -63,11 +63,18 @@
     margin-bottom: 1rem;
 }
 
+.container--LMarginV {
+    margin-top: 8rem;
+    margin-bottom: 8rem;
+}
+
+
 .card-cont {
     display: grid;
     justify-items: center;
     justify-content: center;  
     grid-template-columns: repeat(auto-fill, 15rem); 
+    row-gap: 4rem;
 }
 
 .card-cont--fullWidth {
@@ -78,7 +85,7 @@
     width: 90%;
 }
 .card-cont--VMargin {
-    margin: 2rem 0;
+    margin: 2rem auto;
 }
 
 .album__col-temp {

@@ -36,8 +36,7 @@ function add_songAlbum()
 function recount()
 {
     var songs = document.getElementsByClassName("n_track");
-    for(var i = 0; i<songs.length;i++)
-    {
+    for(var i = 0; i<songs.length;i++) {
         songs[i].innerHTML = i+1;
     }
 }

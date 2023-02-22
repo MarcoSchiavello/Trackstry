@@ -4,21 +4,21 @@
 <div class="abs-center container">
     <div class="container container--row">
         <div class="pivot" fakeUpload="albumImg">
-            <img class="album__img img" preview="albumImg">
-            <h3 class="abs-center">
+            <h3 class="abs-center" clear="albumImg">
                 Inserisci immagine
             </h3>
+            <img class="album__img img" preview="albumImg">
         </div>
-        <input realUpload="albumImg" type="file" class="upload" accept="image/*">
+        <input realUpload="albumImg" type="file" class="upload" accept="image/*" name="songImg">
 
-        <%- include("components/inputText", { name: 'albumTitle', label: 'Titolo album'}) %> 
+        <%- include("components/inputText", { name: 'songTitle', label: 'Titolo canzone'}) %> 
         
         <img src="../assets/img/upload_icon.png" class="icon" fakeUpload="songFile">
-        <input type="file" realUpload="songFile" accept="audio/*">
+        <input type="file" realUpload="songFile" name="songFile" accept="audio/*">
         <h5 fileName="songFile"></h5>
     </div>
 
-    <button class="button" id="sub_upload_song">Crea</button>
+    <button class="button" action="submitUploading">Crea</button>
 
 </div>
 

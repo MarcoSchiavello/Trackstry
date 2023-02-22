@@ -1,5 +1,5 @@
 <!-- song style="display: flex;flex-direction: column;margin-left: 20px;"-->
-<div template="singleSong" class="song container container--Sgap container--row container--noHalign <%= typeof visible === 'undefined' || !visible ? 'template' : '' %>">
+<div template="singleSong" class="song container container--Sgap container--row container--noHalign <%= typeof visible === 'undefined' || !visible ? 'hidden' : '' %>">
     <img field="songImg" src="#" class="song__img img">
     <div class="song__info container container--noValign container--nogap" >
         <h1 field="songTitle"></h1>
@@ -9,9 +9,9 @@
 
     <div class="controls">
         <% if(typeof edit !== 'undefined' && edit) { %>
-            <span class="remove-btn icon"><hr class="remove-line"></span>
+            <span class="remove-btn icon" action="removeSong"><hr class="remove-line"></span>
         <% } else { %>
-            <img src="/assets/img/preferiti/stella_vuota.png" class="icon">
+            <img src="/assets/img/preferiti/stella_vuota.png" class="icon" action="favStar">
         <% } %>
     </div>
 </div>

@@ -3,17 +3,19 @@
 import Req from '/assets/js/requests.js'; 
 
 document.querySelector(".form").addEventListener("submit", e =>{
-    event.preventDefault();
+    e.preventDefault();
 
-    let email = document.querySelector(".form > input[name='email']").value;
-    let password = document.querySelector(".form > input[name='password']").value;
-    let username = document.querySelector(".form > input[name='username']").value;
+    const email = document.querySelector("input[name='email']").value;
+    const password = document.querySelector("input[name='password']").value;
+    const username = document.querySelector("input[name='username']").value;
 
-    let data = {
-        username: username,
-        email: email,
-        password: password,
+    const data = {
+        username,
+        email,
+        password,
     };
+
+    console.log();
     
     Req.APIRequest('auth/signup', 'POST', data)
     .then(res => {
@@ -24,10 +26,11 @@ document.querySelector(".form").addEventListener("submit", e =>{
             location.href = "/";
     })
     .catch(err => {
+        document.querySelector(".form__err").style.display = 'block';
         if(Number(err.message) === 500)
-            document.querySelector(".err").innerHTML = "Errore con il server";
+            document.querySelector(".form__err").innerHTML = "Errore con il server";
         else if(Number(err.message) === 409)
-            document.querySelector(".err").innerHTML = "Email o username gia esistenti";
+            document.querySelector(".form__err").innerHTML = "Email o username gia esistenti";
     });
 
 });

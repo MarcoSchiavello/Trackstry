@@ -60,26 +60,26 @@ Req.APIRequest('auth/isLoggedIn', 'GET')
     basePointerPosition = basePointerPosition === undefined ? 0 : basePointerPosition;
 
     document.querySelectorAll('.nav__voices > li').forEach((voice, i) => {
-        voice.addEventListener('mouseover', e => { movePointer(i) });
-        voice.addEventListener('mouseleave', e => { movePointer(basePointerPosition) });
+        voice.addEventListener('mouseover', e => movePointer(i));
+        voice.addEventListener('mouseleave', e => movePointer(basePointerPosition));
     });
 
     movePointer(basePointerPosition);
 
-    const nav = document.querySelector(".nav");
+    const nav = document.querySelector('.nav');
     
     if (document.documentElement.scrollTop >= 150) {
-        nav.style.background="white";
-        nav.style.borderBottom="solid black 1px";
+        nav.style.background='white';
+        nav.style.borderBottom='solid black 1px';
     }
 
     window.onscroll = () => {
         if (document.documentElement.scrollTop >= 10) {
-            nav.style.background="white";
-            nav.style.borderBottom="solid black 1px";
+            nav.style.background='white';
+            nav.style.borderBottom='solid black 1px';
         } else {
-            nav.style.background="transparent";
-            nav.style.borderBottom="";
+            nav.style.background='transparent';
+            nav.style.borderBottom='';
         }
     };
 
