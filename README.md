@@ -17,7 +17,7 @@ npm install
 ```
 after this go to api/ and do:
 ```
-cp .env.sample .env
+cp api/.env.sample api/.env
 ```
 fill it with the Database credentials(in the JWT secret you can put Hex junk)
 ```
@@ -26,8 +26,22 @@ DB_PWD=
 DB_HOST=localhost
 DB=
 JWT_SECRET=
+PORT=4000
 ```
-once you put the credentials and the JWT secret in the .env file, do:
+do the same thing with the front-end configuration file 
+```
+cp src/config.sample.json src/config.json
+```
+fill it with the address of the API server
+```
+{
+    "API": "127.0.0.1:4000",
+    "prefix": "/v1/", <---- remember to add slashes at the start and end of the prefix
+    "port": 3000
+}
+```
+once you fill all the config file do:
+run first the DB server
 ```
 npm run confDB 
 ```
