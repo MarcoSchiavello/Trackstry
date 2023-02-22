@@ -1,0 +1,17 @@
+<!-- song style="display: flex;flex-direction: column;margin-left: 20px;"-->
+<div template="singleSong" class="song container container--Sgap container--row container--noHalign <%= typeof visible === 'undefined' || !visible ? 'hidden' : '' %>">
+    <img field="songImg" src="#" class="song__img img">
+    <div class="song__info container container--noValign container--nogap" >
+        <h1 field="songTitle"></h1>
+        <h3 field="songAuthor"></h3>
+    </div>
+    <h3 field="songDuration" class="song__duration">0:00</h3>
+
+    <div class="controls">
+        <% if(typeof edit !== 'undefined' && edit) { %>
+            <span class="remove-btn icon" action="removeSong"><hr class="remove-line"></span>
+        <% } else { %>
+            <img src="/assets/img/preferiti/stella_vuota.png" class="icon" action="favStar">
+        <% } %>
+    </div>
+</div>

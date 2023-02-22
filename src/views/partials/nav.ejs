@@ -1,2 +1,70 @@
-<header id="header">
-</header>
+<nav class="nav container container--row container--justBtwn <%= typeof hidden !== 'undefined' && hidden ? 'hidden' : '' %>">
+
+    <a href="/">
+        <img src="../assets/img/Logo.png" alt="icon" class="nav__logo">
+    </a>
+
+    
+    <div class="hidden container container--row container--nogap" template="loggedin">
+        <ul class="nav__voices container container--row container--nogap">
+            <li><a href="/">Home</a></li>
+            <li><a href="/artisti">artisti</a></li>
+            <li class="user-menu container " action="userMenu" >
+                <span class="user-menu__voice" >sdadas</span>
+                <ul class="user-menu__list" action="userMenuCont">
+                    <li><a href="/mia_musica/{{userId}}">Musica</a></li>
+                    <li><a href="/preferiti/{{userId}}">Preferiti</a></li>
+                </ul>
+            </li>       
+        </ul>
+
+        <img src="../assets/img/nav/selector.png" alt="selector" class="nav__selector">
+            
+        <hr class="nav__separator">
+        
+        <div class="nav__user-cont container container--row container--Sgap container--SMarginH">
+            <img src="#" class="nav__user-img">
+
+            <div class="nav__username">
+                Ciao, <br>
+            </div>
+
+            <div class="dot-menu"> 
+                <span class="dot-menu__icon container container--nogap" action="dotMenuIcon">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </span>
+
+                <ul class="dot-menu__list user-menu__list" action="dotMenuCont">
+                    <li><a href="/profilo/{{userId}}">Modifica profilo</a></li>
+                    <li><a action="logout">Logout</a></li>
+                </ul>
+            </div>
+            
+        </div>
+    </div>
+
+    <!--default-->
+    <div class="hidden container container--row container--nogap" template="default">
+        <ul class="nav__voices container container--row container--nogap">
+            <li><a href="/">Home</a></li>
+            <li><a href="/artisti">artisti</a></li>    
+        </ul>
+
+        <img src="../assets/img/nav/selector.png" alt="selector" class="nav__selector">
+            
+        <hr class="nav__separator">
+        
+        <div class="nav__user-cont container container--row container--Sgap container--SMarginH">
+            <a class="nav__login" href="/login">
+                Login
+            </a>
+            <a class="button" href="/signup">
+                Sign up
+            </a>
+        </div>
+    </div>
+
+</nav>
+<main class="main <%= typeof bgGradient !== 'undefined' && bgGradient ? 'main--bgGradient' : '' %>">

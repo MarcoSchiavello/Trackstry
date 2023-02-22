@@ -18,9 +18,9 @@ module.exports = (app) => {
     app.get('/v1/artists',usersCon.getAllArtists);
     app.get('/v1/artists/:artistId',usersCon.getArtist);
     app.patch('/v1/artists/:artistId',
+    Uploads.uploadArtist.fields([{ name: 'newImg', maxCount: 1 }, { name: 'newBanner', maxCount: 1 }]),
     passport.authenticate("jwt",{ session: false }),
-    Uploads.uploadArtist.fields([{ name: 'artistImg', maxCount: 1 }, { name: 'bannerImg', maxCount: 1 }]),
-    usersCon.chngeArtist);
+    usersCon.changeArtist);
 
     //songs
     app.get('/v1/artists/:artistId/songs',songsCon.getAllSongs);

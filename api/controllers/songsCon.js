@@ -32,7 +32,7 @@ module.exports = {
     },
 
     addSong: (req,res) =>{
-        
+        console.log("sadas");
         let songImgPath = "/files/icons/songs/default/default.png";
         if(req.files.songImg !== undefined)
             songImgPath = req.files.songImg[0].destination.replace(".","")+"/"+req.files.songImg[0].filename;

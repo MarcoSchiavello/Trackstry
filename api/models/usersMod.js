@@ -19,12 +19,8 @@ module.exports = {
                     else
                         reject(false);
                 }
-                else
-                {
-                    if(err !== null)
-                        reject(false);
-                    else
-                        reject(-1);
+                else {
+                    reject(false);
                 }
             });
         });
@@ -126,36 +122,37 @@ module.exports = {
         });
     },
 
-    chngeArtist: (artId,newUserData) => {
+    changeArtist: (artId, newUserData) => {
         return new Promise((solved,reject) => {
             let fieldToSet = "";
 
-            if(newUserData.artistName !== undefined)
-                fieldToSet = fieldToSet+"artist_name = "+conn.escape(newUserData.artistName)+",";
-            if(newUserData.artistImg !== undefined)
-                fieldToSet = fieldToSet+"artist_img = "+conn.escape(newUserData.artistImg)+",";
-            if(newUserData.bannerImg !== undefined)
-                fieldToSet = fieldToSet+"artist_banner = "+conn.escape(newUserData.bannerImg)+",";
-            if(newUserData.password !== undefined)
-            {
+            if(newUserData.newUsername !== undefined)
+                fieldToSet = fieldToSet+"artist_name = "+conn.escape(newUserData.newUsername)+",";
+            if(newUserData.newImg !== undefined)
+                fieldToSet = fieldToSet+"artist_img = "+conn.escape(newUserData.newImg)+",";
+            if(newUserData.newBanner !== undefined)
+                fieldToSet = fieldToSet+"artist_banner = "+conn.escape(newUserData.newBanner)+",";
+            if(newUserData.newPassword !== undefined) {
                 const salt = crypto.randomBytes(16).toString("hex");
-                const hash = crypto.createHash("SHA256").update(newUserData.password+salt).digest("hex");
+                const hash = crypto.createHash("SHA256").update(newUserData.newPassword+salt).digest("hex");
                 fieldToSet = fieldToSet+"artist_pwd = "+conn.escape(hash+"."+salt)+",";
             }  
-            if(newUserData.email !== undefined)
-                fieldToSet = fieldToSet+"artist_email = "+conn.escape(newUserData.email);
+            if(newUserData.newEmail !== undefined)
+                fieldToSet = fieldToSet+"artist_email = "+conn.escape(newUserData.newEmail);
         
             if(fieldToSet[fieldToSet.length-1] === ",")
                 fieldToSet = fieldToSet.substr(0,fieldToSet.length-1);
                 
             const query = "UPDATE artists SET "+fieldToSet+" WHERE artist_id = ?;";
+
+            console.log(query, artId);
             conn.query(query,[Number(artId)],(err,res) => {
-                if(err === null && res !== undefined)
-                {
+                if(err === null && res !== undefined){
                     solved(true);
-                } 
-                else 
+                } else {
+                    console.log(err);
                     reject(false);
+                }
             });
         });
     },

@@ -1,0 +1,24 @@
+:root {
+    /*________Colors_________*/
+    --clr-primary: #26272b;
+    --clr-background: white;    
+    --clr-filter: rgba(75, 75, 75, 0.301);
+    --clr-error: red;
+    --clr-rem-btn: rgb(255, 75, 75);
+    --clr-add-btn: rgb(55, 223, 55);
+    --clr-hover: rgb(160, 160, 160);
+
+    /*________Fonts_________*/
+    --font-text: 'Quicksand', sans-serif;
+
+    /*________Font-sizes_________*/
+    --font-size-XXL: 6.5rem;
+    --font-size-XL: 3.6rem;
+    --font-size-L: 2rem;
+    --font-size-M: 1.4rem;
+    --font-size-S: 1rem;
+    --font-size-XS: 0.5rem;
+
+    /*________Box-Shadows_________*/
+    --box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}

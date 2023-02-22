@@ -30,42 +30,15 @@ function add_songAlbum()
     }
 }
 
-//removes the song entry from the list and recount the track number
-function remove_songAlbum(ele)
-{
-    if(!document.getElementsByClassName("n_track")[1])
-        return;
-    ele.parentElement.remove();
 
-    recount();
-}
 
 //recount the track number
 function recount()
 {
     var songs = document.getElementsByClassName("n_track");
-    for(var i = 0; i<songs.length;i++)
-    {
+    for(var i = 0; i<songs.length;i++) {
         songs[i].innerHTML = i+1;
     }
-}
-
-//swap to the next img in the slider show
-function slideNext()
-{
-    const slider = document.getElementById("img_container_slider");
-    if(slider.childElementCount-1 == offset)
-    {
-        slider.style.transition = "unset";
-        slider.style.left = "0%";
-        offset = 0;
-    }
-    else
-    {
-        slider.style.transition = "2s ease";
-        slider.style.left = "-"+offset+"00%";
-    }
-    offset++;
 }
 
 //given a file taken from input of type audio returns his duration
@@ -91,3 +64,5 @@ function getTimeFormat(time)
         sec = "0"+sec;
     return min+":"+sec;
 }
+
+

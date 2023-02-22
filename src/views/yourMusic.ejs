@@ -1,80 +1,26 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="../assets/Img/Logo.png">
-    <link rel="stylesheet" href="../assets/css/style.css">
-    <title>Trackstry Artista</title>
-</head>
-<body>
-    <%- include("partials/nav") %> 
-    <div id="cover_artista">
-        <div style="width: 100%;height: 100%;overflow: hidden;">
-            <img src="#" class="img_cover">
-        </div>
-        <div style="display: flex;">
-            <img src="#" id="img_artista">
-            <h1 id="name_artista" class="shadow_text"></h1>
-        </div>
-    </div>
-    <div id="button_select">
-        <button class="addSong" id="addAlbum">
-            <span class="cross_add">+</span>
-            <h3>aggiungi album</h3>
-        </button>
-        <button class="addSong" id="addSong">
-            <span class="cross_add">+</span>
-            <h3>aggiungi canzone</h3>
-        </button>
-    </div>
+<%- include("partials/head", { title: 'La tua musica', js: [ { file: 'populateSongs.js' } ] }) %> 
+<%- include("partials/nav") %> 
 
-    <div class="song_container">
+<%- include("components/cover", { artista: { nome: '', img: '' },
+                                  img: { src:'', contrast:true } }) %> 
 
-        <div class="album" style="display: none;">
-            <div class="album_header">
-                <img src="../assets/Img/9dcd0cf7ed5659114bdcddea44ffaab4.png" style="width: 138px;height: 128px;">
-                <h1 style="margin-left: 30px;">titolo_album</h1>
-                <span class="removeAlbum"><hr class="remove_line"></span>
-            </div>
-            <div style="display: flex;">
-                <h3 class="n_track">N°</h3>
-                <h3 class="song_name">nome_canzone</h3>
-                <h3 class="author">autore</h3>
-                <h3 class="song_title">album</h3>
-                <h3 class="duration" style="right: 42px;">durata</h3>
-            </div>
-            <hr class="line">
-            <ul class="album_list">
-                <li class="album_song" style="display: none;">
-                    <span class="n_track" ></span>
-                    <span class="song_name">ciao</span> 
-                    <span class="author author_field">naturald</span>
-                    <span class="song_title data_song_field">titolo_album</span> 
-                    <span class="duration data_song_field">3:30</span>
-                    <span class="removeSong"><hr class="remove_line"></span>
-                </li>
-            </ul>
+<div class="container container--row container--Sgap container--end container--SMarginV container--SMarginH">
+    <button class="add-btn" action="addSong">
+        <span class="add-btn__cross">+</span>
+        <h3>aggiungi canzone</h3>
+    </button>
+    <button class="add-btn" action="addAlbum">
+        <span class="add-btn__cross">+</span>
+        <h3>aggiungi album</h3>
+    </button>
+</div>
 
-            <button id="addSongToAlbum" class="addSong" style="width: max-content;" onclick="add_songAlbum()">
-                <span class="cross_add">+</span>
-                <h3>aggiungi canzone</h3>
-            </button>
+<div class="container container--LMarginV" field="mediaContainer">
     
-        </div>
+    <%- include('components/album', { edit: true, visible: false }) %>
 
-        <div class="single_song" style="display: none;">
-            <img src="../assets/Img/9dcd0cf7ed5659114bdcddea44ffaab4.png"  style="width: 138px;height: 128px;">
-            <div style="display: flex;flex-direction: column;margin-left: 20px;">
-                <h1>titolo_canzone</h1>
-                <h3>autore</h3>
-            </div>
-            <h3 class="duration single_song_duration">3:30</h3>
-            <span class="removeSong"><hr class="remove_line"></span>
-        </div>
-    </div>
+    <%- include('components/song', { edit: true, visible: false }) %>
 
-    <%- include("partials/footer") %>
-    <script src="../assets/js/populateSongs.js"></script>
-</body>
-</html>
+</div>
+
+<%- include("partials/footer") %>

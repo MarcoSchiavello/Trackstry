@@ -1,0 +1,21 @@
+<div class="cover__cont">
+    <div class="cover <%= typeof fullScreen !== 'undefined' && fullScreen ? 'cover--fullScreen' : '' %> container">
+        
+        <% if(typeof title !== 'undefined' || typeof subTitle !== 'undefined') { %>
+            <div class="cover__cont <%= typeof transition !== 'undefined' && transition ? 'cover__cont--transition' : ''%> container container--nogap">
+                <% if(typeof title !== 'undefined') { %> <h1 class="cover__title <%= typeof fullScreen == 'undefined' || !fullScreen ? 'cover__title--medium' : '' %>"><%= title %></h1><% } %>
+                <% if(typeof subTitle !== 'undefined') { %> <h3 class="cover__subtitle"><%= subTitle %></h3><% } %>   
+            </div>
+        <% } %>
+
+        <img field="coverImg" class="cover__img <%= typeof img.contrast !== 'undefined' && img.contrast ? 'cover__img--contrast' : ''%>" src="<%= img.src %>" >
+    
+    </div>
+
+    <% if(typeof artista !== 'undefined') { %>
+        <div class="user-box <%= typeof artista.center !== 'undefined' && artista.center ? 'user-box--center' : '' %> container container--row container--Sgap">
+            <% if(typeof artista.img !== 'undefined') { %> <img field="coverArtistName" src="<%= artista.img %>" class="user-box__img"><% } %>
+            <% if(typeof artista.nome !== 'undefined') { %><h1 field="coverArtistImg"class="user-box__name shadow_text"><%= artista.nome %></h1><% } %>
+        </div>
+    <% } %>
+</div>

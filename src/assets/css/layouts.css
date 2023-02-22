@@ -1,0 +1,98 @@
+.abs-center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.pivot {
+    position: relative;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3rem;
+    box-sizing: border-box;
+}
+
+.container--row {
+    flex-direction: row;
+}
+
+.container--nogap {
+    gap: 0;
+}
+
+.container--Sgap {
+    gap: 1rem;
+}
+
+.container--Mgap {
+    gap: 3rem;
+}
+
+.container--Lgap {
+    gap: 5rem;
+}
+
+.container--end {
+    justify-content: end;
+}
+
+.container--justBtwn {
+    justify-content: space-between;
+}
+
+.container--noValign {
+    align-items: unset;
+}
+.container--noHalign {
+    justify-content: start;
+}
+
+.container--SMarginH {
+    margin-left: 1rem;
+    margin-right: 1rem;
+}
+
+.container--SMarginV {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+.container--LMarginV {
+    margin-top: 8rem;
+    margin-bottom: 8rem;
+}
+
+
+.card-cont {
+    display: grid;
+    justify-items: center;
+    justify-content: center;  
+    grid-template-columns: repeat(auto-fill, 15rem); 
+    row-gap: 4rem;
+}
+
+.card-cont--fullWidth {
+    width: 100%;
+}
+
+.card-cont--Hborders { 
+    width: 90%;
+}
+.card-cont--VMargin {
+    margin: 2rem auto;
+}
+
+.album__col-temp {
+    display: grid;
+    grid-template-columns: 4rem 1fr 1fr 1fr 1fr;
+    justify-items: start;
+}
+.album__col-temp--noNum {
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+}

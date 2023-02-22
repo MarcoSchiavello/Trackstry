@@ -1,112 +1,36 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="../assets/Img/Logo.png">
-    <link rel="stylesheet" href="../assets/css/style.css">
-    <title>Trackstry</title>
-    <style>
-        .site-footer
-        {
-            margin-top: 0;
-        }
-    </style>
-</head>
-<body>
+<%- include("partials/head", { title: 'Trackstry', js: [ { file: 'imgSlider.js' }, { file: 'redirect.js' } ] }) %> 
+<%- include('partials/nav') %>
 
-    <%- include('partials/nav')%>
-    
-    <div id="cover">
-        <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);z-index: 98;">
-            <h1 id="title_index">Trackstry</h1>   
-            <h3 style="text-align: center;" id="subtitle_index">Dai vita alla tua musica</h3>   
-        </div>
+<%- include('components/cover', { title: 'Trackstry', 
+                                  subTitle: 'Dai vita alla tua musica', 
+                                  transition: true,
+                                  img: { src: 'assets/img/slider/bg_home.jpg' }, 
+                                  fullScreen: true }) %>
 
-        <img src="../assets/Img/home/bg_home.jpg" style="width: 100%;height: 100%;filter: blur(6px); transform: scale(1.1);" >
-    </div>
-    <div class="container">
-        <div style="width: 50%;overflow: hidden;">
-            <img src="../assets/Img/home/sec_1.jpg" class="container_img">
-        </div>
-        <div style="position: relative;margin-top: 40px;width: 50%;">
-            <div style="margin-left:60px;">
-                <h1 style="margin-bottom:40px;">La tua musica</h1>
-                <p style="font-size: 18px;">
-                    Con Trackstry potrai caricare tutta la musica che <br> 
-                    crei per far spere a gli altri chi sei veramente attraverso<br>
-                    la tua musica cosa aspetti inizia a caricare le tue canzioni.
-                </p>
-            </div>
-            <button  class="button" style="position: absolute;right: 50%;top: 70%;transform: translateX(+50%)">
-                Clicca qui
-            </button>
-        </div>
-    </div>
-    <div class="container">
-        <div style="position: relative;margin-top: 40px;width: 50%;">
-            <div style="margin-left:60px;">
-                <h1 style="margin-bottom:40px;">Artisti</h1>
-                <p style="font-size: 18px;">
-                    Trackstry è una comunity perciò perché non vai a vedere <br> 
-                    cosa gli altri artisti hanno da offrire scoprendo novi generi<br>
-                    che più si addicono a te e alla tua personalità.
-                </p>
-            </div>
-            <button  class="button" onclick="location.href = '/artisti'" style="position: absolute;right: 50%;top: 70%;transform: translateX(+50%)">
-                Clicca qui
-            </button>
-        </div>
-        <div style="width: 50%;overflow: hidden;">
-            <img src="../assets/Img/home/sec_2.jpg" class="container_img">
-        </div>
-    </div>
-    <div class="container">
-        <div style="width: 50%;overflow: hidden;">
-            <img src="../assets/Img/home/sec_3.jpg" class="container_img">
-        </div>
-        <div style="position: relative;margin-top: 40px;width: 50%;">
-            <div style="margin-left:60px;">
-                <h1 style="margin-bottom:40px;">Iscriviti</h1>
-                <p style="font-size: 18px;">
-                    Ora che hai visto le potenzialità di Trackstry cosa aspetti<br> 
-                    ad unirti, iscriviti e dai inizio alla festa con la tua creatività.<br>
-                    Clicca sul bottone per Iscriverti.
-                </p>
-            </div>
-            <button  class="button" onclick="location.href = '/signup'" style="position: absolute;right: 50%;top: 70%;transform: translateX(+50%)">
-                Clicca qui
-            </button>
-        </div>
-    </div>
-    <div id="container_slider">
-        <div id="slider">
-            <div id="img_container_slider">
-                <div  class="img_slider">
-                    <img src="../assets/Img/home/sec_3.jpg" class="inner_img_slider">
-                </div>
-                <div  class="img_slider">
-                    <img src="../assets/Img/home/bg_home.jpg" class="inner_img_slider">
-                </div>
-                <div  class="img_slider">
-                    <img src="../assets/Img/home/sec_1.jpg" class="inner_img_slider">
-                </div>
-                <div  class="img_slider">
-                    <img src="../assets/Img/home/sec_2.jpg" class="inner_img_slider">
-                </div>
-                <div  class="img_slider">
-                    <img src="../assets/Img/home/sec_3.jpg" class="inner_img_slider">
-                </div>
-                <div  class="img_slider">
-                    <img src="../assets/Img/home/bg_home.jpg" class="inner_img_slider">
-                </div>
-            </div>
-        </div>
-    </div>
-    <%- include('partials/footer') %>
-    <script>
-        var offset = 0;
-        setInterval(slideNext,5000);
-    </script>
-</body>
-</html>
+<%- include('components/imageSection', {title: 'La tua musica', 
+                                        text: `Con Trackstry potrai caricare tutta la musica che  
+                                               crei per far spere a gli altri chi sei veramente attraverso
+                                               la tua musica cosa aspetti inizia a caricare le tue canzioni.`, 
+                                        btn: { text: 'Clicca qui', redirect: '/mia_musica/1' }, 
+                                        img: 'slider/sec_1.jpg', 
+                                        float: 'left'}) %>
+
+<%- include('components/imageSection', {title: 'Artisti', 
+                                        text: `Trackstry è una comunity perciò perché non vai a vedere  
+                                               cosa gli altri artisti hanno da offrire scoprendo novi generi
+                                               che più si addicono a te e alla tua personalità.`, 
+                                        btn: { text: 'Clicca qui', redirect: '/artisti' }, 
+                                        img: 'slider/sec_2.jpg', 
+                                        float: 'right'}) %>
+
+<%- include('components/imageSection', {title: 'Iscriviti', 
+                                        text: `Ora che hai visto le potenzialità di Trackstry cosa aspetti 
+                                               ad unirti, iscriviti e dai inizio alla festa con la tua creatività.
+                                               Clicca sul bottone per Iscriverti.`, 
+                                        btn: { text: 'Clicca qui', redirect: '/signup' }, 
+                                        img: 'slider/sec_3.jpg', 
+                                        float: 'left'}) %>
+
+<%- include('components/slider', { imgs: [ 'slider/bg_home.jpg', 'slider/sec_1.jpg', 'slider/sec_2.jpg', 'slider/sec_3.jpg' ] }) %>
+
+<%- include('partials/footer') %>

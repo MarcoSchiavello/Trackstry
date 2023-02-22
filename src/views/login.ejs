@@ -1,65 +1,23 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="../assets/Img/Logo.png">
-    <link rel="stylesheet" href="../assets/css/style.css">
-    <title>Trackstry Login</title>
-    <style>
-        .site-footer
-        {
-            margin-top: 0;
-        }
-    </style>
-</head>
-<body class="bg_log">
-    <%- include('partials/nav') %>
-    <div id="container_log">
-        <form action="#" class="form" style="height:55%;padding: 40px;" method="POST">
-            <img src="../assets/Img/Logo.png" class="img_log">
-            <input type="text" name="email" required autocomplete="off" class="input_text" style="width: 320px;">
-            <label for="username">E-mail</label>
-            <input type="password" name="password" required required autocomplete="off" class="input_text" style="margin-top: 100px;width: 320px;">
-            <label for="password">Password</label>
-            <input type="submit"  style="margin: auto; margin-top: 100px;width: 220px;min-width: 100px;" class="button">
-            <h5 class="err"></h5>
-        </form>
-    </div>
-    <%- include('partials/footer') %>
-    <script>
-        document.querySelector(".form").addEventListener("submit", e =>{
-            let email = document.querySelector(".form > input[name='email']").value;
-            let password = document.querySelector(".form > input[name='password']").value;
-            let data = {
-                email: email,
-                password: password
-            };
-            event.preventDefault();
-            fetch("http://localhost:4000/v1/auth/login",{
-                method: 'POST',
-                mode: 'cors',
-                credentials: 'include',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(data)
-            })
-            .then(res => {
-                if(res.status > 399)
-                    throw new Error(res.status);                
+<%- include("partials/head", { title: 'Login', js: [ { file: 'pages/login.js' } ] }) %> 
+<%- include('partials/nav', { bgGradient: true, hidden: true}) %>
 
-                if(res.status === 200)
-                    location.href = "/";
-            })
-            .catch(err => {
-                if(Number(err.message) === 500)
-                    document.querySelector(".err").innerHTML = "Errore con il server";
-                else if(Number(err.message) === 401)
-                    document.querySelector(".err").innerHTML = "Email o password sbagliati";
-            });
+<a href="/">
+    <svg class="back-arrow" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
+	width="800px" height="800px" viewBox="0 0 60.731 60.73"
+	xml:space="preserve">
 
-        });
-    </script>
-</body>
-</html>
+	    <polygon points="0,30.365 29.737,60.105 29.737,42.733 60.731,42.729 60.731,18.001 29.737,17.999 29.737,0.625 		"/>
+    </svg>
+</a>
+
+<form action="#" class="form container" method="POST">
+    <img src="../assets/img/Logo.png" class="from__logo">
+
+    <%- include('components/inputText', { name: 'email', label: 'E-mail' }) %>
+    <%- include('components/inputText', { name: 'password', label: 'Password', type: 'password' }) %>
+
+    <input type="submit" value="Login" class="form__btn button">
+    <h5 class="form__err err"></h5>
+</form>
+
+<%- include('partials/footer') %>
