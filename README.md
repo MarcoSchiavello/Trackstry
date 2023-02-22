@@ -8,7 +8,7 @@ Requirements: Git, Node.js and npm.
 
 To install the project do the following steps:
 ```
-git clone https://github.com/naturald/Trackstry.git
+git clone https://github.com/marcoschiavello/Trackstry.git
 ```
 go to the main directory of the project and do:
 ```
