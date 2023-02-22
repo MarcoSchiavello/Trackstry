@@ -33,7 +33,6 @@ module.exports = {
             const hash = crypto.createHash("SHA256").update(pwd+salt).digest("hex");
             const query = "INSERT INTO artists(artist_id,artist_name,artist_email,artist_pwd,artist_banner) VALUES(null,?,?,?,'/files/banners/default/default?.png');"; // conn.escape adds already '' around the value
             conn.query(query,[username,email,hash+"."+salt,Number(randNum)],(err,res) =>{
-                console.log(err);
                 if(err === null && res != undefined)
                 {
                     const tokenPacket = {};

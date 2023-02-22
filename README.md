@@ -12,10 +12,9 @@ git clone https://github.com/marcoschiavello/Trackstry.git
 ```
 go to the main directory of the project and do:
 ```
-npm i nodemon <-- if not installed yet
 npm install 
 ```
-after this go to api/ and do:
+after this do:
 ```
 cp api/.env.sample api/.env
 ```
