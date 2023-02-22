@@ -1,4 +1,3 @@
-const { EDESTADDRREQ } = require('constants');
 const usersMod = require('../models/usersMod');
 
 module.exports = {  

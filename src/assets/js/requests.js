@@ -3,7 +3,7 @@
 import Conifg from '/config.json' assert { type: 'json' };
 
 async function APIRequest(uri, method, body, json = true) {
-    return fetch(`http://${Conifg.API}/v1/${uri}`, {
+    return fetch(`http://${Conifg.API}${Conifg.prefix}${uri}`, {
         method: method,
         credentials: 'include',
         mode: 'cors',

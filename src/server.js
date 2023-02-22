@@ -1,3 +1,4 @@
+const Config = require('./config.json');
 const express = require('express');
 const router = require('./Routers/router.js');
 
@@ -9,4 +10,4 @@ app.use('/config.json',express.static("config.json"));
 
 router(app);
 
-app.listen(3000);
+app.listen(Config.port);
