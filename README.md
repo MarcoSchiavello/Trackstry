@@ -20,11 +20,12 @@ cp api/.env.sample api/.env
 ```
 fill it with the Database credentials(in the JWT secret you can put Hex junk)
 ```
-DB_USERNAME=
+DB_USERNAME=root
 DB_PWD=
 DB_HOST=localhost
-DB=
-JWT_SECRET=
+DB=trackstry
+PORT=3306
+JWT_SECRET=7364616464736a6b63646273686a206776756c6e79654c464e432059465953554b464c6a68664b535545204e43594546554c467975696
 PORT=4000
 ```
 do the same thing with the front-end configuration file 
