@@ -4,7 +4,7 @@ module.exports = {
     login: (req,res) =>{
         usersMod.login(req.body.email,req.body.password)
         .then(token =>  {
-            res.cookie("jwt",token,{ httpOnly: true }) 
+            res.cookie("jwt",token,{ httpOnly: true, sameSite: 'None', secure: true }) 
             .json({token:token})
             .status(200);
         })

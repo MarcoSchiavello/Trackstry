@@ -11,3 +11,4 @@ api/files/icons/profiles/*
 api/files/banners/*
 !api/files/banners/default
 src/config.json
+package-lock.json
