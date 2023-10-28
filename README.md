@@ -1,10 +1,26 @@
-# Trackstry
-Audio player Spotify-like
+![Static Badge](https://img.shields.io/badge/Version-1.0.0-blue)
+![Static Badge](https://img.shields.io/badge/Licence-GPL_3.0-yallow)
+![GitHub commit activity (master)](https://img.shields.io/github/commit-activity/t/MarcoSchiavello/Trackstry?color=orange)
+![GitLab stars](https://img.shields.io/github/stars/MarcoSchiavello/Trackstry?color=purple)
 
----
-# Installation
+<h1 align="center"><img src="https://github.com/MarcoSchiavello/Trackstry/blob/main/src/assets/img/Logo.png" style="width: 50px" /> Trackstry</h1>
+Audio Player, Spotify clone with different features such as a favorites list, profile customization, and grouping song by album.
+The player has also different functions like the ability to shuffle the song or to loop one song or the entire album.
+The application has an API structure, such that anyone can create their own client for Trackstry or a third companion app.
 
-Requirements: Git, Node.js and npm.
+## Tech-stack
+- Express.js
+- MySQL
+- JS vanilla
+- HTML
+- CSS
+
+## DB schema
+<img src="https://github.com/MarcoSchiavello/Trackstry/blob/main/DBschema.PNG" />
+
+## Installation
+
+Requirements: Git, Node.js, and npm.
 
 To install the project do the following steps:
 ```
@@ -57,10 +73,10 @@ npm run all
 ```
 GET /v1/auth/isLoggedIn
 ```
-Check the token send in the cookie and if it's valid and the user inside the cookie exist returns the user object
+Check the token sent in the cookie and if it's valid and the user inside the cookie exist return the user object
 
 Cookies params:<br />
-+ jwt (required): jwt token that identify the user in the subsequent apis requests
++ jwt (required): jwt token that identifies the user in the subsequent api's requests
 
 Response:<br />
 + 401 Unauthorized
@@ -86,7 +102,7 @@ Unauthorized
 POST /v1/auth/login
 ```
 
-Given user\'s credential try to log in the user 
+Given user\'s credentials try to log in the user 
 
 Request Body (required) | Type: application/json: <br />
 ```
@@ -312,7 +328,7 @@ POST /v1/artists/{artistId}/songs
 Adds a new song to the songs of the specified artist
 
 Path params:
-+ artistId (required): id of the artist we want to add the new song
++ artistId (required): id of the artist we want to add to the new song
 
 Request Body (required) | Type: multipart/form-data: <br />
 + songName | Type: Text: name of the new song
