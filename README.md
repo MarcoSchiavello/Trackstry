@@ -27,7 +27,7 @@ The application has an API structure, such that anyone can create their own clie
 - CSS
 
 ## DB schema
-<img src="https://github.com/MarcoSchiavello/Trackstry/blob/main/DBschema.PNG" />
+<img src="https://github.com/MarcoSchiavello/Trackstry/blob/main/DBschema.PNG" style="width: 70%" />
 
 ## Installation
 
