@@ -612,7 +612,7 @@ Response:<br />
 <br />
 <br />
 
-## favorites
+## Favorites
 ```
 GET /v1/artists/{artistId}/favorites
 ```
