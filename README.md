@@ -8,6 +8,11 @@
 -  [DB-schema](#db-schema)
 -  [Installation](#installation)
 -  [API Doc](#api-doc)
+    - [Auth](#auth)
+    - [Artists](#artists)
+    - [Songs](#songs)
+    - [Albums](#albums)
+    - [Favorites](#favorites)
 
 <h1 align="center" id="about"><img src="https://github.com/MarcoSchiavello/Trackstry/blob/main/src/assets/img/Logo.png" style="width: 50px" /> Trackstry</h1>
 Audio Player, Spotify clone with different features such as a favorites list, profile customization, and grouping song by album.
