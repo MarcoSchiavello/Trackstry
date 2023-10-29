@@ -5,7 +5,7 @@
 
 
 <details>
-  <summary><h3>Table of content</h3></summary>
+  <summary><h3>Table of contents</h3></summary>
     
 -  [About](#about)
 -  [Tech-stack](#tech-stack)
