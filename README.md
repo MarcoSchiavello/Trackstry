@@ -3,7 +3,13 @@
 ![GitHub commit activity (master)](https://img.shields.io/github/commit-activity/t/MarcoSchiavello/Trackstry?color=orange)
 ![GitLab stars](https://img.shields.io/github/stars/MarcoSchiavello/Trackstry?color=purple)
 
-<h1 align="center"><img src="https://github.com/MarcoSchiavello/Trackstry/blob/main/src/assets/img/Logo.png" style="width: 50px" /> Trackstry</h1>
+-  [About](#about)
+-  [Tech-stack](#tech-stack)
+-  [DB-schema](#db-schema)
+-  [Installation](#installation)
+-  [API Doc](#api-doc)
+
+<h1 align="center" id="about"><img src="https://github.com/MarcoSchiavello/Trackstry/blob/main/src/assets/img/Logo.png" style="width: 50px" /> Trackstry</h1>
 Audio Player, Spotify clone with different features such as a favorites list, profile customization, and grouping song by album.
 The player has also different functions like the ability to shuffle the song or to loop one song or the entire album.
 The application has an API structure, such that anyone can create their own client for Trackstry or a third companion app.
