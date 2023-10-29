@@ -3,6 +3,10 @@
 ![GitHub commit activity (master)](https://img.shields.io/github/commit-activity/t/MarcoSchiavello/Trackstry?color=orange)
 ![GitLab stars](https://img.shields.io/github/stars/MarcoSchiavello/Trackstry?color=purple)
 
+
+<details>
+  <summary><h3>Table of content</h3></summary>
+    
 -  [About](#about)
 -  [Tech-stack](#tech-stack)
 -  [DB-schema](#db-schema)
@@ -13,6 +17,7 @@
     - [Songs](#songs)
     - [Albums](#albums)
     - [Favorites](#favorites)
+</details>
 
 <h1 align="center" id="about"><img src="https://github.com/MarcoSchiavello/Trackstry/blob/main/src/assets/img/Logo.png" style="width: 50px" /> Trackstry</h1>
 Audio Player, Spotify clone with different features such as a favorites list, profile customization, and grouping song by album.
